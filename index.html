@@ -307,7 +307,7 @@
       </div>
       <div class="ig-trio-block t-teal">
         <div class="ig-trio-tag">Opvang</div>
-        <div class="ig-trio-num" id="n-week">ca. 0/wk</div>
+        <div class="ig-trio-num" id="n-week" style="font-size:clamp(1.4rem,2.5vw,2.1rem);">ca. 0 pers./wk</div>
         <div class="ig-trio-label">Gemiddelde wekelijkse<br>instroom (jan '25–apr '26)</div>
       </div>
       <div class="ig-trio-block t-purple">
@@ -622,7 +622,7 @@
     entries.forEach(e => {
       if (!e.isIntersecting) return;
       if (e.target.id === 'n-geld')   animateCounter(e.target, 10,    'ca. €', ' mrd', 1600);
-      if (e.target.id === 'n-week')   animateCounter(e.target, 850,   'ca. ', '/wk',  1400);
+      if (e.target.id === 'n-week')   animateCounter(e.target, 850,   'ca. ', ' pers./wk',  1400);
       if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, 'ca. ', '',     1800);
       if (e.target.id === 'jobBars')  animateBars();
       io.unobserve(e.target);
