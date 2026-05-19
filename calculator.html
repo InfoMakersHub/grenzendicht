@@ -59,10 +59,10 @@
 
     <div class="calc-box">
       <div style="display:flex;gap:.75rem;align-items:flex-end;flex-wrap:wrap;">
-        <div style="flex:1;min-width:220px;position:relative;">
+        <div style="flex:0 0 auto;position:relative;">
           <label style="font-size:.78rem;color:var(--text-2);display:block;margin-bottom:.4rem;">Gemeente</label>
           <input type="text" id="gemeenteInput" placeholder="Typ je gemeente..." autocomplete="off"
-            style="width:100%;padding:.65rem .85rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9rem;box-sizing:border-box;"
+            style="width:calc(16ch + 1.7rem);padding:.65rem .85rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9rem;box-sizing:border-box;"
             oninput="filterSuggestions(this.value)" onkeydown="handleKey(event)">
           <div id="suggestionList" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg2);border:1px solid var(--border);border-radius:0 0 8px 8px;z-index:99;max-height:220px;overflow-y:auto;"></div>
         </div>
