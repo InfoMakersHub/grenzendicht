@@ -60,7 +60,7 @@
       <div class="chart-box">
         <h3>Vergelijking met andere sectoren</h3>
         <div class="chart-wrap"><canvas id="compareChart"></canvas></div>
-        <p class="chart-note">Asielindustrie = middenscenario 20.500 FTE. Scheepsbouw en Schiphol ter vergelijking.</p>
+        <p class="chart-note">Asielindustrie = middenscenario 20.500 FTE. NS: jaarverslag 2023 (~23.000 FTE). Gemeente Amsterdam: gemeentelijk jaarverslag. Rijkswaterstaat: jaarlijkse personeelsrapportage RWS (~9.800 FTE).</p>
       </div>
     </div>
   </div>
@@ -209,10 +209,10 @@
   new Chart(document.getElementById('compareChart'), {
     type: 'bar',
     data: {
-      labels: ['Asielindustrie NL','NL scheepsbouw','Gemeente Amsterdam','Schiphol (grond)'],
+      labels: ['Asielindustrie NL','NS (spoorwegen)','Gemeente Amsterdam','Rijkswaterstaat'],
       datasets: [{
         label: 'FTE',
-        data: [20500,20000,14000,7000],
+        data: [20500,23000,14000,9800],
         backgroundColor: ['#b91c1c','#1d6fd4','#0d2d6b','#4a90d9'],
         borderRadius: 5
       }]
