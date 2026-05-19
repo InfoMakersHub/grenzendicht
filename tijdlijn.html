@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4P90BFW1PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4P90BFW1PD');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tijdlijn 2018–2025 — GrenzenDicht</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── TIMELINE PAGE STYLES ── */
+    .tl-hero {
+      background: var(--brand);
+      padding: 3.5rem 1.5rem 3rem;
+    }
+    .tl-hero-inner { max-width: 1100px; margin: 0 auto; }
+    .tl-hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 900; color: #fff;
+      margin: 0 0 .6rem; letter-spacing: -.5px;
+    }
+    .tl-hero p { font-size: .92rem; color: rgba(255,255,255,.72); max-width: 580px; line-height: 1.65; margin: 0; }
+
+    /* ── SLIDER SECTION ── */
+    .tl-slider-wrap {
+      max-width: 1100px; margin: 0 auto;
+      padding: 3rem 1.5rem 0;
+    }
+
+    .tl-year-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .tl-year-big {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 900; color: var(--brand);
+      letter-spacing: -3px; line-height: 1;
+      transition: color .2s;
+    }
+    .tl-vs-badge {
+      font-size: .75rem; font-weight: 700;
+      color: var(--muted); text-align: right;
+      line-height: 1.5;
+    }
+    .tl-vs-badge span { display: block; font-size: .65rem; color: var(--muted); font-weight: 400; }
+
+    /* Range slider */
+    .tl-range-wrap { position: relative; margin-bottom: .5rem; }
+    input[type=range].tl-slider {
+      -webkit-appearance: none;
+      width: 100%; height: 6px;
+      background: var(--bg3); border-radius: 99px; outline: none;
+      cursor: pointer;
+    }
+    input[type=range].tl-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--brand);
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.18);
+      cursor: grab;
+      transition: transform .1s;
+    }
+    input[type=range].tl-slider:active::-webkit-slider-thumb { transform: scale(1.15); cursor: grabbing; }
+    input[type=range].tl-slider::-moz-range-thumb {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--brand); border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.18); cursor: grab;
+    }
+
+    .tl-year-labels {
+      display: flex; justify-content: space-between;
+      font-size: .7rem; color: var(--muted);
+      padding: 0 2px; margin-top: .35rem;
+    }
+
+    /* ── METRIC CARDS ── */
+    .tl-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 1100px; margin: 2.5rem auto 0; padding: 0 1.5rem;
+    }
+    @media (max-width: 800px) { .tl-cards { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 480px) { .tl-cards { grid-template-columns: 1fr; } }
+
+    .tl-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.25rem 1.25rem 1rem;
+      position: relative; overflow: hidden;
+    }
+    .tl-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+    }
+    .tl-card-label {
+      font-size: .65rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: .5rem;
+    }
+    .tl-card-value {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 900; line-height: 1; margin-bottom: .4rem;
+      transition: opacity .15s;
+    }
+    .tl-card-unit { font-size: .72rem; color: var(--muted); margin-bottom: .85rem; }
+    .tl-card-delta {
+      display: inline-flex; align-items: center; gap: .25rem;
+      font-size: .72rem; font-weight: 700;
+      padding: .25rem .55rem; border-radius: 99px;
+    }
+    .delta-up   { background: rgba(185,28,28,.1);  color: #b91c1c; }
+    .delta-down { background: rgba(29,111,212,.1); color: #1d6fd4; }
+    .delta-zero { background: var(--bg3); color: var(--muted); }
+
+    /* Mini sparkbars */
+    .tl-sparkbar-wrap {
+      display: flex; align-items: flex-end;
+      gap: 3px; height: 28px;
+      margin-top: .85rem;
+    }
+    .tl-bar {
+      flex: 1; border-radius: 3px 3px 0 0;
+      transition: background .25s, height .25s;
+      min-height: 3px;
+    }
+
+    /* Card accent colors */
+    .c-instroom::before { background: #1d6fd4; }
+    .c-instroom .tl-card-value { color: #1d6fd4; }
+    .c-instroom .tl-bar { background: rgba(29,111,212,.25); }
+    .c-instroom .tl-bar.active { background: #1d6fd4; }
+
+    .c-budget::before { background: #b91c1c; }
+    .c-budget .tl-card-value { color: #b91c1c; }
+    .c-budget .tl-bar { background: rgba(185,28,28,.2); }
+    .c-budget .tl-bar.active { background: #b91c1c; }
+
+    .c-banen::before { background: #0d2d6b; }
+    .c-banen .tl-card-value { color: #0d2d6b; }
+    .c-banen .tl-bar { background: rgba(13,45,107,.2); }
+    .c-banen .tl-bar.active { background: #0d2d6b; }
+
+    .c-narei::before { background: #991b1b; }
+    .c-narei .tl-card-value { color: #991b1b; }
+    .c-narei .tl-bar { background: rgba(153,27,27,.18); }
+    .c-narei .tl-bar.active { background: #991b1b; }
+
+    /* ── COMPARISON TABLE ── */
+    .tl-compare {
+      max-width: 1100px; margin: 3rem auto 0; padding: 0 1.5rem 4rem;
+    }
+    .tl-compare-title {
+      font-size: .65rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: 1.5rem;
+    }
+    .tl-compare-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .tl-compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    }
+    @media (max-width: 560px) { .tl-compare-grid { grid-template-columns: 1fr; } }
+
+    .tl-cg-block { background: var(--bg); padding: 1.5rem; }
+    .tl-cg-year  { font-size: .65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: .75rem; }
+    .tl-cg-row   { display: flex; justify-content: space-between; align-items: center; padding: .45rem 0; border-bottom: 1px solid var(--border); font-size: .85rem; }
+    .tl-cg-row:last-child { border-bottom: none; }
+    .tl-cg-key   { color: var(--text-2); }
+    .tl-cg-val   { font-weight: 700; color: var(--text); }
+
+    .tl-badge-est { font-size: .6rem; color: var(--muted); font-weight: 400; margin-left: .3rem; }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="stabiliteit.html">Stabiliteit</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="nareizigers.html">Nareizigers</a></li>
+      <li><a href="tijdlijn.html" class="active">Tijdlijn</a></li>
+      <li><a href="trechters.html">Trechters</a></li>
+      <li><a href="ontmanteling.html">Ontmanteling</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<div class="tl-hero">
+  <div class="tl-hero-inner">
+    <div class="hero-label" style="margin-bottom:.6rem;">Verdieping — Tijdlijn</div>
+    <h1>Wat is er veranderd in 7 jaar?</h1>
+    <p>Versleep de slider om te zien hoe instroom, overheidskosten, werkgelegenheid en nareizigers zijn gegroeid van 2018 naar 2025. Alle getallen ten opzichte van het basisjaar 2018.</p>
+  </div>
+</div>
+
+<!-- ── SLIDER ── -->
+<div class="tl-slider-wrap">
+  <div class="tl-year-row">
+    <div class="tl-year-big" id="tlYear">2025</div>
+    <div class="tl-vs-badge">
+      t.o.v. basisjaar 2018
+      <span>Sleep de slider om jaren te vergelijken</span>
+    </div>
+  </div>
+
+  <div class="tl-range-wrap">
+    <input type="range" class="tl-slider" id="tlSlider" min="2018" max="2025" value="2025" step="1">
+  </div>
+  <div class="tl-year-labels">
+    <span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span>
+  </div>
+</div>
+
+<!-- ── CARDS ── -->
+<div class="tl-cards">
+
+  <!-- Instroom -->
+  <div class="tl-card c-instroom">
+    <div class="tl-card-label">Totale instroom</div>
+    <div class="tl-card-value" id="v-instroom">40.600</div>
+    <div class="tl-card-unit">personen / jaar</div>
+    <div class="tl-card-delta delta-up" id="d-instroom">+51% vs 2018</div>
+    <div class="tl-sparkbar-wrap" id="spark-instroom"></div>
+    <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem;">CBS StatLine · IND kerncijfers. 2025 = voorlopig.</p>
+  </div>
+
+  <!-- Budget -->
+  <div class="tl-card c-budget">
+    <div class="tl-card-label">Overheidsbudget</div>
+    <div class="tl-card-value" id="v-budget">€8,5 mrd</div>
+    <div class="tl-card-unit">ministerie A&amp;M + uitvoering</div>
+    <div class="tl-card-delta delta-up" id="d-budget">+325% vs 2018</div>
+    <div class="tl-sparkbar-wrap" id="spark-budget"></div>
+    <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem;">Schattingen op basis van begrotingen. 2026 = €9,7 mrd (hard).</p>
+  </div>
+
+  <!-- Banen -->
+  <div class="tl-card c-banen">
+    <div class="tl-card-label">Banen (FTE)</div>
+    <div class="tl-card-value" id="v-banen">~20.500</div>
+    <div class="tl-card-unit">voltijdsequivalenten totaal</div>
+    <div class="tl-card-delta delta-up" id="d-banen">+71% vs 2018</div>
+    <div class="tl-sparkbar-wrap" id="spark-banen"></div>
+    <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem;">IND 2024 = 6.438 FTE (hard). Overige: schattingen.</p>
+  </div>
+
+  <!-- Nareizigers -->
+  <div class="tl-card c-narei">
+    <div class="tl-card-label">Nareizigers</div>
+    <div class="tl-card-value" id="v-narei">16.500</div>
+    <div class="tl-card-unit">personen / jaar</div>
+    <div class="tl-card-delta delta-up" id="d-narei">+155% vs 2018</div>
+    <div class="tl-sparkbar-wrap" id="spark-narei"></div>
+    <p style="font-size:.65rem;color:var(--muted);margin-top:.5rem;">CBS StatLine 83102NED. 2025 = record.</p>
+  </div>
+
+</div>
+
+<!-- ── 2018 vs geselecteerd jaar ── -->
+<div class="tl-compare">
+  <div class="tl-compare-title">Vergelijking 2018 vs geselecteerd jaar</div>
+  <div class="tl-compare-grid">
+    <div class="tl-cg-block">
+      <div class="tl-cg-year">Basisjaar — 2018</div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Totale instroom</span><span class="tl-cg-val">~26.975</span></div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Overheidsbudget</span><span class="tl-cg-val">~€2,0 mrd <span class="tl-badge-est">schatting</span></span></div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Banen (FTE)</span><span class="tl-cg-val">~12.000 <span class="tl-badge-est">schatting</span></span></div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Nareizigers</span><span class="tl-cg-val">6.460</span></div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Aandeel nareizigers</span><span class="tl-cg-val">24%</span></div>
+    </div>
+    <div class="tl-cg-block">
+      <div class="tl-cg-year" id="cg-year-label">Geselecteerd jaar — 2025</div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Totale instroom</span><span class="tl-cg-val" id="cg-instroom">~40.600</span></div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Overheidsbudget</span><span class="tl-cg-val" id="cg-budget">~€8,5 mrd <span class="tl-badge-est">schatting</span></span></div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Banen (FTE)</span><span class="tl-cg-val" id="cg-banen">~20.500 <span class="tl-badge-est">schatting</span></span></div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Nareizigers</span><span class="tl-cg-val" id="cg-narei">16.500</span></div>
+      <div class="tl-cg-row"><span class="tl-cg-key">Aandeel nareizigers</span><span class="tl-cg-val" id="cg-pct">41%</span></div>
+    </div>
+  </div>
+  <p style="font-size:.7rem;color:var(--muted);margin-top:.85rem;line-height:1.6;">
+    Bronnen: CBS StatLine 83102NED (instroom, nareizigers) · IND Jaarcijfers 2024 · Rijksbegrotingen 2018–2026 · Algemene Rekenkamer. Budgetcijfers vóór 2022 zijn schattingen op basis van historische COA-jaarverslagen en begrotingsgeheugen Rijksoverheid. FTE-totalen vóór 2024 zijn modelschattingen.
+  </p>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <p>GrenzenDicht — Data-journalistieke analyse van de asielindustrie in Nederland</p>
+  <p style="margin-top:.4rem;"><a href="bronnen.html">Bronnen</a> · <a href="index.html">← Terug naar home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // ── DATA ──────────────────────────────────────────────────────────
+  // instroom = eerste aanvragen + nareizigers (CBS)
+  // budget   = schatting totaal overheidsuitgaven asiel (mln €)
+  // banen    = schatting totaal FTE asielindustrie
+  // narei    = CBS StatLine 83102NED
+  // hardBudget / hardBanen = true als hard cijfer beschikbaar
+  const DATA = {
+    2018: { instroom: 26975, budget: 2000,  banen: 12000, narei: 6460,  hardBudget: false, hardBanen: false },
+    2019: { instroom: 26720, budget: 2200,  banen: 12500, narei: 4180,  hardBudget: false, hardBanen: false },
+    2020: { instroom: 17585, budget: 2000,  banen: 11500, narei: 3865,  hardBudget: false, hardBanen: false },
+    2021: { instroom: 34865, budget: 2800,  banen: 13500, narei: 10120, hardBudget: false, hardBanen: false },
+    2022: { instroom: 46665, budget: 4000,  banen: 16000, narei: 11130, hardBudget: false, hardBanen: false },
+    2023: { instroom: 48500, budget: 6000,  banen: 19000, narei: 10125, hardBudget: false, hardBanen: false },
+    2024: { instroom: 44000, budget: 8000,  banen: 20500, narei: 11900, hardBudget: false, hardBanen: true  },
+    2025: { instroom: 40600, budget: 8500,  banen: 20500, narei: 16500, hardBudget: false, hardBanen: false },
+  };
+
+  const BASE = DATA[2018];
+  const YEARS = [2018,2019,2020,2021,2022,2023,2024,2025];
+
+  // ── SPARKBARS ────────────────────────────────────────────────────
+  function buildSpark(id, key) {
+    const wrap = document.getElementById(id);
+    const max = Math.max(...YEARS.map(y => DATA[y][key]));
+    YEARS.forEach(y => {
+      const bar = document.createElement('div');
+      bar.className = 'tl-bar';
+      bar.dataset.year = y;
+      bar.dataset.key  = key;
+      const pct = (DATA[y][key] / max) * 100;
+      bar.style.height = pct + '%';
+      wrap.appendChild(bar);
+    });
+  }
+  buildSpark('spark-instroom', 'instroom');
+  buildSpark('spark-budget',   'budget');
+  buildSpark('spark-banen',    'banen');
+  buildSpark('spark-narei',    'narei');
+
+  // ── HELPERS ──────────────────────────────────────────────────────
+  function fmtNum(n) { return n.toLocaleString('nl-NL'); }
+  function fmtBudget(mln) {
+    if (mln >= 1000) return '€' + (mln/1000).toLocaleString('nl-NL', {maximumFractionDigits:1}) + ' mrd';
+    return '€' + mln.toLocaleString('nl-NL') + ' mln';
+  }
+  function delta(current, base) {
+    const pct = Math.round(((current - base) / base) * 100);
+    return { pct, dir: pct > 0 ? 'up' : pct < 0 ? 'down' : 'zero' };
+  }
+  function deltaLabel(pct, dir) {
+    if (dir === 'zero') return '= gelijk aan 2018';
+    const sign = pct > 0 ? '+' : '';
+    return sign + pct + '% vs 2018';
+  }
+
+  // ── UPDATE ───────────────────────────────────────────────────────
+  function update(year) {
+    const d = DATA[year];
+
+    // Year display
+    document.getElementById('tlYear').textContent = year;
+
+    // Values
+    document.getElementById('v-instroom').textContent = '~' + fmtNum(d.instroom);
+    document.getElementById('v-budget').textContent   = (d.hardBudget ? '' : '~') + fmtBudget(d.budget);
+    document.getElementById('v-banen').textContent    = (d.hardBanen ? '' : '~') + fmtNum(d.banen);
+    document.getElementById('v-narei').textContent    = fmtNum(d.narei);
+
+    // Deltas
+    ['instroom','budget','banen','narei'].forEach(k => {
+      const key = k === 'budget' ? 'budget' : k;
+      const { pct, dir } = delta(d[k === 'narei' ? 'narei' : k], BASE[k === 'narei' ? 'narei' : k]);
+      const el = document.getElementById('d-' + k);
+      el.textContent = year === 2018 ? 'basisjaar' : deltaLabel(pct, dir);
+      el.className = 'tl-card-delta delta-' + (year === 2018 ? 'zero' : dir);
+    });
+
+    // Sparkbars highlight
+    document.querySelectorAll('.tl-bar').forEach(bar => {
+      bar.classList.toggle('active', parseInt(bar.dataset.year) <= year);
+    });
+
+    // Comparison table right column
+    const narei_pct = Math.round((d.narei / d.instroom) * 100);
+    document.getElementById('cg-year-label').textContent = 'Geselecteerd jaar — ' + year;
+    document.getElementById('cg-instroom').textContent   = '~' + fmtNum(d.instroom);
+    document.getElementById('cg-budget').innerHTML       = (d.hardBudget ? '' : '~') + fmtBudget(d.budget) + (d.hardBudget ? '' : ' <span class="tl-badge-est">schatting</span>');
+    document.getElementById('cg-banen').innerHTML        = (d.hardBanen ? '' : '~') + fmtNum(d.banen) + (d.hardBanen ? ' <span class="tl-badge-est">hard cijfer IND</span>' : ' <span class="tl-badge-est">schatting</span>');
+    document.getElementById('cg-narei').textContent      = fmtNum(d.narei);
+    document.getElementById('cg-pct').textContent        = narei_pct + '%';
+  }
+
+  // ── SLIDER EVENT ─────────────────────────────────────────────────
+  const slider = document.getElementById('tlSlider');
+  slider.addEventListener('input', () => update(parseInt(slider.value)));
+
+  // ── INIT ─────────────────────────────────────────────────────────
+  update(2025);
+</script>
+
+</body>
+</html>
