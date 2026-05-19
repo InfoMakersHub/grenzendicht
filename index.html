@@ -312,7 +312,7 @@
       </div>
       <div class="ig-trio-block t-purple">
         <div class="ig-trio-tag">Werkgelegenheid</div>
-        <div class="ig-trio-num" id="n-banen">+/- 0</div>
+        <div class="ig-trio-num" id="n-banen">+/- 0 banen</div>
         <div class="ig-trio-label">Banen die verdwijnen<br>bij volledige afbouw</div>
       </div>
     </div>
@@ -623,7 +623,7 @@
       if (!e.isIntersecting) return;
       if (e.target.id === 'n-geld')   animateCounter(e.target, 10,    '+/- €', ' mrd', 1600);
       if (e.target.id === 'n-week')   animateCounter(e.target, 850,   '+/- ',  ' pers./wk', 1400);
-      if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, '+/- ',  '',          1800);
+      if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, '+/- ',  ' banen',    1800);
       if (e.target.id === 'jobBars')  animateBars();
       io.unobserve(e.target);
     });
