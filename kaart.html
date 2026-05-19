@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4P90BFW1PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4P90BFW1PD');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kaart — Taakstelling per gemeente — GrenzenDicht</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    .map-hero {
+      background: var(--brand);
+      padding: 2.5rem 1.5rem 2rem;
+    }
+    .map-hero-inner { max-width: 1100px; margin: 0 auto; }
+    .map-hero h1 {
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      font-weight: 900; color: #fff; margin: 0 0 .5rem; letter-spacing: -.5px;
+    }
+    .map-hero p { font-size: .9rem; color: rgba(255,255,255,.72); max-width: 560px; line-height: 1.65; margin: 0; }
+
+    /* ── MAP LAYOUT ── */
+    .map-wrap {
+      max-width: 1100px; margin: 2rem auto 0; padding: 0 1.5rem;
+      display: grid; grid-template-columns: 1fr 300px; gap: 1.25rem;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .map-wrap { grid-template-columns: 1fr; }
+    }
+
+    #map {
+      height: 580px; border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #f0f4fa;
+      position: relative;
+    }
+    @media (max-width: 760px) { #map { height: 65vw; min-height: 320px; } }
+
+    /* Loading overlay */
+    #mapLoading {
+      position: absolute; inset: 0; z-index: 999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: #f0f4fa; border-radius: 14px;
+      font-size: .88rem; color: var(--muted); gap: .75rem;
+    }
+    .spinner {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 3px solid var(--border);
+      border-top-color: var(--brand);
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── INFO PANEL ── */
+    .map-info {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.25rem;
+      position: sticky; top: 80px;
+    }
+    .map-info-placeholder {
+      text-align: center; padding: 2rem 1rem;
+      color: var(--muted); font-size: .85rem; line-height: 1.6;
+    }
+    .map-info-placeholder svg { opacity: .3; margin-bottom: .75rem; display: block; margin: 0 auto .75rem; }
+
+    .mi-gemeente { font-size: 1.1rem; font-weight: 900; color: var(--text); margin-bottom: .25rem; }
+    .mi-inwoners { font-size: .75rem; color: var(--muted); margin-bottom: 1.1rem; }
+
+    .mi-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-bottom: 1rem; }
+    .mi-card {
+      background: var(--bg3); border-radius: 9px; padding: .75rem .75rem .6rem;
+      text-align: center;
+    }
+    .mi-card-label { font-size: .58rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: .25rem; }
+    .mi-card-val   { font-size: 1.3rem; font-weight: 900; line-height: 1; }
+    .mi-card-unit  { font-size: .6rem; color: var(--muted); margin-top: .15rem; }
+
+    .mi-cta {
+      display: flex; align-items: center; justify-content: center; gap: .4rem;
+      background: var(--brand); color: #fff; text-decoration: none;
+      padding: .6rem 1rem; border-radius: 8px;
+      font-weight: 700; font-size: .8rem;
+      transition: opacity .15s;
+    }
+    .mi-cta:hover { opacity: .85; }
+
+    /* ── LEGEND ── */
+    .map-legend {
+      max-width: 1100px; margin: 1.25rem auto 0; padding: 0 1.5rem;
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .legend-label { font-size: .7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+    .legend-scale { display: flex; gap: .3rem; align-items: center; flex-wrap: wrap; }
+    .legend-item  { display: flex; align-items: center; gap: .35rem; font-size: .7rem; color: var(--muted); }
+    .legend-swatch { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+    .legend-nodata { display: flex; align-items: center; gap: .35rem; font-size: .7rem; color: var(--muted); }
+
+    .map-note {
+      max-width: 1100px; margin: .75rem auto 2.5rem; padding: 0 1.5rem;
+      font-size: .72rem; color: var(--muted); line-height: 1.6;
+    }
+
+    /* Leaflet hover highlight */
+    .gemeente-hover { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="stabiliteit.html">Stabiliteit</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="nareizigers.html">Nareizigers</a></li>
+      <li><a href="tijdlijn.html">Tijdlijn</a></li>
+      <li><a href="kaart.html" class="active">Kaart</a></li>
+      <li><a href="trechters.html">Trechters</a></li>
+      <li><a href="ontmanteling.html">Ontmanteling</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<div class="map-hero">
+  <div class="map-hero-inner">
+    <div class="hero-label" style="margin-bottom:.5rem;">Interactieve kaart</div>
+    <h1>Taakstelling per gemeente — Nederland 2025</h1>
+    <p>Klik op een gemeente om de verplichte huisvestingstaakstelling te zien. Donkerder = hogere absolute taakstelling. Bron: bevolkingsaandeel × nationale taakstelling 28.000 (2025).</p>
+  </div>
+</div>
+
+<div class="map-wrap">
+
+  <!-- MAP -->
+  <div style="position:relative;">
+    <div id="map">
+      <div id="mapLoading">
+        <div class="spinner"></div>
+        <span>Gemeentegrenzen laden…</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFO PANEL -->
+  <div class="map-info" id="infoPanel">
+    <div class="map-info-placeholder" id="infoPlaceholder">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13 6-3m-6 3V7m6 10 4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-1.447-.894L15 9m0 8V9M9 7l6-2"/></svg>
+      Klik op een gemeente op de kaart om de taakstelling te zien.
+    </div>
+    <div id="infoContent" style="display:none;">
+      <div class="mi-gemeente" id="mi-naam"></div>
+      <div class="mi-inwoners" id="mi-inwoners"></div>
+      <div class="mi-cards">
+        <div class="mi-card">
+          <div class="mi-card-label">Taakstelling 2025</div>
+          <div class="mi-card-val" id="mi-t2025" style="color:var(--brand);"></div>
+          <div class="mi-card-unit">vergunninghouders/jaar</div>
+        </div>
+        <div class="mi-card">
+          <div class="mi-card-label">Waarvan nareizigers</div>
+          <div class="mi-card-val" id="mi-narei" style="color:var(--red);"></div>
+          <div class="mi-card-unit">~41% van totaal</div>
+        </div>
+        <div class="mi-card">
+          <div class="mi-card-label">Per maand</div>
+          <div class="mi-card-val" id="mi-maand" style="color:var(--text);"></div>
+          <div class="mi-card-unit">gemiddeld 2025</div>
+        </div>
+        <div class="mi-card">
+          <div class="mi-card-label">Taakstelling 2026-I</div>
+          <div class="mi-card-val" id="mi-t2026" style="color:var(--blue);"></div>
+          <div class="mi-card-unit">jan–jun 2026</div>
+        </div>
+      </div>
+      <a id="mi-cta-link" href="calculator.html" class="mi-cta">
+        Meer details voor deze gemeente
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- LEGEND -->
+<div class="map-legend">
+  <span class="legend-label">Taakstelling 2025</span>
+  <div class="legend-scale">
+    <div class="legend-item"><div class="legend-swatch" style="background:#cfe1f5;"></div> &lt; 20</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#93c4e8;"></div> 20–50</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#4a90d9;"></div> 50–100</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#1d6fd4;"></div> 100–250</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#1d4ed8;"></div> 250–500</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#0d2d6b;"></div> &gt; 500</div>
+    <div class="legend-nodata"><div class="legend-swatch" style="background:#dde3ea;border:1px solid #c0c8d4;"></div> Geen data</div>
+  </div>
+</div>
+
+<div class="map-note">
+  Berekening: (gemeentebevolking ÷ 17.900.000) × 28.000 (nationale taakstelling 2025). Gemeentegrenzen: CBS / CartoMap NL 2024. Populatiecijfers: CBS bevolkingsstatistiek 2024. Gemeenten zonder match in onze database worden grijs weergegeven.
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <p>GrenzenDicht — Data-journalistieke analyse van de asielindustrie in Nederland</p>
+  <p style="margin-top:.4rem;"><a href="bronnen.html">Bronnen</a> · <a href="index.html">← Terug naar home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // ── DATA ────────────────────────────────────────────────────────
+  const GEMEENTEN = {
+    'Amsterdam': 921402, 'Rotterdam': 665186, 'Den Haag': 550952, "'s-Gravenhage": 550952,
+    'Utrecht': 367984, 'Eindhoven': 244767, 'Groningen': 233218, 'Tilburg': 223505,
+    'Almere': 221296, 'Breda': 185374, 'Nijmegen': 179468, 'Apeldoorn': 163998,
+    'Haarlem': 162764, 'Arnhem': 162599, 'Amersfoort': 161593, 'Zaanstad': 156760,
+    "'s-Hertogenbosch": 155108, 'Den Bosch': 155108, 'Haarlemmermeer': 154742,
+    'Enschede': 159399, 'Zwolle': 130093, 'Leiden': 125535, 'Zoetermeer': 124424,
+    'Maastricht': 121051, 'Dordrecht': 118693, 'Alkmaar': 108225, 'Ede': 116982,
+    'Westland': 111027, 'Emmen': 107218, 'Delft': 105645, 'Venlo': 103476,
+    'Deventer': 101978, 'Leeuwarden': 101038, 'Helmond': 92558, 'Oss': 92168,
+    'Sittard-Geleen': 92671, 'Lelystad': 82649, 'Alphen aan den Rijn': 113200,
+    'Hilversum': 89979, 'Hengelo': 80892, 'Purmerend': 81578, 'Roosendaal': 77400,
+    'Schiedam': 78000, 'Hoorn': 72600, 'Gouda': 73440, 'Vlaardingen': 71844,
+    'Nissewaard': 86000, 'Capelle aan den IJssel': 66850, 'Westerkwartier': 66000,
+    'Spijkenisse': 73000, 'Middelburg': 49302, 'Hardenberg': 62000, 'Meierijstad': 82000,
+    'Westerwolde': 26000, 'Súdwest-Fryslân': 90145, 'Smallingerland': 55000,
+    'Dantumadiel': 19000, 'Waadhoeke': 46000, 'Noardeast-Fryslân': 46000,
+    'Noordoostpolder': 47000, 'Kampen': 54000, 'Dalfsen': 30000,
+    'Oldebroek': 23000, 'Harderwijk': 48000, 'Ermelo': 27000, 'Nunspeet': 27000,
+    'Elburg': 24000, 'Zeewolde': 23000, 'Dronten': 42000, 'Urk': 21000,
+    'Delfzijl': 25000, 'Oldambt': 38000, 'Stadskanaal': 32000, 'Veendam': 27000,
+    'Midden-Groningen': 61000, 'Eemsdelta': 44000, 'Het Hogeland': 49000,
+    'Tynaarlo': 33000, 'Aa en Hunze': 25000, 'Borger-Odoorn': 26000,
+    'Coevorden': 36000, 'Meppel': 34000, 'Hoogeveen': 56000, 'De Wolden': 24000,
+    'Westerveld': 19000, 'Steenwijkerland': 44000, 'Staphorst': 17000,
+    'Zwartewaterland': 23000, 'Raalte': 37000, 'Ommen': 18000, 'Olst-Wijhe': 18000,
+    'Rijssen-Holten': 38000, 'Hellendoorn': 36000, 'Twenterand': 34000, 'Almelo': 72000,
+    'Wierden': 24000, 'Dinkelland': 26000, 'Tubbergen': 21000, 'Losser': 23000,
+    'Oldenzaal': 32000, 'Haaksbergen': 25000, 'Borne': 23000, 'Hof van Twente': 35000,
+    'Lochem': 33000, 'Zutphen': 47000, 'Bronckhorst': 37000, 'Doetinchem': 57000,
+    'Aalten': 27000, 'Oost Gelre': 29000, 'Winterswijk': 29000, 'Berkelland': 45000,
+    'Montferland': 36000, 'Zevenaar': 42000, 'Duiven': 26000, 'Westervoort': 15000,
+    'Lingewaard': 46000, 'Overbetuwe': 48000, 'Berg en Dal': 35000,
+    'Heumen': 16000, 'Wijchen': 42000, 'Druten': 19000, 'Beuningen': 25000,
+    'Maasdriel': 25000, 'Zaltbommel': 28000, 'Tiel': 42000, 'Neder-Betuwe': 24000,
+    'Wageningen': 38000, 'Rhenen': 20000, 'Veenendaal': 67000, 'Renswoude': 6000,
+    'Wijk bij Duurstede': 24000, 'Houten': 50000, 'IJsselstein': 35000,
+    'Nieuwegein': 64000, 'Stichtse Vecht': 66000, 'De Ronde Venen': 44000,
+    'Woerden': 53000, 'Montfoort': 14000, 'Oudewater': 10000, 'Lopik': 14000,
+    'Vijfheerenlanden': 57000, 'Gorinchem': 37000, 'Molenlanden': 44000,
+    'Alblasserdam': 20000, 'Papendrecht': 32000, 'Hendrik-Ido-Ambacht': 30000,
+    'Zwijndrecht': 44000, 'Sliedrecht': 25000, 'Hardinxveld-Giessendam': 18000,
+    'Ridderkerk': 46000, 'Barendrecht': 48000, 'Albrandswaard': 25000,
+    'Lansingerland': 62000, 'Zuidplas': 44000, 'Krimpen aan den IJssel': 29000,
+    'Maassluis': 33000, 'Brielle': 18000, 'Westvoorne': 14000, 'Hellevoetsluis': 40000,
+    'Goeree-Overflakkee': 49000, 'Hoeksche Waard': 87000,
+    'Lisse': 23000, 'Hillegom': 22000, 'Noordwijk': 43000, 'Katwijk': 68000,
+    'Wassenaar': 26000, 'Voorschoten': 25000, 'Leidschendam-Voorburg': 78000,
+    'Rijswijk': 56000, 'Pijnacker-Nootdorp': 56000, 'Midden-Delfland': 19000,
+    'Scherpenzeel': 10000, 'Barneveld': 61000, 'Nijkerk': 43000, 'Bunschoten': 22000,
+    'Soest': 47000, 'Baarn': 25000, 'Woudenberg': 14000, 'Leusden': 31000,
+    'Utrechtse Heuvelrug': 50000, 'Zeist': 65000, 'De Bilt': 43000, 'Bunnik': 15000,
+    'Vianen': 21000, 'Nieuwkoop': 29000, 'Kaag en Braassem': 27000,
+    'Leiderdorp': 27000, 'Oegstgeest': 24000, 'Teylingen': 36000,
+    'Bergen op Zoom': 67000, 'Woensdrecht': 22000, 'Steenbergen': 24000,
+    'Halderberge': 30000, 'Rucphen': 23000, 'Moerdijk': 37000, 'Drimmelen': 27000,
+    'Oosterhout': 55000, 'Geertruidenberg': 22000, 'Dongen': 26000, 'Gilze en Rijen': 26000,
+    'Goirle': 23000, 'Hilvarenbeek': 16000, 'Oisterwijk': 26000, 'Loon op Zand': 24000,
+    'Waalwijk': 48000, 'Heusden': 44000, 'Altena': 56000,
+    'Zundert': 22000, 'Alphen-Chaam': 10000, 'Baarle-Nassau': 7000,
+    'Veldhoven': 45000, 'Waalre': 17000, 'Valkenswaard': 31000,
+    'Heeze-Leende': 16000, 'Cranendonck': 20000, 'Weert': 50000, 'Leudal': 37000,
+    'Maasgouw': 24000, 'Roermond': 58000, 'Echt-Susteren': 32000,
+    'Beekdaelen': 36000, 'Brunssum': 29000, 'Heerlen': 86000, 'Landgraaf': 38000,
+    'Kerkrade': 46000, 'Simpelveld': 11000, 'Voerendaal': 12000, 'Gulpen-Wittem': 14000,
+    'Vaals': 10000, 'Meerssen': 20000, 'Valkenburg aan de Geul': 17000,
+    'Eijsden-Margraten': 25000, 'Stein': 25000, 'Beek': 16000,
+    'Schinnen': 13000, 'Peel en Maas': 44000, 'Venray': 44000, 'Gennep': 17000,
+    'Bergen (L)': 13000, 'Beesel': 14000, 'Horst aan de Maas': 42000,
+    'Medemblik': 46000, 'Drechterland': 20000, 'Enkhuizen': 18000, 'Stede Broec': 22000,
+    'Koggenland': 23000, 'Hollands Kroon': 49000, 'Schagen': 47000, 'Texel': 13000,
+    'Den Helder': 57000, 'Bergen (NH)': 31000, 'Castricum': 36000,
+    'Alkmaar': 108225, 'Heiloo': 23000, 'Bergen op Zoom': 67000,
+    'Uitgeest': 14000, 'Beverwijk': 40000, 'Heemskerk': 40000, 'Velsen': 68000,
+    'Bloemendaal': 23000, 'Zandvoort': 17000, 'Heemstede': 27000,
+    'Amstelveen': 93000, 'Diemen': 29000, 'Ouder-Amstel': 13000,
+    'Aalsmeer': 32000, 'Uithoorn': 29000, 'De Ronde Venen': 44000,
+    'Edam-Volendam': 36000, 'Waterland': 17000, 'Beemster': 9000,
+    'Landsmeer': 11000, 'Oostzaan': 10000, 'Wormerland': 16000,
+    'Weesp': 19000, 'Muiden': 8000, 'Bussum': 33000, 'Naarden': 18000,
+    'Huizen': 41000, 'Blaricum': 11000, 'Laren': 11000, 'Eemnes': 9000,
+    'Bunschoten': 22000, 'Soest': 47000, 'Baarn': 25000,
+    'Rhenen': 20000, 'Veenendaal': 67000,
+    'Goes': 38000, 'Kapelle': 13000, 'Reimerswaal': 22000,
+    'Hulst': 27000, 'Terneuzen': 54000, 'Sluis': 24000,
+    'Vlissingen': 44000, 'Veere': 22000, 'Noord-Beveland': 7000,
+    'Schouwen-Duiveland': 34000, 'Tholen': 26000, 'Bergen op Zoom': 67000,
+  };
+
+  const NL_BEVOLKING = 17900000;
+  const TAAKSTELLING_2025 = 28000;
+  const TAAKSTELLING_2026_H1 = 15000;
+
+  // ── NAAM-MATCHING (CBS GeoJSON → onze GEMEENTEN keys) ───────────
+  const ALIASSEN = {
+    "'s-Gravenhage":    'Den Haag',
+    "'s-Hertogenbosch": "'s-Hertogenbosch",
+    'Súdwest-Fryslân':  'Súdwest-Fryslân',
+    'SúdwestFryslân':   'Súdwest-Fryslân',
+    'Leeuwarden':       'Leeuwarden',
+    'Groningen':        'Groningen',
+  };
+
+  function zoekGemeente(statnaam) {
+    if (GEMEENTEN[statnaam] !== undefined) return statnaam;
+    if (ALIASSEN[statnaam] && GEMEENTEN[ALIASSEN[statnaam]] !== undefined) return ALIASSEN[statnaam];
+    // fuzzy: lowercase vergelijking
+    const lower = statnaam.toLowerCase().trim();
+    const match = Object.keys(GEMEENTEN).find(k => k.toLowerCase().trim() === lower);
+    return match || null;
+  }
+
+  function berekenData(inwoners) {
+    const t2025  = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2025);
+    const t2026h = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2026_H1);
+    const maand  = Math.round(t2025 / 12);
+    const narei  = Math.round(t2025 * 0.41);
+    return { t2025, t2026h, maand, narei };
+  }
+
+  // ── KLEURSCHAAL ──────────────────────────────────────────────────
+  function getColor(t) {
+    if (t === null) return '#dde3ea';
+    if (t >= 500)  return '#0d2d6b';
+    if (t >= 250)  return '#1d4ed8';
+    if (t >= 100)  return '#1d6fd4';
+    if (t >= 50)   return '#4a90d9';
+    if (t >= 20)   return '#93c4e8';
+    return '#cfe1f5';
+  }
+
+  function getStyle(feature) {
+    const naam = zoekGemeente(feature.properties.statnaam || feature.properties.name || '');
+    const inwoners = naam ? GEMEENTEN[naam] : null;
+    const t2025    = inwoners ? Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2025) : null;
+    return {
+      fillColor:   getColor(t2025),
+      fillOpacity: t2025 ? 0.82 : 0.45,
+      color:       '#ffffff',
+      weight:      0.8,
+      opacity:     1
+    };
+  }
+
+  // ── INFO PANEL ───────────────────────────────────────────────────
+  let activeLayer = null;
+
+  function toonInfo(statnaam) {
+    const naam     = zoekGemeente(statnaam);
+    const inwoners = naam ? GEMEENTEN[naam] : null;
+    const displayNaam = naam || statnaam;
+
+    document.getElementById('infoPlaceholder').style.display = 'none';
+    document.getElementById('infoContent').style.display    = 'block';
+    document.getElementById('mi-naam').textContent = displayNaam;
+
+    if (inwoners) {
+      const d = berekenData(inwoners);
+      document.getElementById('mi-inwoners').textContent =
+        inwoners.toLocaleString('nl-NL') + ' inwoners · ' +
+        ((inwoners / NL_BEVOLKING) * 100).toFixed(2) + '% van NL';
+      document.getElementById('mi-t2025').textContent = d.t2025.toLocaleString('nl-NL');
+      document.getElementById('mi-narei').textContent = d.narei.toLocaleString('nl-NL');
+      document.getElementById('mi-maand').textContent = d.maand.toLocaleString('nl-NL');
+      document.getElementById('mi-t2026').textContent = d.t2026h.toLocaleString('nl-NL');
+      document.getElementById('mi-cta-link').href = 'calculator.html?gemeente=' + encodeURIComponent(naam || statnaam);
+    } else {
+      document.getElementById('mi-inwoners').textContent = 'Geen populatiedata beschikbaar';
+      document.getElementById('mi-t2025').textContent = '—';
+      document.getElementById('mi-narei').textContent = '—';
+      document.getElementById('mi-maand').textContent = '—';
+      document.getElementById('mi-t2026').textContent = '—';
+      document.getElementById('mi-cta-link').href = 'calculator.html';
+    }
+  }
+
+  // ── LEAFLET MAP ──────────────────────────────────────────────────
+  const map = L.map('map', {
+    center: [52.2, 5.28],
+    zoom: 8,
+    zoomControl: true,
+    attributionControl: true,
+  });
+
+  // Subtiele achtergrond (CartoLite labels only)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    subdomains: 'abcd', maxZoom: 19, pane: 'shadowPane'
+  }).addTo(map);
+
+  let geojsonLayer;
+
+  function onEachFeature(feature, layer) {
+    const statnaam = feature.properties.statnaam || feature.properties.name || '';
+    const naam     = zoekGemeente(statnaam);
+    const inwoners = naam ? GEMEENTEN[naam] : null;
+    const t2025    = inwoners ? Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2025) : null;
+    const tooltipText = t2025
+      ? `<strong>${naam || statnaam}</strong><br>${t2025.toLocaleString('nl-NL')} vergunninghouders`
+      : `<strong>${statnaam}</strong><br><span style="color:#888">Geen data</span>`;
+
+    layer.bindTooltip(tooltipText, { sticky: true, opacity: 0.95, className: 'gemeente-tooltip' });
+
+    layer.on({
+      mouseover(e) {
+        e.target.setStyle({ fillOpacity: 1, weight: 1.5, color: '#0d2d6b' });
+        e.target.bringToFront();
+      },
+      mouseout(e) {
+        if (activeLayer !== e.target) geojsonLayer.resetStyle(e.target);
+      },
+      click(e) {
+        if (activeLayer && activeLayer !== e.target) geojsonLayer.resetStyle(activeLayer);
+        e.target.setStyle({ fillOpacity: 1, weight: 2, color: '#0d2d6b' });
+        activeLayer = e.target;
+        toonInfo(statnaam);
+      }
+    });
+  }
+
+  // Laad GeoJSON
+  fetch('https://cartomap.github.io/nl/wgs84/gemeente_2024.geojson')
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(data => {
+      document.getElementById('mapLoading').style.display = 'none';
+      geojsonLayer = L.geoJSON(data, {
+        style: getStyle,
+        onEachFeature
+      }).addTo(map);
+      map.fitBounds(geojsonLayer.getBounds(), { padding: [10, 10] });
+    })
+    .catch(err => {
+      document.getElementById('mapLoading').innerHTML =
+        '<span style="color:#b91c1c;font-size:.85rem;padding:1rem;text-align:center;">Kaart kon niet geladen worden.<br>Controleer je internetverbinding.</span>';
+      console.error('GeoJSON laden mislukt:', err);
+    });
+</script>
+
+</body>
+</html>
