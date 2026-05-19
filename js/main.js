@@ -21,7 +21,7 @@ const WEEKLY_DATA = [
 ];
 
 const WEEK_LABELS = [
-  ...Array.from({length: 52}, (_, i) => `2025-W${i+1}`),
+  ...Array.from({length: 55}, (_, i) => `2025-W${i+1}`),
   ...Array.from({length: 17}, (_, i) => `2026-W${i+1}`)
 ];
 
