@@ -245,6 +245,70 @@
     <p class="chart-note" style="margin-top:.6rem;">Schattingen op basis van historische inwilligingspercentages (~55–60%) en gemiddelde gezinsgrootte. Inwilligingspercentages en gezinssamenstelling variëren sterk per nationaliteit.</p>
   </div>
 
+  <!-- GEMEENTE CALCULATOR -->
+  <div class="section">
+    <div class="section-title">F. Gemeentecalculator</div>
+    <p style="margin-bottom:1.25rem;color:var(--text-2);font-size:.9rem;">Hoeveel vergunninghouders (inclusief nareizigers) moet jouw gemeente verplicht huisvesten? Voer je gemeente in voor de berekening op basis van de officiële taakstellingsformule (bevolkingsaandeel × nationale taakstelling).</p>
+
+    <div class="calc-box">
+      <div style="display:flex;gap:.75rem;align-items:flex-end;flex-wrap:wrap;">
+        <div style="flex:1;min-width:220px;position:relative;">
+          <label style="font-size:.78rem;color:var(--text-2);display:block;margin-bottom:.4rem;">Gemeente</label>
+          <input type="text" id="gemeenteInput" placeholder="Typ je gemeente..." autocomplete="off"
+            style="width:100%;padding:.65rem .85rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9rem;box-sizing:border-box;"
+            oninput="filterSuggestions(this.value)" onkeydown="handleKey(event)">
+          <div id="suggestionList" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg2);border:1px solid var(--border);border-radius:0 0 8px 8px;z-index:99;max-height:220px;overflow-y:auto;"></div>
+        </div>
+        <button onclick="berekenGemeente()"
+          style="padding:.65rem 1.4rem;background:var(--brand);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;white-space:nowrap;">
+          Bereken
+        </button>
+      </div>
+
+      <div id="calcResult" style="display:none;margin-top:1.5rem;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.85rem;margin-bottom:1.25rem;">
+          <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
+            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Taakstelling 2025</div>
+            <div id="res2025" style="font-size:1.6rem;font-weight:900;color:var(--brand);"></div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">vergunninghouders/jaar</div>
+          </div>
+          <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
+            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Taakstelling 2026-I</div>
+            <div id="res2026" style="font-size:1.6rem;font-weight:900;color:var(--blue);"></div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">vergunninghouders (jan–jun)</div>
+          </div>
+          <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
+            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Per maand</div>
+            <div id="resMaand" style="font-size:1.6rem;font-weight:900;color:var(--text);"></div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">gemiddeld (2025)</div>
+          </div>
+          <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
+            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Waarvan nareizigers</div>
+            <div id="resNarei" style="font-size:1.6rem;font-weight:900;color:var(--red);"></div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">~41% van totaal (2025)</div>
+          </div>
+        </div>
+        <div id="resContext" style="background:var(--bg2);border:1px solid var(--border-2);border-radius:8px;padding:1rem;font-size:.83rem;color:var(--text-2);line-height:1.6;"></div>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:.75rem;">Berekening: (gemeentebevolking ÷ 17.900.000) × nationale taakstelling. Bron: CBS bevolkingscijfers 2024 · Huisvestingswet 2014 art. 26.</p>
+      </div>
+
+      <div id="calcNotFound" style="display:none;margin-top:1rem;font-size:.85rem;color:var(--muted);">
+        Gemeente niet gevonden. <span style="color:var(--text-2);">Vul hieronder het inwonertal in voor een handmatige berekening:</span>
+        <div style="display:flex;gap:.75rem;align-items:flex-end;margin-top:.75rem;flex-wrap:wrap;">
+          <div>
+            <label style="font-size:.78rem;color:var(--text-2);display:block;margin-bottom:.4rem;">Aantal inwoners</label>
+            <input type="number" id="manuaalInwoners" placeholder="bijv. 45000"
+              style="padding:.6rem .85rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9rem;width:160px;">
+          </div>
+          <button onclick="berekenManuaal()"
+            style="padding:.6rem 1.2rem;background:var(--blue);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer;">
+            Bereken
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 </main>
 
@@ -255,6 +319,162 @@
 
 <script src="js/main.js"></script>
 <script>
+  // ── GEMEENTE CALCULATOR ──────────────────────────────────────────
+  const GEMEENTEN = {
+    'Amsterdam': 921402, 'Rotterdam': 665186, 'Den Haag': 550952, "'s-Gravenhage": 550952,
+    'Utrecht': 367984, 'Eindhoven': 244767, 'Groningen': 233218, 'Tilburg': 223505,
+    'Almere': 221296, 'Breda': 185374, 'Nijmegen': 179468, 'Apeldoorn': 163998,
+    'Haarlem': 162764, 'Arnhem': 162599, 'Amersfoort': 161593, 'Zaanstad': 156760,
+    "'s-Hertogenbosch": 155108, 'Den Bosch': 155108, 'Haarlemmermeer': 154742,
+    'Enschede': 159399, 'Zwolle': 130093, 'Leiden': 125535, 'Zoetermeer': 124424,
+    'Maastricht': 121051, 'Dordrecht': 118693, 'Alkmaar': 108225, 'Ede': 116982,
+    'Westland': 111027, 'Emmen': 107218, 'Delft': 105645, 'Venlo': 103476,
+    'Deventer': 101978, 'Leeuwarden': 101038, 'Helmond': 92558, 'Oss': 92168,
+    'Sittard-Geleen': 92671, 'Lelystad': 82649, 'Alphen aan den Rijn': 113200,
+    'Hilversum': 89979, 'Hengelo': 80892, 'Purmerend': 81578, 'Roosendaal': 77400,
+    'Schiedam': 78000, 'Hoorn': 72600, 'Gouda': 73440, 'Vlaardingen': 71844,
+    'Capelle aan den IJssel': 66850, 'Westerkwartier': 66000, 'Nissewaard': 86000,
+    'Spijkenisse': 73000, 'Middelburg': 49302, 'Hardenberg': 62000, 'Meierijstad': 82000,
+    'Westerwolde': 26000, 'Súdwest-Fryslân': 90145, 'Smallingerland': 55000,
+    'Leeuwarden': 101038, 'Dantumadiel': 19000, 'Waadhoeke': 46000, 'Noardeast-Fryslân': 46000,
+    'Emmeloord': 27000, 'Noordoostpolder': 47000, 'Kampen': 54000, 'Dalfsen': 30000,
+    'Oldebroek': 23000, 'Harderwijk': 48000, 'Ermelo': 27000, 'Nunspeet': 27000,
+    'Elburg': 24000, 'Zeewolde': 23000, 'Dronten': 42000, 'Urk': 21000,
+    'Delfzijl': 25000, 'Oldambt': 38000, 'Stadskanaal': 32000, 'Veendam': 27000,
+    'Midden-Groningen': 61000, 'Eemsdelta': 44000, 'Het Hogeland': 49000,
+    'Tynaarlo': 33000, 'Aa en Hunze': 25000, 'Borger-Odoorn': 26000,
+    'Coevorden': 36000, 'Meppel': 34000, 'Hoogeveen': 56000, 'De Wolden': 24000,
+    'Westerveld': 19000, 'Steenwijkerland': 44000, 'Staphorst': 17000,
+    'Zwartewaterland': 23000, 'Raalte': 37000, 'Ommen': 18000, 'Olst-Wijhe': 18000,
+    'Rijssen-Holten': 38000, 'Hellendoorn': 36000, 'Twenterand': 34000, 'Almelo': 72000,
+    'Wierden': 24000, 'Dinkelland': 26000, 'Tubbergen': 21000, 'Losser': 23000,
+    'Oldenzaal': 32000, 'Haaksbergen': 25000, 'Borne': 23000, 'Hof van Twente': 35000,
+    'Lochem': 33000, 'Zutphen': 47000, 'Bronckhorst': 37000, 'Doetinchem': 57000,
+    'Aalten': 27000, 'Oost Gelre': 29000, 'Winterswijk': 29000, 'Berkelland': 45000,
+    'Montferland': 36000, 'Zevenaar': 42000, 'Duiven': 26000, 'Westervoort': 15000,
+    'Lingewaard': 46000, 'Overbetuwe': 48000, 'Nijmegen': 179468, 'Berg en Dal': 35000,
+    'Heumen': 16000, 'Wijchen': 42000, 'Druten': 19000, 'Beuningen': 25000,
+    'Maasdriel': 25000, 'Zaltbommel': 28000, 'Tiel': 42000, 'Neder-Betuwe': 24000,
+    'Wageningen': 38000, 'Rhenen': 20000, 'Veenendaal': 67000, 'Renswoude': 6000,
+    'Wijk bij Duurstede': 24000, 'Houten': 50000, 'IJsselstein': 35000,
+    'Nieuwegein': 64000, 'Stichtse Vecht': 66000, 'De Ronde Venen': 44000,
+    'Woerden': 53000, 'Montfoort': 14000, 'Oudewater': 10000, 'Lopik': 14000,
+    'Vijfheerenlanden': 57000, 'Gorinchem': 37000, 'Molenlanden': 44000,
+    'Alblasserdam': 20000, 'Papendrecht': 32000, 'Hendrik-Ido-Ambacht': 30000,
+    'Zwijndrecht': 44000, 'Sliedrecht': 25000, 'Hardinxveld-Giessendam': 18000,
+    'Ridderkerk': 46000, 'Barendrecht': 48000, 'Albrandswaard': 25000,
+    'Lansingerland': 62000, 'Zuidplas': 44000, 'Krimpen aan den IJssel': 29000,
+    'Capelle aan den IJssel': 66850, 'Schiedam': 78000, 'Vlaardingen': 71844,
+    'Maassluis': 33000, 'Brielle': 18000, 'Westvoorne': 14000, 'Hellevoetsluis': 40000,
+    'Goeree-Overflakkee': 49000, 'Hoeksche Waard': 87000, 'Oud-Beijerland': 24000,
+    'Lisse': 23000, 'Hillegom': 22000, 'Noordwijk': 43000, 'Katwijk': 68000,
+    'Wassenaar': 26000, 'Voorschoten': 25000, 'Leidschendam-Voorburg': 78000,
+    'Rijswijk': 56000, 'Pijnacker-Nootdorp': 56000, 'Zoetermeer': 124424,
+    'Lansingerland': 62000, 'Westland': 111027, 'Delft': 105645, 'Midden-Delfland': 19000,
+    'Scherpenzeel': 10000, 'Barneveld': 61000, 'Nijkerk': 43000, 'Bunschoten': 22000,
+    'Soest': 47000, 'Baarn': 25000, 'Woudenberg': 14000, 'Leusden': 31000,
+    'Utrechtse Heuvelrug': 50000, 'Zeist': 65000, 'De Bilt': 43000, 'Bunnik': 15000,
+    'Vianen': 21000, 'Nieuwkoop': 29000, 'Alphen aan den Rijn': 113200,
+    'Kaag en Braassem': 27000, 'Leiderdorp': 27000, 'Oegstgeest': 24000,
+    'Teylingen': 36000, 'Noordwijk': 43000, 'Sassenheim': 15000,
+    'Bergen op Zoom': 67000, 'Woensdrecht': 22000, 'Steenbergen': 24000,
+    'Halderberge': 30000, 'Rucphen': 23000, 'Moerdijk': 37000, 'Drimmelen': 27000,
+    'Oosterhout': 55000, 'Geertruidenberg': 22000, 'Dongen': 26000, 'Gilze en Rijen': 26000,
+    'Goirle': 23000, 'Hilvarenbeek': 16000, 'Oisterwijk': 26000, 'Loon op Zand': 24000,
+    'Waalwijk': 48000, 'Heusden': 44000, 'Altena': 56000, 'Werkendam': 27000,
+    'Zundert': 22000, 'Alphen-Chaam': 10000, 'Baarle-Nassau': 7000,
+    'Eindhoven': 244767, 'Veldhoven': 45000, 'Waalre': 17000, 'Valkenswaard': 31000,
+    'Heeze-Leende': 16000, 'Cranendonck': 20000, 'Weert': 50000, 'Leudal': 37000,
+    'Maasgouw': 24000, 'Roermond': 58000, 'Echt-Susteren': 32000, 'Sittard-Geleen': 92671,
+    'Beekdaelen': 36000, 'Brunssum': 29000, 'Heerlen': 86000, 'Landgraaf': 38000,
+    'Kerkrade': 46000, 'Simpelveld': 11000, 'Voerendaal': 12000, 'Gulpen-Wittem': 14000,
+    'Vaals': 10000, 'Maastricht': 121051, 'Meerssen': 20000, 'Valkenburg aan de Geul': 17000,
+    'Eijsden-Margraten': 25000, 'Maastricht': 121051, 'Stein': 25000,
+    'Beek': 16000, 'Nuth': 15000, 'Schinnen': 13000
+  };
+
+  const NL_BEVOLKING = 17900000;
+  const TAAKSTELLING_2025 = 28000;
+  const TAAKSTELLING_2026_H1 = 15000;
+
+  let geselecteerdeGemeente = null;
+
+  function filterSuggestions(val) {
+    const list = document.getElementById('suggestionList');
+    geselecteerdeGemeente = null;
+    if (val.length < 2) { list.style.display = 'none'; return; }
+    const hits = Object.keys(GEMEENTEN).filter(g =>
+      g.toLowerCase().includes(val.toLowerCase())
+    ).slice(0, 8);
+    if (!hits.length) { list.style.display = 'none'; return; }
+    list.innerHTML = hits.map(g =>
+      `<div onclick="selectGemeente('${g}')"
+        style="padding:.55rem .85rem;cursor:pointer;font-size:.88rem;color:var(--text);border-bottom:1px solid var(--border);"
+        onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background=''">${g}</div>`
+    ).join('');
+    list.style.display = 'block';
+  }
+
+  function selectGemeente(naam) {
+    document.getElementById('gemeenteInput').value = naam;
+    document.getElementById('suggestionList').style.display = 'none';
+    geselecteerdeGemeente = naam;
+    berekenGemeente();
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter') berekenGemeente();
+    if (e.key === 'Escape') document.getElementById('suggestionList').style.display = 'none';
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#gemeenteInput') && !e.target.closest('#suggestionList')) {
+      document.getElementById('suggestionList').style.display = 'none';
+    }
+  });
+
+  function berekenGemeente() {
+    const input = document.getElementById('gemeenteInput').value.trim();
+    const naam = geselecteerdeGemeente ||
+      Object.keys(GEMEENTEN).find(g => g.toLowerCase() === input.toLowerCase());
+    document.getElementById('calcResult').style.display = 'none';
+    document.getElementById('calcNotFound').style.display = 'none';
+    if (!naam) {
+      document.getElementById('calcNotFound').style.display = 'block';
+      return;
+    }
+    toonResultaat(naam, GEMEENTEN[naam]);
+  }
+
+  function berekenManuaal() {
+    const inwoners = parseInt(document.getElementById('manuaalInwoners').value);
+    if (!inwoners || inwoners < 1000) return;
+    toonResultaat('Jouw gemeente', inwoners);
+    document.getElementById('calcNotFound').style.display = 'none';
+  }
+
+  function toonResultaat(naam, inwoners) {
+    const t2025  = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2025);
+    const t2026h = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2026_H1);
+    const maand  = Math.round(t2025 / 12);
+    const narei  = Math.round(t2025 * 0.41);
+
+    document.getElementById('res2025').textContent = t2025.toLocaleString('nl-NL');
+    document.getElementById('res2026').textContent = t2026h.toLocaleString('nl-NL');
+    document.getElementById('resMaand').textContent = maand.toLocaleString('nl-NL');
+    document.getElementById('resNarei').textContent = narei.toLocaleString('nl-NL');
+
+    let context = `<strong style="color:var(--text);">${naam}</strong> heeft ${inwoners.toLocaleString('nl-NL')} inwoners `;
+    context += `(${((inwoners / NL_BEVOLKING) * 100).toFixed(2)}% van Nederland). `;
+    context += `De gemeente is verplicht in 2025 in totaal <strong style="color:var(--brand);">${t2025.toLocaleString('nl-NL')} vergunninghouders</strong> te huisvesten — `;
+    context += `gemiddeld <strong style="color:var(--brand);">${maand} per maand</strong>. `;
+    context += `Hiervan zijn naar schatting <strong style="color:var(--red);">${narei} nareizigers</strong> (op basis van het 2025-aandeel van 41%). `;
+    context += `Al deze personen krijgen voorrang boven reguliere woningzoekenden op de sociale huurwachtlijst.`;
+
+    document.getElementById('resContext').innerHTML = context;
+    document.getElementById('calcResult').style.display = 'block';
+  }
+
   Chart.defaults.color = '#4a6480';
   Chart.defaults.borderColor = '#e2e8f0';
 
