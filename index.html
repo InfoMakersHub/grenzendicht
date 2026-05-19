@@ -288,6 +288,28 @@
 
 <main>
 
+<!-- ━━━━━━━━ CALCULATOR CTA ━━━━━━━━ -->
+<div style="max-width:1100px;margin:0 auto;padding:1.25rem 1.5rem 1.25rem;">
+  <div style="background:linear-gradient(135deg,#0d2d6b 0%,#1d6fd4 100%);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-30px;right:-30px;width:160px;height:160px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;">
+      <div style="font-size:1.1rem;font-weight:900;color:#fff;line-height:1.2;">Hoeveel personen moet <em style="font-style:normal;color:#fbbf24;">jouw gemeente</em> huisvesten?</div>
+      <div style="font-size:.8rem;color:rgba(255,255,255,.7);margin-top:.3rem;">Bereken de verplichte taakstelling op basis van het bevolkingsaandeel, inclusief het aandeel nareizigers.</div>
+    </div>
+    <a href="calculator.html" class="calc-cta-btn" style="position:relative;z-index:1;display:inline-flex;align-items:center;gap:.5rem;background:#fbbf24;color:#0d2d6b;text-decoration:none;padding:.7rem 1.5rem;border-radius:8px;font-weight:800;font-size:.88rem;white-space:nowrap;animation:calcPulse 2.4s ease-in-out infinite;">
+      Bereken voor jouw gemeente
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</div>
+<style>
+@keyframes calcPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(251,191,36,.5); }
+  50%      { box-shadow: 0 0 0 10px rgba(251,191,36,0); }
+}
+.calc-cta-btn:hover { opacity: .9; animation: none; }
+</style>
+
 <!-- ━━━━━━━━ HERO ━━━━━━━━ -->
 <div class="ig-hero">
   <div class="ig-hero-inner">
@@ -501,31 +523,6 @@
     </div>
   </div>
 </div>
-
-<hr class="ig-divider">
-
-<!-- ━━━━━━━━ CALCULATOR CTA ━━━━━━━━ -->
-<div class="ig-section" style="padding-top:2.5rem;padding-bottom:2.5rem;">
-  <div style="background:linear-gradient(135deg,#0d2d6b 0%,#1d6fd4 100%);border-radius:18px;padding:2.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;position:relative;overflow:hidden;">
-    <div style="position:absolute;top:-40px;right:-40px;width:220px;height:220px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none;"></div>
-    <div style="position:relative;z-index:1;">
-      <div style="font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.6rem;">Interactieve tool</div>
-      <div style="font-size:1.4rem;font-weight:900;color:#fff;line-height:1.2;margin-bottom:.5rem;">Hoeveel moet <em style="font-style:normal;color:#fbbf24;">jouw gemeente</em> huisvesten?</div>
-      <div style="font-size:.85rem;color:rgba(255,255,255,.75);max-width:440px;line-height:1.6;">Bereken de verplichte taakstelling op basis van het bevolkingsaandeel — inclusief het aandeel nareizigers.</div>
-    </div>
-    <a href="calculator.html" class="calc-cta-btn" style="position:relative;z-index:1;display:inline-flex;align-items:center;gap:.6rem;background:#fbbf24;color:#0d2d6b;text-decoration:none;padding:.9rem 1.9rem;border-radius:10px;font-weight:800;font-size:.95rem;white-space:nowrap;animation:calcPulse 2.4s ease-in-out infinite;">
-      Bereken voor jouw gemeente
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
-</div>
-<style>
-@keyframes calcPulse {
-  0%,100% { box-shadow: 0 0 0 0 rgba(251,191,36,.5); }
-  50%      { box-shadow: 0 0 0 10px rgba(251,191,36,0); }
-}
-.calc-cta-btn:hover { opacity: .9; animation: none; }
-</style>
 
 <hr class="ig-divider">
 
