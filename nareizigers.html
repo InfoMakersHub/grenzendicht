@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4P90BFW1PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4P90BFW1PD');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nareizigers — GrenzenDicht</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="stabiliteit.html">Stabiliteit</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="nareizigers.html" class="active">Nareizigers</a></li>
+      <li><a href="trechters.html">Trechters</a></li>
+      <li><a href="ontmanteling.html">Ontmanteling</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Verdieping — Nareizigers</div>
+    <h1>Eén asielzoeker, meerdere aankomsten</h1>
+    <p>Wie een verblijfsvergunning krijgt, heeft recht op gezinshereniging. Partner, kinderen — soms meer. Elke erkende aanvraag genereert daarmee automatisch een tweede golf instroom, jaren later. Die golf is juridisch onstuitbaar, loopt buiten COA om en landt direct op de sociale huurmarkt van gemeenten.</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">~21%</div><div class="label">Van alle instroom is nareiziger (2023)</div></div>
+      <div class="stat-card"><div class="num">1–6</div><div class="label">Nareizigers per erkende aanvraag</div></div>
+      <div class="stat-card"><div class="num">EVRM art. 8</div><div class="label">Juridische basis — vrijwel onbeperkt</div></div>
+      <div class="stat-card"><div class="num">Direct</div><div class="label">Op gemeentelijke woninglijst, geen COA</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- AANTALLEN -->
+  <div class="section">
+    <div class="section-title">A. Jaarlijkse aantallen 2018–2023</div>
+    <div class="two-col" style="align-items:start;">
+      <div class="chart-box">
+        <h3>Eerste aanvragen vs. nareizigers per jaar</h3>
+        <div class="chart-wrap"><canvas id="stackedChart"></canvas></div>
+        <p class="chart-note">Bron: CBS StatLine 83102NED. Nareizigers = nareizende gezinsleden erkende vluchtelingen.</p>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table">
+          <thead>
+            <tr><th>Jaar</th><th>Eerste aanvragen</th><th>Nareizigers</th><th>Totaal</th><th>% nareiziger</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2018</td><td>20.515</td><td class="num-col">6.460</td><td>26.975</td><td>24%</td></tr>
+            <tr><td>2019</td><td>22.540</td><td class="num-col">4.180</td><td>26.720</td><td>16%</td></tr>
+            <tr><td>2020</td><td>13.720</td><td class="num-col">3.865</td><td>17.585</td><td>22%</td></tr>
+            <tr><td>2021</td><td>24.745</td><td class="num-col">10.120</td><td>34.865</td><td>29%</td></tr>
+            <tr><td>2022</td><td>35.535</td><td class="num-col">11.130</td><td>46.665</td><td>24%</td></tr>
+            <tr style="background:var(--bg3);"><td><strong>2023</strong></td><td>38.375</td><td class="num-col"><strong>10.125</strong></td><td>48.500</td><td>21%</td></tr>
+          </tbody>
+        </table>
+        <p class="chart-note" style="margin-top:.6rem;">Bron: CBS StatLine 83102NED / IND Jaarcijfers.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-red" style="margin-top:1.25rem;">
+      <strong>2021: plotselinge verdubbeling</strong>
+      In 2021 verdubbelde het aantal nareizigers van 3.865 naar 10.120 — een stijging van 162%. Dit is de naijlende golf van de instroompiek van 2015–2016: de procedures duurden zo lang dat gezinshereniging pas vijf tot zes jaar later op gang kwam.
+    </div>
+  </div>
+
+  <!-- MULTIPLIER -->
+  <div class="section">
+    <div class="section-title">B. Het multiplier-effect</div>
+    <div class="two-col" style="align-items:start;">
+      <div>
+        <p>Een erkende vluchteling heeft op grond van EVRM artikel 8 (recht op gezinsleven) en de EU Gezinsherenigingsrichtlijn (2003/86/EG) recht op hereniging met:</p>
+        <ul class="obs-list" style="margin:.75rem 0;">
+          <li>De huwelijkspartner of geregistreerd partner</li>
+          <li>Minderjarige kinderen (ook uit eerdere relaties)</li>
+          <li>In sommige gevallen: ouders van minderjarige vluchtelingen (AMV)</li>
+        </ul>
+        <p>In de praktijk betekent dit dat één erkende aanvraag leidt tot gemiddeld 1,5 tot 3 extra personen die naar Nederland komen. Bij grote gezinnen kan dit oplopen tot 6 of meer.</p>
+        <div class="callout callout-amber" style="margin-top:1rem;">
+          <strong>De pijplijn werkt jaren door</strong>
+          De IND-behandelduur voor nareizigersaanvragen bedraagt gemiddeld 12–18 maanden. Alle ~38.000 eerste aanvragen uit 2023 die worden ingewilligd, genereren daarmee een nareizigerspijplijn die tot en met 2026–2027 doorloopt — ongeacht het huidige beleid.
+        </div>
+      </div>
+      <div>
+        <div class="chart-box">
+          <h3>Illustratie: één erkende aanvraag</h3>
+          <div style="display:grid;gap:.6rem;margin-top:.5rem;">
+            <div style="background:var(--bg3);border-left:3px solid var(--brand);border-radius:6px;padding:.85rem;">
+              <div style="font-weight:700;font-size:.85rem;color:var(--text);">Minimaal scenario</div>
+              <div style="font-size:.8rem;color:var(--text-2);margin-top:.3rem;">1 erkende aanvraag → partner → <strong style="color:var(--brand);">2 personen totaal</strong></div>
+            </div>
+            <div style="background:var(--bg3);border-left:3px solid var(--blue);border-radius:6px;padding:.85rem;">
+              <div style="font-weight:700;font-size:.85rem;color:var(--text);">Gemiddeld scenario</div>
+              <div style="font-size:.8rem;color:var(--text-2);margin-top:.3rem;">1 erkende aanvraag → partner + 2 kinderen → <strong style="color:var(--blue);">4 personen totaal</strong></div>
+            </div>
+            <div style="background:var(--bg3);border-left:3px solid var(--red);border-radius:6px;padding:.85rem;">
+              <div style="font-weight:700;font-size:.85rem;color:var(--text);">Maximaal scenario</div>
+              <div style="font-size:.8rem;color:var(--text-2);margin-top:.3rem;">1 erkende aanvraag → partner + 5 kinderen → <strong style="color:var(--red);">7 personen totaal</strong></div>
+            </div>
+            <div style="background:var(--bg2);border:1px solid var(--border-2);border-radius:6px;padding:.85rem;font-size:.78rem;color:var(--muted);">
+              Na erkenning kunnen nareizigers zelf ook recht krijgen op gezinshereniging als zij meerderjarig worden — de keten werkt door.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WONINGMARKT -->
+  <div class="section">
+    <div class="section-title">C. De woningmarktimpact</div>
+    <div class="callout callout-red">
+      <strong>Nareizigers bypass het COA-systeem volledig</strong>
+      Eerste asielzoekers gaan naar COA-opvanglocaties. Nareizigers niet: zij komen direct bij gemeenten terecht als "vergunninghouder" en moeten binnen een vastgestelde termijn worden gehuisvest. Zij gaan voor op de reguliere sociale huurwachtlijst.
+    </div>
+
+    <div style="overflow-x:auto;margin-top:1.25rem;">
+      <table class="data-table">
+        <thead>
+          <tr><th>Aspect</th><th>Reguliere woningzoekende</th><th>Nareiziger (vergunninghouder)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Wachttijd sociale huur</td><td>8–15 jaar (regionaal)</td><td class="num-col" style="color:var(--red);">Voorrang — geen wachttijd</td></tr>
+          <tr><td>Wettelijke basis</td><td>Huisvestingswet (marktwerking)</td><td class="num-col">Gemeentelijke taakstelling (wettelijk verplicht)</td></tr>
+          <tr><td>Sanctie bij niet-nakomen</td><td>n.v.t.</td><td class="num-col" style="color:var(--red);">Korting op rijksuitkering gemeente</td></tr>
+          <tr><td>Begeleiding</td><td>Geen</td><td class="num-col">Maatschappelijke begeleiding (€60–100 mln/jaar)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-amber" style="margin-top:1.25rem;">
+      <strong>Gemeentelijke taakstelling — halfjaarlijks opgelegd</strong>
+      Elke zes maanden stelt het Rijk een taakstelling vast: het aantal vergunninghouders (inclusief nareizigers) dat elke gemeente verplicht moet huisvesten. In 2024 bedroeg de nationale taakstelling circa 23.000 personen per halfjaar. Gemeenten die de taakstelling niet halen worden financieel gekort. Weigeren is juridisch vrijwel onmogelijk.
+    </div>
+  </div>
+
+  <!-- JURIDISCH -->
+  <div class="section">
+    <div class="section-title">D. De juridische basis — vrijwel onbeperkt</div>
+    <div class="two-col" style="align-items:start;">
+      <div class="callout callout-blue">
+        <strong>EVRM artikel 8 — recht op gezinsleven</strong>
+        Het Europees Verdrag voor de Rechten van de Mens verplicht staten het gezinsleven te beschermen. Het Europees Hof heeft herhaaldelijk geoordeeld dat scheiding van gezinnen een schending oplevert — ook als de betrokkene geen erkende vluchteling is maar subsidiaire bescherming heeft. Beperking is alleen mogelijk bij "zwaarwegende openbare orde"-gronden, die in de praktijk zelden standhouden.
+      </div>
+      <div class="callout callout-amber">
+        <strong>Wat wél juridisch mogelijk is</strong>
+        <ul class="obs-list" style="margin-top:.6rem;">
+          <li>DNA-verificatie familierelatie (al toegepast door IND)</li>
+          <li>Strengere documentatie-eisen — maar bewijslast is lastig bij oorlogsvluchtelingen</li>
+          <li>Maximale wachttijd handhaven (al gelimiteerd door IND dwangsomregime)</li>
+          <li>Inkomenseis sponsor — beperkt toepasbaar bij vluchtelingenstatus</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="section">
+    <div class="section-title">E. De pijplijn is al gevuld</div>
+    <div class="callout callout-red">
+      <strong>Stop vandaag alle nieuwe instroom — de nareizigers komen toch</strong>
+      Van de ~76.000 eerste aanvragen die in 2022 en 2023 zijn ingediend, zullen er tienduizenden worden ingewilligd. Elke inwilliging genereert het recht op nareizigers. Die aanvragen lopen nu bij de IND — met een doorlooptijd van 12 tot 18 maanden. Zelfs bij een volledig gesloten grens vandaag loopt de nareizigerspijplijn door tot minimaal eind 2026.
+    </div>
+    <div style="overflow-x:auto;margin-top:1.25rem;">
+      <table class="data-table">
+        <thead>
+          <tr><th>Instroompiek</th><th>Geschatte inwilligingen</th><th>Verwachte nareizigers</th><th>Pijplijn tot</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2015–2016 (Syrische crisis)</td><td>~30.000</td><td class="num-col">~50.000 (deels al gerealiseerd)</td><td>2019–2022</td></tr>
+          <tr><td>2022</td><td>~20.000</td><td class="num-col">~25.000–35.000</td><td>2023–2025</td></tr>
+          <tr style="background:var(--bg3);"><td><strong>2023</strong></td><td>~22.000</td><td class="num-col"><strong>~28.000–40.000</strong></td><td><strong>2024–2026</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="chart-note" style="margin-top:.6rem;">Schattingen op basis van historische inwilligingspercentages (~55–60%) en gemiddelde gezinsgrootte. Inwilligingspercentages en gezinssamenstelling variëren sterk per nationaliteit.</p>
+  </div>
+
+</div>
+</main>
+
+<footer class="site-footer">
+  <p>GrenzenDicht — Data-journalistieke analyse van de asielindustrie in Nederland</p>
+  <p style="margin-top:.4rem;"><a href="bronnen.html">Bronnen</a> · <a href="index.html">← Terug naar home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  Chart.defaults.color = '#4a6480';
+  Chart.defaults.borderColor = '#e2e8f0';
+
+  new Chart(document.getElementById('stackedChart'), {
+    type: 'bar',
+    data: {
+      labels: ['2018','2019','2020','2021','2022','2023'],
+      datasets: [
+        {
+          label: 'Eerste aanvragen',
+          data: [20515, 22540, 13720, 24745, 35535, 38375],
+          backgroundColor: 'rgba(29,111,212,0.7)',
+          borderRadius: 4
+        },
+        {
+          label: 'Nareizigers',
+          data: [6460, 4180, 3865, 10120, 11130, 10125],
+          backgroundColor: 'rgba(185,28,28,0.75)',
+          borderRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { color: '#7a90a8', boxWidth: 12, padding: 14 } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('nl-NL')}` } }
+      },
+      scales: {
+        x: { stacked: true, grid: { color: '#e2e8f0' }, ticks: { color: '#3d526b' } },
+        y: { stacked: true, grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'Personen', color: '#7a90a8' } }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
