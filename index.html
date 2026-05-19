@@ -109,7 +109,7 @@
     .t-purple .ig-trio-tag { color: #bfdbfe; }   /* zeer licht blauw op navy */
 
     .ig-trio-num {
-      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-size: clamp(1.4rem, 2.5vw, 2.1rem);
       font-weight: 900; color: #ffffff;
       line-height: 1; margin-bottom: .5rem; letter-spacing: -1px;
     }
@@ -302,17 +302,17 @@
     <div class="ig-trio">
       <div class="ig-trio-block t-orange">
         <div class="ig-trio-tag">Economie</div>
-        <div class="ig-trio-num" id="n-geld">ca. €0</div>
+        <div class="ig-trio-num" id="n-geld">+/- €0</div>
         <div class="ig-trio-label">Jaarlijkse geldstroom<br>door het systeem</div>
       </div>
       <div class="ig-trio-block t-teal">
         <div class="ig-trio-tag">Opvang</div>
-        <div class="ig-trio-num" id="n-week" style="font-size:clamp(1.4rem,2.5vw,2.1rem);">ca. 0 pers./wk</div>
+        <div class="ig-trio-num" id="n-week">+/- 0 pers./wk</div>
         <div class="ig-trio-label">Gemiddelde wekelijkse<br>instroom (jan '25–apr '26)</div>
       </div>
       <div class="ig-trio-block t-purple">
         <div class="ig-trio-tag">Werkgelegenheid</div>
-        <div class="ig-trio-num" id="n-banen">ca. 0</div>
+        <div class="ig-trio-num" id="n-banen">+/- 0</div>
         <div class="ig-trio-label">Banen die verdwijnen<br>bij volledige afbouw</div>
       </div>
     </div>
@@ -621,9 +621,9 @@
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
-      if (e.target.id === 'n-geld')   animateCounter(e.target, 10,    'ca. €', ' mrd', 1600);
-      if (e.target.id === 'n-week')   animateCounter(e.target, 850,   'ca. ', ' pers./wk',  1400);
-      if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, 'ca. ', '',     1800);
+      if (e.target.id === 'n-geld')   animateCounter(e.target, 10,    '+/- €', ' mrd', 1600);
+      if (e.target.id === 'n-week')   animateCounter(e.target, 850,   '+/- ',  ' pers./wk', 1400);
+      if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, '+/- ',  '',          1800);
       if (e.target.id === 'jobBars')  animateBars();
       io.unobserve(e.target);
     });
