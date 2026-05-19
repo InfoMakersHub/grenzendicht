@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De Stabiliteit — GrenzenDicht</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="stabiliteit.html" class="active">Stabiliteit</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="trechters.html">Trechters</a></li>
+      <li><a href="ontmanteling.html">Ontmanteling</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Hoofdstuk 1 — Stabiliteit</div>
+    <h1>De constante van 600–1.100 per week</h1>
+    <p>In 2025 viel 83% van alle weken binnen de band van 700–1.000 personen. In Q1 2026 blijft het patroon stabiel op ~875/week. Geen correlatie met seizoen, politieke gebeurtenissen of nieuwscyclus. De data wijzen op capaciteitsmanagement, niet op organische variatie.</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">~850</div><div class="label">Weekgemiddelde 2025</div></div>
+      <div class="stat-card"><div class="num">~875</div><div class="label">Weekgemiddelde jan–apr 2026</div></div>
+      <div class="stat-card"><div class="num">600</div><div class="label">Minimum (week 22 '25, begin juni)</div></div>
+      <div class="stat-card"><div class="num">1.100</div><div class="label">Maximum (week 46 '25, eind nov)</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="chart-box">
+      <h3>Wekelijkse asielinstroom jan 2025 – apr 2026 (benadering o.b.v. maandtotalen)</h3>
+      <div class="chart-wrap-lg">
+        <canvas id="weeklyChart"></canvas>
+      </div>
+      <p class="chart-note">Bron: IND kerncijfers / CBS. Wekelijkse verdeling berekend uit maandtotalen. Apr 2026 = voorlopig cijfer. Stippellijn = gemiddelde ~850.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="chart-box">
+      <h3>Maandtotalen jan 2025 – apr 2026 — IND kerncijfers</h3>
+      <div class="chart-wrap">
+        <canvas id="monthlyChart"></canvas>
+      </div>
+      <p class="chart-note">Bron: IND kerncijfers 2025–2026. Rood = maanden boven 4.000 totaal. * Apr 2026 = voorlopig.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Kwartaalverdeling 2025–2026</div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr><th>Periode</th><th>Minimum</th><th>Maximum</th><th>Gem./week</th><th>Opmerking</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Heel jaar 2025</strong></td>
+            <td class="num-col">600 (w22)</td>
+            <td class="num-col">1.100 (w46)</td>
+            <td class="num-col">~850</td>
+            <td>83% in 700–1.000 band</td>
+          </tr>
+          <tr><td>2025 Q1 (jan–mrt)</td><td>750</td><td>975</td><td>~770</td><td>Laagste kwartaal 2025</td></tr>
+          <tr><td>2025 Q2 (apr–jun)</td><td>600</td><td>988</td><td>~820</td><td>Week 22 = jaarminimum 2025</td></tr>
+          <tr><td>2025 Q3 (jul–sep)</td><td>845</td><td>1.020</td><td>~910</td><td>Zomerstijging</td></tr>
+          <tr><td>2025 Q4 (okt–dec)</td><td>800</td><td>1.100</td><td>~935</td><td>Hoogste kwartaal 2025</td></tr>
+          <tr style="background:var(--bg3);"><td><strong>2026 Q1 (jan–mrt)</strong></td><td>860</td><td>895</td><td>~875</td><td>Stabiel t.o.v. Q4 2025</td></tr>
+          <tr style="background:var(--bg3);"><td>2026 apr (voorlopig)</td><td>840</td><td>865</td><td>~860</td><td>Lichte daling; cijfer niet definitief</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Maandcijfers jan 2025 – apr 2026 — volledig overzicht</div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr><th>Maand</th><th>Totaal</th><th>Weekgemiddelde</th><th>t.o.v. jaargem.</th></tr>
+        </thead>
+        <tbody id="monthTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Wat zeggen deze cijfers?</div>
+    <ul class="obs-list">
+      <li><strong>Geen seizoenspatroon:</strong> De instroom stijgt in het najaar (Q3/Q4), niet in de zomer zoals bij toerisme. Dit duidt op andere drijvers dan klimaat.</li>
+      <li><strong>Geen correlatie met nieuws:</strong> Grote politieke gebeurtenissen zijn niet zichtbaar als pieken of dalen in de wekelijkse data.</li>
+      <li><strong>Harde ondergrens ~500:</strong> Geen enkele week valt onder 500. Dit suggereert een minimale capaciteitsvloer in de smokkelinfrastructuur en opvangsector.</li>
+      <li><strong>Zachte bovengrens ~1.200:</strong> Dit wijst op capaciteitsplafonds: opvanglocaties, IND-behandelcapaciteit, smokkellogistiek.</li>
+      <li><strong>2025 totaal:</strong> ~44.100 (eerste aanvragen + nareizigers). 2026 Q1: ~10.560 (CBS). Jaarprojectie 2026 op basis van Q1: ~42.000–44.000.</li>
+      <li><strong>Historisch patroon:</strong> In 21 van 23 jaar (1995–2018) waren de uitgaven hoger dan begroot. Structurele onderschatting leidt tot permanente "crisis"-framing.</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-red">
+    <strong>De kernvraag: wat als dit een natuurlijk proces was?</strong>
+    Bij echte organische variatie — afhankelijk van weersomstandigheden, conflicten en politiek — zou je pieken van 2.000–3.000 per week verwachten, gevolgd door weken van 200–300. De feitelijke spreiding van 600–1.100 wijst op capaciteitsmanagement in het systeem, niet op een natuur­lijk migratiepatroon.
+  </div>
+
+</div>
+</main>
+
+<footer class="site-footer">
+  <p>GrenzenDicht — Data-journalistieke analyse van de asielindustrie in Nederland</p>
+  <p style="margin-top:.4rem;"><a href="bronnen.html">Bronnen</a> · <a href="index.html">← Terug naar home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  Chart.defaults.color = '#4a6480';
+  Chart.defaults.borderColor = '#e2e8f0';
+
+  // Weekly chart
+  new Chart(document.getElementById('weeklyChart'), {
+    type: 'line',
+    data: {
+      labels: WEEK_LABELS,
+      datasets: [
+        {
+          label: 'Instroom per week',
+          data: WEEKLY_DATA,
+          borderColor: '#1d6fd4',
+          backgroundColor: 'rgba(29,111,212,0.07)',
+          borderWidth: 2, pointRadius: 2, pointHoverRadius: 5,
+          tension: 0.3, fill: true
+        },
+        {
+          label: 'Gemiddelde (~850)',
+          data: Array(WEEKLY_DATA.length).fill(850),
+          borderColor: '#b91c1c', borderWidth: 1.5,
+          borderDash: [6,3], pointRadius: 0, fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { color: '#7a90a8', boxWidth: 12 } } },
+      scales: {
+        x: { grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'Week 2025', color: '#7a90a8' } },
+        y: { min: 400, max: 1300, grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'Personen/week', color: '#7a90a8' } }
+      }
+    }
+  });
+
+  // Monthly chart
+  new Chart(document.getElementById('monthlyChart'), {
+    type: 'bar',
+    data: {
+      labels: MONTHLY_DATA.labels,
+      datasets: [{
+        label: 'Instroom per maand',
+        data: MONTHLY_DATA.values,
+        backgroundColor: MONTHLY_DATA.values.map(v => v > 4000 ? 'rgba(185,28,28,0.65)' : 'rgba(29,111,212,0.6)'),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' } },
+        y: { min: 2000, grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'Totaal/maand', color: '#7a90a8' } }
+      }
+    }
+  });
+
+  // Monthly table
+  const monthNames = [
+    'Januari 2025','Februari 2025','Maart 2025','April 2025','Mei 2025','Juni 2025',
+    'Juli 2025','Augustus 2025','September 2025','Oktober 2025','November 2025','December 2025',
+    'Januari 2026','Februari 2026','Maart 2026','April 2026 *'
+  ];
+  const tbody = document.getElementById('monthTable');
+  MONTHLY_DATA.values.forEach((v, i) => {
+    const wkAvg = Math.round(v / 4.3);
+    const diff = wkAvg - 850;
+    const sign = diff > 0 ? '+' : '';
+    const color = diff > 100 ? '#b91c1c' : diff < -100 ? '#1d6fd4' : '#7a90a8';
+    tbody.innerHTML += `<tr>
+      <td>${monthNames[i]}</td>
+      <td class="num-col">${v.toLocaleString('nl-NL')}</td>
+      <td style="color:var(--text-2);">${wkAvg}</td>
+      <td style="color:${color};font-weight:600;">${sign}${diff}</td>
+    </tr>`;
+  });
+</script>
+
+</body>
+</html>

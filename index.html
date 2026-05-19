@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrenzenDicht — Asielindustrie Nederland</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ─── INFOGRAPHIC DESIGN TOKENS — alleen rood & blauw ─── */
+    :root {
+      --ig-bg:      #ffffff;
+      --ig-bg2:     #f4f7fb;
+      --ig-bg3:     #e8eef6;
+      --ig-border:  #cfd8e8;
+      --ig-text:    #0f1d30;
+      --ig-muted:   #4a6480;
+      /* Rood/blauw palet */
+      --ig-blue:    #1d6fd4;
+      --ig-blue2:   #4a90d9;
+      --ig-navy:    #0d2d6b;
+      --ig-red:     #b91c1c;
+      --ig-red2:    #991b1b;
+      /* Backward-compat aliassen → remapped naar rood/blauw */
+      --ig-orange:  #c0392b;
+      --ig-teal:    #4a90d9;
+      --ig-purple:  #0d2d6b;
+      --ig-gold:    #991b1b;
+      --ig-green:   #1d6fd4;
+    }
+
+    /* ─── HERO (navy background, white text) ─── */
+    .ig-hero {
+      background: var(--brand);
+      padding: 5rem 1.5rem 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .ig-hero::before {
+      content: '';
+      position: absolute; top: -40%; right: -15%;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,255,255,.04) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .ig-hero::after {
+      content: '';
+      position: absolute; bottom: -40%; left: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,.03) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .ig-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+
+    .ig-eyebrow {
+      font-size: .68rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: rgba(255,255,255,.6);
+      display: flex; align-items: center; gap: .6rem;
+      margin-bottom: 1.25rem;
+    }
+    .ig-eyebrow::before { content: ''; width: 28px; height: 2px; background: rgba(255,255,255,.4); }
+
+    .ig-hero h1 {
+      font-size: clamp(1.9rem, 5vw, 3.4rem);
+      font-weight: 900; line-height: 1.1; letter-spacing: -1.5px;
+      color: #ffffff; margin: 0 0 1.25rem; max-width: 800px;
+    }
+    .ig-hero h1 em { font-style: normal; color: #fbbf24; }
+
+    .ig-hero-sub {
+      font-size: .97rem; color: rgba(255,255,255,.75);
+      max-width: 620px; line-height: 1.7; margin: 0 0 3rem;
+    }
+
+    /* ─── BIG THREE ─── */
+    .ig-trio {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 16px; overflow: hidden; max-width: 860px;
+    }
+    .ig-trio-block {
+      background: rgba(255,255,255,.08); padding: 2rem 1.75rem;
+      position: relative; transition: background .2s;
+    }
+    .ig-trio-block:hover { background: rgba(255,255,255,.14); }
+    .ig-trio-block::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+    }
+    .t-orange::before { background: #ef4444; }
+    .t-teal::before   { background: #3b82f6; }
+    .t-purple::before { background: #1d4ed8; }
+
+    .ig-trio-tag {
+      font-size: .63rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: .55rem;
+    }
+    .t-orange .ig-trio-tag { color: #fca5a5; }   /* licht rood op navy */
+    .t-teal   .ig-trio-tag { color: #93c5fd; }   /* licht blauw op navy */
+    .t-purple .ig-trio-tag { color: #bfdbfe; }   /* zeer licht blauw op navy */
+
+    .ig-trio-num {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 900; color: #ffffff;
+      line-height: 1; margin-bottom: .5rem; letter-spacing: -1px;
+    }
+    .ig-trio-label { font-size: .77rem; color: rgba(255,255,255,.7); line-height: 1.4; }
+
+    /* ─── SECTION WRAPPER ─── */
+    .ig-section { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
+    .ig-divider { border: none; border-top: 1px solid var(--ig-border); }
+
+    .ig-section-eyebrow {
+      font-size: .65rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ig-muted);
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: .75rem;
+    }
+    .ig-section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--ig-border); }
+
+    .ig-section-title {
+      font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+      font-weight: 800; color: var(--ig-text);
+      margin: 0 0 2rem; letter-spacing: -.5px;
+    }
+
+    /* ─── MACHINE FLOW ─── */
+    .ig-flow-wrap { overflow-x: auto; padding-bottom: .5rem; }
+    .ig-flow { display: flex; gap: 0; min-width: 700px; align-items: flex-start; }
+    .ig-flow-step { flex: 1; text-align: center; position: relative; padding: 0 .5rem; }
+    .ig-flow-step:not(:last-child)::after {
+      content: '▶';
+      position: absolute; right: -8px; top: 20px;
+      font-size: .75rem; color: var(--ig-muted); z-index: 1;
+    }
+    .ig-flow-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      margin: 0 auto .75rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .fi-orange { background: rgba(185,28,28,.1);  color: #b91c1c; }
+    .fi-red    { background: rgba(185,28,28,.1);  color: #b91c1c; }
+    .fi-purple { background: rgba(13,45,107,.1);  color: #0d2d6b; }
+    .fi-blue   { background: rgba(29,111,212,.1); color: #1d6fd4; }
+    .fi-teal   { background: rgba(29,111,212,.1); color: #1d6fd4; }
+    .fi-gold   { background: rgba(153,27,27,.1);  color: #991b1b; }
+    .fi-green  { background: rgba(29,111,212,.1); color: #1d6fd4; }
+    .ig-flow-icon svg { display: block; }
+
+    .ig-flow-label { font-size: .73rem; font-weight: 700; color: var(--ig-text); margin-bottom: .25rem; }
+    .ig-flow-sub   { font-size: .65rem; color: var(--ig-muted); line-height: 1.35; }
+    .ig-flow-stat  { font-size: .78rem; font-weight: 800; margin-top: .35rem; }
+    .s-orange { color: var(--ig-orange); }
+    .s-red    { color: var(--ig-red); }
+    .s-teal   { color: var(--ig-teal); }
+    .s-purple { color: var(--ig-purple); }
+    .s-gold   { color: var(--ig-gold); }
+    .s-green  { color: var(--ig-green); }
+
+    /* ─── GELDSTROOM BAR ─── */
+    .ig-money-bar {
+      display: flex; height: 54px;
+      border-radius: 10px; overflow: hidden;
+      margin: 1.5rem 0 1.25rem; gap: 2px;
+    }
+    .ig-money-seg {
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700; color: white;
+      overflow: hidden; white-space: nowrap;
+      transition: filter .2s; cursor: default;
+    }
+    .ig-money-seg:hover { filter: brightness(1.1); }
+    .ig-money-legend { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .ig-money-legend-item {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .77rem; color: var(--ig-muted);
+    }
+    .ig-money-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .ig-money-amount { font-weight: 700; color: var(--ig-text); }
+
+    /* ─── CHART BOX ─── */
+    .ig-chart-box {
+      background: var(--ig-bg2); border: 1px solid var(--ig-border);
+      border-radius: 16px; padding: 1.75rem;
+    }
+    .ig-chart-box h3 { font-size: .88rem; font-weight: 700; color: var(--ig-text); margin: 0 0 1.5rem; }
+    .ig-chart-note { font-size: .7rem; color: var(--ig-muted); margin-top: .75rem; }
+
+    /* ─── JOB BARS ─── */
+    .ig-job-row { display: flex; align-items: center; gap: 1rem; margin-bottom: .85rem; }
+    .ig-job-label { font-size: .75rem; color: var(--ig-muted); min-width: 140px; text-align: right; }
+    .ig-job-track { flex: 1; background: var(--ig-bg3); border-radius: 99px; height: 26px; overflow: hidden; }
+    .ig-job-fill {
+      height: 100%; border-radius: 99px;
+      display: flex; align-items: center; padding-left: .75rem;
+      font-size: .7rem; font-weight: 700; color: white;
+      white-space: nowrap; width: 0;
+      transition: width 1.2s cubic-bezier(.23,1,.32,1);
+    }
+    .ig-job-count { font-size: .75rem; color: var(--ig-muted); min-width: 50px; }
+
+    /* ─── FINDINGS GRID ─── */
+    .ig-findings {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 1px; background: var(--ig-border);
+      border: 1px solid var(--ig-border);
+      border-radius: 16px; overflow: hidden;
+    }
+    .ig-finding { background: #ffffff; padding: 1.75rem; position: relative; }
+    .ig-finding::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; }
+    .ff-orange::before { background: var(--ig-orange); }
+    .ff-teal::before   { background: var(--ig-teal); }
+    .ff-purple::before { background: var(--ig-purple); }
+    .ff-blue::before   { background: var(--ig-blue); }
+
+    .ig-finding-big  { font-size: 2.1rem; font-weight: 900; line-height: 1; margin-bottom: .35rem; }
+    .ff-orange .ig-finding-big { color: var(--ig-orange); }
+    .ff-teal   .ig-finding-big { color: var(--ig-teal); }
+    .ff-purple .ig-finding-big { color: var(--ig-purple); }
+    .ff-blue   .ig-finding-big { color: var(--ig-blue); }
+
+    .ig-finding-head { font-size: .88rem; font-weight: 700; color: var(--ig-text); margin-bottom: .5rem; }
+    .ig-finding-body { font-size: .78rem; color: var(--ig-muted); line-height: 1.55; }
+
+    /* ─── CHAPTER CARDS ─── */
+    .ig-chapters {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--ig-border);
+      border: 1px solid var(--ig-border);
+      border-radius: 16px; overflow: hidden;
+    }
+    .ig-ch { background: #ffffff; padding: 1.5rem; text-decoration: none; display: block; transition: background .15s; }
+    .ig-ch:hover { background: var(--ig-bg2); }
+    .ig-ch-idx   { font-size: .62rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ig-muted); margin-bottom: .4rem; }
+    .ig-ch-stat  { font-size: 1.55rem; font-weight: 900; line-height: 1; margin-bottom: .3rem; }
+    .ig-ch-title { font-size: .88rem; font-weight: 700; color: var(--ig-text); margin-bottom: .35rem; }
+    .ig-ch-body  { font-size: .75rem; color: var(--ig-muted); line-height: 1.5; }
+    .ig-ch-cta   { font-size: .72rem; font-weight: 600; margin-top: .75rem; display: inline-block; }
+
+    .ch-teal   .ig-ch-stat, .ch-teal   .ig-ch-cta { color: var(--ig-teal); }
+    .ch-orange .ig-ch-stat, .ch-orange .ig-ch-cta { color: var(--ig-orange); }
+    .ch-purple .ig-ch-stat, .ch-purple .ig-ch-cta { color: var(--ig-purple); }
+    .ch-blue   .ig-ch-stat, .ch-blue   .ig-ch-cta { color: var(--ig-blue); }
+    .ch-red    .ig-ch-stat, .ch-red    .ig-ch-cta { color: var(--ig-red); }
+    .ch-gold   .ig-ch-stat, .ch-gold   .ig-ch-cta { color: var(--ig-gold); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 700px) {
+      .ig-trio      { grid-template-columns: 1fr; }
+      .ig-findings  { grid-template-columns: 1fr; }
+      .ig-chapters  { grid-template-columns: 1fr 1fr; }
+      .ig-job-label { min-width: 80px; font-size: .68rem; }
+    }
+    @media (max-width: 480px) {
+      .ig-chapters { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="stabiliteit.html">Stabiliteit</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="trechters.html">Trechters</a></li>
+      <li><a href="ontmanteling.html">Ontmanteling</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<!-- ━━━━━━━━ HERO ━━━━━━━━ -->
+<div class="ig-hero">
+  <div class="ig-hero-inner">
+
+    <div class="ig-eyebrow">Data-analyse · Nederland 2025–2026</div>
+
+    <h1>De asielindustrie in Nederland<br>is een machine van <em>€10 miljard</em></h1>
+
+    <p class="ig-hero-sub">
+      Waarom blijft de instroom zo constant op ~850 personen per week? Omdat dit een georganiseerd ecosysteem is met twintigduizend banen en tien miljard aan jaarlijkse geldstromen — waarbij alle partijen belang hebben bij continuering.
+    </p>
+
+    <!-- BIG THREE -->
+    <div class="ig-trio">
+      <div class="ig-trio-block t-orange">
+        <div class="ig-trio-tag">Economie</div>
+        <div class="ig-trio-num" id="n-geld">€0</div>
+        <div class="ig-trio-label">Jaarlijkse geldstroom<br>door het systeem</div>
+      </div>
+      <div class="ig-trio-block t-teal">
+        <div class="ig-trio-tag">Stabiliteit</div>
+        <div class="ig-trio-num" id="n-week">0/wk</div>
+        <div class="ig-trio-label">Gemiddelde wekelijkse<br>instroom (jan '25–apr '26)</div>
+      </div>
+      <div class="ig-trio-block t-purple">
+        <div class="ig-trio-tag">Werkgelegenheid</div>
+        <div class="ig-trio-num" id="n-banen">0</div>
+        <div class="ig-trio-label">Banen die verdwijnen<br>bij volledige afbouw</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="ig-divider">
+
+<!-- ━━━━━━━━ HOE DE MACHINE WERKT ━━━━━━━━ -->
+<div class="ig-section">
+  <div class="ig-section-eyebrow">Systeemanalyse</div>
+  <div class="ig-section-title">Hoe de machine werkt</div>
+
+  <div class="ig-flow-wrap">
+    <div class="ig-flow">
+
+      <div class="ig-flow-step">
+        <div class="ig-flow-icon fi-orange"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3c-2.5 2.5-4 5.5-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9"/><path d="M3.5 9h17M3.5 15h17"/></svg></div>
+        <div class="ig-flow-label">Herkomstland</div>
+        <div class="ig-flow-sub">Chronisch conflict<br>of dictatuur</div>
+        <div class="ig-flow-stat s-orange">4 hoofdlanden</div>
+      </div>
+
+      <div class="ig-flow-step">
+        <div class="ig-flow-icon fi-red"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-2a4 4 0 0 0-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a4 4 0 0 1 5.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5 5 0 0 1 9.288 0M15 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6 3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM7 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg></div>
+        <div class="ig-flow-label">Smokkelaars</div>
+        <div class="ig-flow-sub">Georganiseerd<br>netwerk</div>
+        <div class="ig-flow-stat s-red">€12–15k/pers.</div>
+      </div>
+
+      <div class="ig-flow-step">
+        <div class="ig-flow-icon fi-purple"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13 6-3m-6 3V7m6 10 4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-1.447-.894L15 9m0 8V9M9 7l6-2"/></svg></div>
+        <div class="ig-flow-label">Transitroute</div>
+        <div class="ig-flow-sub">Turkije/Balkan<br>of Libië/Italië</div>
+        <div class="ig-flow-stat s-purple">3 hoofdroutes</div>
+      </div>
+
+      <div class="ig-flow-step">
+        <div class="ig-flow-icon fi-blue"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286z"/></svg></div>
+        <div class="ig-flow-label">EU-buitengrens</div>
+        <div class="ig-flow-sub">Dublin-registratie<br>eerste land</div>
+        <div class="ig-flow-stat" style="color:var(--ig-blue);">Buffer &amp; spreiding</div>
+      </div>
+
+      <div class="ig-flow-step">
+        <div class="ig-flow-icon fi-teal"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></div>
+        <div class="ig-flow-label">IND-aanmelding</div>
+        <div class="ig-flow-sub">6.438 medewerkers<br>verwerken aanvragen</div>
+        <div class="ig-flow-stat s-teal">€720 mln/jaar</div>
+      </div>
+
+      <div class="ig-flow-step">
+        <div class="ig-flow-icon fi-gold"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 21h19.5M3.75 21V10.5m0 0L12 3l8.25 7.5M3.75 10.5h16.5M15 21v-6.75a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0-.75.75V21"/></svg></div>
+        <div class="ig-flow-label">COA-opvang</div>
+        <div class="ig-flow-sub">64.300 personen<br>31-12-2023</div>
+        <div class="ig-flow-stat s-gold">€4,2 mrd/jaar</div>
+      </div>
+
+      <div class="ig-flow-step">
+        <div class="ig-flow-icon fi-green"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.99 5.99 0 0 1-4.062 0c-.483-.174-.711-.703-.59-1.202L18.75 4.97zM5.25 4.97l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.99 5.99 0 0 1-4.062 0c-.483-.174-.711-.703-.59-1.202L5.25 4.97z"/></svg></div>
+        <div class="ig-flow-label">Juridische fase</div>
+        <div class="ig-flow-sub">Advocaten, beroep<br>procedures</div>
+        <div class="ig-flow-stat s-green">~3.000 FTE</div>
+      </div>
+
+    </div>
+  </div>
+
+  <p style="font-size:.78rem;color:var(--ig-muted);margin-top:1.5rem;line-height:1.6;">
+    Elke stap in de keten heeft een eigen capaciteitsplafond. Die plafonds — niet politieke besluiten of seizoenen — bepalen dat de instroom nooit boven 1.200 of onder 500 per week komt. <strong style="color:var(--ig-text);">83% van alle weken in 2025 valt tussen 700 en 1.000.</strong>
+  </p>
+</div>
+
+<hr class="ig-divider">
+
+<!-- ━━━━━━━━ GELDSTROOM ━━━━━━━━ -->
+<div class="ig-section">
+  <div class="ig-section-eyebrow">Economie</div>
+  <div class="ig-section-title">Waar gaat het geld naartoe?</div>
+
+  <!-- PROPORTIONAL BAR -->
+  <div class="ig-money-bar" id="moneyBar">
+    <div class="ig-money-seg" style="width:43.3%;background:#b91c1c;" title="COA — €4,2 mrd">COA €4,2 mrd</div>
+    <div class="ig-money-seg" style="width:48.2%;background:#1d6fd4;" title="Overig overheid — €4,68 mrd">Overig overheid €4,7 mrd</div>
+    <div class="ig-money-seg" style="width:7.4%;background:#4a90d9;" title="IND — €720 mln">IND</div>
+    <div class="ig-money-seg" style="width:1.1%;background:#0d2d6b;" title="Nidos — €100 mln"></div>
+  </div>
+
+  <div class="ig-money-legend">
+    <div class="ig-money-legend-item">
+      <div class="ig-money-dot" style="background:#b91c1c;"></div>
+      <span>COA opvang</span>
+      <span class="ig-money-amount">€4,2 mrd (43%)</span>
+    </div>
+    <div class="ig-money-legend-item">
+      <div class="ig-money-dot" style="background:#1d6fd4;"></div>
+      <span>Overig overheid (DT&amp;V, gemeenten)</span>
+      <span class="ig-money-amount">€4,7 mrd (48%)</span>
+    </div>
+    <div class="ig-money-legend-item">
+      <div class="ig-money-dot" style="background:#4a90d9;"></div>
+      <span>IND procedures</span>
+      <span class="ig-money-amount">€720 mln (7%)</span>
+    </div>
+    <div class="ig-money-legend-item">
+      <div class="ig-money-dot" style="background:#0d2d6b;"></div>
+      <span>Nidos (AMV)</span>
+      <span class="ig-money-amount">€100 mln (1%)</span>
+    </div>
+  </div>
+
+  <p style="font-size:.75rem;color:var(--ig-muted);margin-top:1.25rem;">
+    Boven op het overheidsbudget van €9,7 mrd: mensensmokkelnetwerken (±€540 mln NL-deel), juridische sector (~€300 mln) en secundaire diensten (€1–1,5 mrd). Bron: PwC/Begroting 2026, SGP Eerste Kamer.
+  </p>
+
+  <!-- CHART -->
+  <div class="ig-chart-box" style="margin-top:2rem;">
+    <h3>Maandelijkse asielinstroom jan 2025 – apr 2026 — IND kerncijfers</h3>
+    <div style="position:relative;height:300px;">
+      <canvas id="heroChart"></canvas>
+    </div>
+    <p class="ig-chart-note">Bron: IND kerncijfers / CBS. Totaal 2025: ~44.100. Q1 2026: ~10.560 (CBS). * Apr 2026 = voorlopig cijfer.</p>
+  </div>
+</div>
+
+<hr class="ig-divider">
+
+<!-- ━━━━━━━━ WERKGELEGENHEID ━━━━━━━━ -->
+<div class="ig-section">
+  <div class="ig-section-eyebrow">Werkgelegenheid</div>
+  <div class="ig-section-title">20.000 banen hangen ervan af</div>
+
+  <div id="jobBars">
+    <div class="ig-job-row">
+      <div class="ig-job-label">IND (bewezen)</div>
+      <div class="ig-job-track"><div class="ig-job-fill" data-w="100" style="background:var(--ig-teal);">6.438 FTE</div></div>
+      <div class="ig-job-count">6.438</div>
+    </div>
+    <div class="ig-job-row">
+      <div class="ig-job-label">COA personeel</div>
+      <div class="ig-job-track"><div class="ig-job-fill" data-w="70" style="background:var(--ig-orange);">4.500 FTE</div></div>
+      <div class="ig-job-count">~4.500</div>
+    </div>
+    <div class="ig-job-row">
+      <div class="ig-job-label">Asieladvocaten</div>
+      <div class="ig-job-track"><div class="ig-job-fill" data-w="39" style="background:var(--ig-purple);">2.500 FTE</div></div>
+      <div class="ig-job-count">~2.500</div>
+    </div>
+    <div class="ig-job-row">
+      <div class="ig-job-label">Beveiliging</div>
+      <div class="ig-job-track"><div class="ig-job-fill" data-w="27" style="background:var(--ig-blue);">1.750</div></div>
+      <div class="ig-job-count">~1.750</div>
+    </div>
+    <div class="ig-job-row">
+      <div class="ig-job-label">Facilitair &amp; catering</div>
+      <div class="ig-job-track"><div class="ig-job-fill" data-w="20" style="background:var(--ig-gold);">1.250</div></div>
+      <div class="ig-job-count">~1.250</div>
+    </div>
+    <div class="ig-job-row">
+      <div class="ig-job-label">Tolken &amp; vertalers</div>
+      <div class="ig-job-track"><div class="ig-job-fill" data-w="16" style="background:var(--ig-green);">1.000</div></div>
+      <div class="ig-job-count">~1.000</div>
+    </div>
+    <div class="ig-job-row">
+      <div class="ig-job-label">Overig</div>
+      <div class="ig-job-track"><div class="ig-job-fill" data-w="30" style="background:#475569;">Nidos, medisch, begeleiding, indirect</div></div>
+      <div class="ig-job-count">~4.000</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:1rem;margin-top:1.75rem;flex-wrap:wrap;">
+    <div style="background:var(--ig-bg2);border:1px solid var(--ig-border);border-radius:12px;padding:1.25rem 1.5rem;flex:1;min-width:200px;">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--ig-purple);">~20.000</div>
+      <div style="font-size:.78rem;color:var(--ig-muted);margin-top:.25rem;">FTE totaal bij volledige afbouw</div>
+    </div>
+    <div style="background:var(--ig-bg2);border:1px solid var(--ig-border);border-radius:12px;padding:1.25rem 1.5rem;flex:1;min-width:200px;">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--ig-teal);">= scheepsbouw</div>
+      <div style="font-size:.78rem;color:var(--ig-muted);margin-top:.25rem;">Nederlandse scheepsbouwindustrie: ook ~20.000 FTE</div>
+    </div>
+    <div style="background:var(--ig-bg2);border:1px solid var(--ig-border);border-radius:12px;padding:1.25rem 1.5rem;flex:1;min-width:200px;">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--ig-orange);">3× Schiphol</div>
+      <div style="font-size:.78rem;color:var(--ig-muted);margin-top:.25rem;">Schiphol grondpersoneel: ~7.000 FTE</div>
+    </div>
+  </div>
+</div>
+
+<hr class="ig-divider">
+
+<!-- ━━━━━━━━ KERNBEVINDINGEN ━━━━━━━━ -->
+<div class="ig-section">
+  <div class="ig-section-eyebrow">Kernbevindingen</div>
+  <div class="ig-section-title">Wat de data laten zien</div>
+
+  <div class="ig-findings">
+    <div class="ig-finding ff-teal">
+      <div class="ig-finding-big">83%</div>
+      <div class="ig-finding-head">De instroom is geen natuurlijk proces</div>
+      <div class="ig-finding-body">83% van alle weken in 2025 valt tussen 700 en 1.000 personen. Geen enkele week boven 1.200 of onder 500. Bij echte organische variatie verwacht je pieken van 2.000–3.000 en dalen van 200–300. Dat wijst op capaciteitsmanagement, niet op toeval.</div>
+    </div>
+    <div class="ig-finding ff-orange">
+      <div class="ig-finding-big">€10 mrd</div>
+      <div class="ig-finding-head">Alle partijen profiteren mee</div>
+      <div class="ig-finding-body">Van COA-directeuren tot advocaten, van beveiligingsbedrijven tot tussenpersonen: iedereen in de keten heeft belang bij continuering. Eén tussenpersoon verdiende €44 miljoen aan één COA-opvangdeal (FD, 2025).</div>
+    </div>
+    <div class="ig-finding ff-purple">
+      <div class="ig-finding-big">21/23</div>
+      <div class="ig-finding-head">Structurele onderbegroting sinds 1995</div>
+      <div class="ig-finding-body">In 21 van 23 jaar (1995–2018) waren de werkelijke uitgaven hoger dan begroot (Algemene Rekenkamer, 2023). De permanente "crisis" rechtvaardigt elk jaar extra budget — een cyclus die zichzelf voedt.</div>
+    </div>
+    <div class="ig-finding ff-blue">
+      <div class="ig-finding-big">&lt;5%</div>
+      <div class="ig-finding-head">Technisch mogelijk, politiek onhaalbaar</div>
+      <div class="ig-finding-body">Ontmanteling bespaart €8 mrd/jaar met break-even na 2–3 maanden. Maar de kans op daadwerkelijke uitvoering is kleiner dan 5%. Vakbonden, advocatuur, EU-hoven en mediadruk blokkeren structurele verandering.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="ig-divider">
+
+<!-- ━━━━━━━━ CHAPTER NAVIGATION ━━━━━━━━ -->
+<div class="ig-section">
+  <div class="ig-section-eyebrow">Verdieping</div>
+  <div class="ig-section-title">Verken de volledige analyse</div>
+
+  <div class="ig-chapters">
+    <a href="stabiliteit.html" class="ig-ch ch-teal">
+      <div class="ig-ch-idx">Hoofdstuk 1</div>
+      <div class="ig-ch-stat">850/wk</div>
+      <div class="ig-ch-title">De Stabiliteit</div>
+      <div class="ig-ch-body">Jan 2025 – apr 2026 in kaart. Interactieve grafieken. Waarom schommelt de instroom zo weinig?</div>
+      <div class="ig-ch-cta">Bekijk visualisatie →</div>
+    </a>
+    <a href="economie.html" class="ig-ch ch-orange">
+      <div class="ig-ch-idx">Hoofdstuk 2</div>
+      <div class="ig-ch-stat">€10 mrd</div>
+      <div class="ig-ch-title">De Economie</div>
+      <div class="ig-ch-body">Wie verdient wat? COA, IND, smokkelaars, advocaten en secundaire dienstverlening.</div>
+      <div class="ig-ch-cta">Bekijk breakdown →</div>
+    </a>
+    <a href="werkgelegenheid.html" class="ig-ch ch-purple">
+      <div class="ig-ch-idx">Hoofdstuk 3</div>
+      <div class="ig-ch-stat">20.000</div>
+      <div class="ig-ch-title">De Werkgelegenheid</div>
+      <div class="ig-ch-body">Van IND (6.438 FTE hard cijfer) tot beveiliging, tolken en facilitaire diensten.</div>
+      <div class="ig-ch-cta">Bekijk analyse →</div>
+    </a>
+    <a href="trechters.html" class="ig-ch ch-blue">
+      <div class="ig-ch-idx">Hoofdstuk 4</div>
+      <div class="ig-ch-stat">5 trechters</div>
+      <div class="ig-ch-title">De Trechters</div>
+      <div class="ig-ch-body">Geografisch, financieel, informatiestromen, push-factoren en Europese spreiding.</div>
+      <div class="ig-ch-cta">Bekijk trechters →</div>
+    </a>
+    <a href="ontmanteling.html" class="ig-ch ch-red">
+      <div class="ig-ch-idx">Hoofdstuk 5</div>
+      <div class="ig-ch-stat">6 fases</div>
+      <div class="ig-ch-title">De Ontmanteling</div>
+      <div class="ig-ch-body">De roadmap. Kosten, tijdlijnen, weerstand, politieke haalbaarheid. Met interactieve calculator.</div>
+      <div class="ig-ch-cta">Bekijk roadmap →</div>
+    </a>
+    <a href="bronnen.html" class="ig-ch ch-gold">
+      <div class="ig-ch-idx">Verantwoording</div>
+      <div class="ig-ch-stat">24+ bronnen</div>
+      <div class="ig-ch-title">Bronnen &amp; Methodologie</div>
+      <div class="ig-ch-body">Rijksoverheid, IND, CBS, Rekenkamer, Europol. Alle schattingen verantwoord.</div>
+      <div class="ig-ch-cta">Bekijk bronnen →</div>
+    </a>
+  </div>
+
+  <p style="font-size:.75rem;color:var(--ig-muted);margin-top:2rem;max-width:660px;line-height:1.65;">
+    Toon: feitelijk, niet activistisch. De cijfers zijn afkomstig uit officiële overheidspublicaties (IND, COA, CBS, Ministerie van Asiel &amp; Migratie, Algemene Rekenkamer). Waar geschat worden bandbreedtes vermeld. <a href="bronnen.html" style="color:var(--ig-gold);">Volledige bronvermelding →</a>
+  </p>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <p>GrenzenDicht — Data-journalistieke analyse van de asielindustrie in Nederland</p>
+  <p style="margin-top:.4rem;"><a href="bronnen.html">Bronvermelding</a> · Alle cijfers gebaseerd op officiële bronnen</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // ── COUNTER ANIMATION ──
+  function animateCounter(el, target, suffix, duration) {
+    const start = performance.now();
+    const isFloat = target < 20;
+    function update(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const val = isFloat
+        ? (target * ease).toFixed(1).replace('.', ',')
+        : Math.round(target * ease).toLocaleString('nl-NL');
+      el.textContent = suffix ? val + suffix : val;
+      if (t < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  // ── JOB BARS ANIMATION ──
+  function animateBars() {
+    document.querySelectorAll('.ig-job-fill').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  }
+
+  // ── INTERSECTION OBSERVER ──
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      if (e.target.id === 'n-geld')   animateCounter(e.target, 10, ' mrd', 1600);
+      if (e.target.id === 'n-week')   animateCounter(e.target, 850, '/wk', 1400);
+      if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, '', 1800);
+      if (e.target.id === 'jobBars')  animateBars();
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.3 });
+
+  ['n-geld','n-week','n-banen','jobBars'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+
+  // ── CHART.JS (light theme) ──
+  Chart.defaults.color = '#7a90a8';
+  Chart.defaults.borderColor = '#e2e8f0';
+
+  const ctx = document.getElementById('heroChart').getContext('2d');
+  const weeklyAvgs = MONTHLY_DATA.values.map(v => Math.round(v / 4.3));
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: MONTHLY_DATA.labels,
+      datasets: [
+        {
+          label: 'Totaal per maand',
+          data: MONTHLY_DATA.values,
+          backgroundColor: MONTHLY_DATA.values.map((_, i) => i === 15 ? 'rgba(185,28,28,0.35)' : 'rgba(29,111,212,0.5)'),
+          borderRadius: 6,
+          yAxisID: 'y1'
+        },
+        {
+          label: 'Weekgemiddelde',
+          data: weeklyAvgs,
+          type: 'line',
+          borderColor: '#b91c1c',
+          backgroundColor: 'transparent',
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: '#b91c1c',
+          tension: 0.35,
+          yAxisID: 'y2'
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { color: '#7a90a8', boxWidth: 12, padding: 16 }
+        }
+      },
+      scales: {
+        x:  { grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' } },
+        y1: {
+          position: 'left',
+          grid: { color: '#e2e8f0' },
+          ticks: { color: '#7a90a8' },
+          title: { display: true, text: 'Totaal/maand', color: '#7a90a8', font: { size: 11 } }
+        },
+        y2: {
+          position: 'right',
+          grid: { drawOnChartArea: false },
+          ticks: { color: '#b91c1c' },
+          min: 400,
+          title: { display: true, text: 'Week gem.', color: '#b91c1c', font: { size: 11 } }
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

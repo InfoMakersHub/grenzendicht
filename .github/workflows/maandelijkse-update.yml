@@ -1,0 +1,103 @@
+name: Maandelijkse data-check
+
+on:
+  schedule:
+    # Elke 8e van de maand om 09:00 (IND publiceert kerncijfers begin van de maand)
+    - cron: '0 9 8 * *'
+  workflow_dispatch:   # ook handmatig te starten via GitHub UI
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  data-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Probeer CBS data op te halen
+        id: fetch
+        run: |
+          python3 - <<'EOF'
+          import json, re, urllib.request, os
+
+          CBS_BASE = "https://opendata.cbs.nl/ODataApi/OData/85501NED"
+
+          try:
+              with urllib.request.urlopen(
+                  f"{CBS_BASE}/TypedDataSet?$format=json"
+                  "&$select=Perioden,TotaalAsielaanvragen_1"
+                  "&$filter=startswith(Perioden,'2025') or startswith(Perioden,'2026') or startswith(Perioden,'2027')",
+                  timeout=20
+              ) as r:
+                  data = json.loads(r.read())
+
+              rows = data.get("value", [])
+              valid = []
+              for row in rows:
+                  key = row["Perioden"].strip()
+                  val = row.get("TotaalAsielaanvragen_1")
+                  if val and re.match(r"\d{4}MM\d{2}", key):
+                      m = re.match(r"(\d{4})MM(\d{2})", key)
+                      valid.append((int(m.group(1)), int(m.group(2)), int(val)))
+
+              valid.sort()
+
+              # Lees huidige values
+              with open("js/main.js") as f:
+                  content = f.read()
+              cur_match = re.search(r"values:\s*\[([^\]]+)\]", content)
+              cur_vals = [int(x.strip()) for x in cur_match.group(1).split(",")]
+
+              new_vals = [v for _,_,v in valid]
+              if new_vals != cur_vals:
+                  print(f"NIEUW: {len(new_vals)} maanden gevonden, {len(cur_vals)} huidig")
+                  with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+                      f.write(f"new_data=true\n")
+                      f.write(f"n_new={len(new_vals)}\n")
+                      f.write(f"n_cur={len(cur_vals)}\n")
+              else:
+                  print("Geen nieuwe data gevonden.")
+                  with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+                      f.write("new_data=false\n")
+
+          except Exception as e:
+              print(f"CBS API fout: {e}")
+              with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+                  f.write("new_data=false\n")
+                  f.write("api_error=true\n")
+          EOF
+
+      - name: Maak reminder-issue aan als er nieuwe data is
+        if: steps.fetch.outputs.new_data == 'true' || steps.fetch.outputs.api_error == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const today = new Date().toLocaleDateString('nl-NL');
+            const newData = '${{ steps.fetch.outputs.new_data }}' === 'true';
+            const apiError = '${{ steps.fetch.outputs.api_error }}' === 'true';
+
+            const title = `📊 Data-update nodig — ${today}`;
+            const body = apiError
+              ? `## Maandelijkse data-check\n\nDe CBS API was niet bereikbaar. Controleer handmatig:\n\n- [ ] [IND Asieltrends](https://ind.nl/nl/over-ind/statistieken-en-publicaties/asieltrends)\n- [ ] [CBS Asielzoekers](https://www.cbs.nl/nl-nl/onderwerp/asielzoekers)\n\nAls er nieuwe maandcijfers zijn:\n\`\`\`\npython3 scripts/update_cijfers.py\ngit add js/main.js && git commit -m 'data: update IND cijfers' && git push\n\`\`\``
+              : `## Nieuwe IND-cijfers beschikbaar\n\nCBS StatLine heeft nieuwe data. Voer lokaal uit:\n\n\`\`\`\npython3 scripts/update_cijfers.py\ngit add js/main.js && git commit -m 'data: update IND cijfers' && git push\n\`\`\`\n\nOf check handmatig:\n- [IND Asieltrends](https://ind.nl/nl/over-ind/statistieken-en-publicaties/asieltrends)\n- [CBS Asielzoekers](https://www.cbs.nl/nl-nl/onderwerp/asielzoekers)`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['data-update']
+            });
+
+      - name: Geen nieuwe data
+        if: steps.fetch.outputs.new_data == 'false' && steps.fetch.outputs.api_error != 'true'
+        run: echo "✅ Alles actueel — geen actie nodig."
