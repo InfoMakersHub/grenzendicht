@@ -302,17 +302,17 @@
     <div class="ig-trio">
       <div class="ig-trio-block t-orange">
         <div class="ig-trio-tag">Economie</div>
-        <div class="ig-trio-num" id="n-geld">€0</div>
+        <div class="ig-trio-num" id="n-geld">ca. €0</div>
         <div class="ig-trio-label">Jaarlijkse geldstroom<br>door het systeem</div>
       </div>
       <div class="ig-trio-block t-teal">
-        <div class="ig-trio-tag">Stabiliteit</div>
-        <div class="ig-trio-num" id="n-week">0/wk</div>
+        <div class="ig-trio-tag">Opvang</div>
+        <div class="ig-trio-num" id="n-week">ca. 0/wk</div>
         <div class="ig-trio-label">Gemiddelde wekelijkse<br>instroom (jan '25–apr '26)</div>
       </div>
       <div class="ig-trio-block t-purple">
         <div class="ig-trio-tag">Werkgelegenheid</div>
-        <div class="ig-trio-num" id="n-banen">0</div>
+        <div class="ig-trio-num" id="n-banen">ca. 0</div>
         <div class="ig-trio-label">Banen die verdwijnen<br>bij volledige afbouw</div>
       </div>
     </div>
@@ -598,16 +598,13 @@
 <script src="js/main.js"></script>
 <script>
   // ── COUNTER ANIMATION ──
-  function animateCounter(el, target, suffix, duration) {
+  function animateCounter(el, target, prefix, suffix, duration) {
     const start = performance.now();
-    const isFloat = target < 20;
     function update(now) {
       const t = Math.min((now - start) / duration, 1);
       const ease = 1 - Math.pow(1 - t, 3);
-      const val = isFloat
-        ? (target * ease).toFixed(1).replace('.', ',')
-        : Math.round(target * ease).toLocaleString('nl-NL');
-      el.textContent = suffix ? val + suffix : val;
+      const val = Math.round(target * ease).toLocaleString('nl-NL');
+      el.textContent = prefix + val + suffix;
       if (t < 1) requestAnimationFrame(update);
     }
     requestAnimationFrame(update);
@@ -624,9 +621,9 @@
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
-      if (e.target.id === 'n-geld')   animateCounter(e.target, 10, ' mrd', 1600);
-      if (e.target.id === 'n-week')   animateCounter(e.target, 850, '/wk', 1400);
-      if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, '', 1800);
+      if (e.target.id === 'n-geld')   animateCounter(e.target, 10,    'ca. €', ' mrd', 1600);
+      if (e.target.id === 'n-week')   animateCounter(e.target, 850,   'ca. ', '/wk',  1400);
+      if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, 'ca. ', '',     1800);
       if (e.target.id === 'jobBars')  animateBars();
       io.unobserve(e.target);
     });
