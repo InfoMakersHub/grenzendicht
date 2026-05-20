@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4P90BFW1PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4P90BFW1PD');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Samenvatting — GrenzenDicht</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ── TOKENS ───────────────────────────────────────── */
+    :root {
+      --navy:   #0d2d6b;
+      --red:    #b91c1c;
+      --yellow: #fbbf24;
+      --green:  #16a34a;
+      --light:  #f4f7fb;
+      --border: #d1dbe8;
+    }
+
+    /* ── RESET / BASE ─────────────────────────────────── */
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .sum-hero {
+      background: var(--navy);
+      padding: 4rem 1.5rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .sum-hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--yellow) 0%, #e97c2a 50%, var(--red) 100%);
+    }
+    .sum-hero-inner { max-width: 900px; margin: 0 auto; }
+    .sum-eyebrow {
+      font-size: .68rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: rgba(255,255,255,.5);
+      margin-bottom: 1rem;
+    }
+    .sum-hero h1 {
+      font-size: clamp(1.9rem, 5vw, 3.2rem);
+      font-weight: 900; line-height: 1.1; letter-spacing: -1px;
+      color: #fff; margin: 0 0 1rem; max-width: 720px;
+    }
+    .sum-hero h1 em { font-style: normal; color: var(--yellow); }
+    .sum-hero p {
+      font-size: .95rem; color: rgba(255,255,255,.65);
+      max-width: 560px; line-height: 1.7; margin: 0 0 2rem;
+    }
+    .sum-scroll-hint {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .75rem; color: rgba(255,255,255,.35);
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+    .sum-scroll-hint svg {
+      animation: bounceY 1.6s ease-in-out infinite;
+    }
+    @keyframes bounceY {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(5px); }
+    }
+
+    /* ── SECTION WRAPPERS ─────────────────────────────── */
+    .sum-block {
+      padding: 3.5rem 1.5rem;
+    }
+    .sum-block-inner { max-width: 960px; margin: 0 auto; }
+    .sum-block.dark  { background: var(--navy); color: #fff; }
+    .sum-block.light { background: var(--light); }
+    .sum-block.white { background: #fff; }
+
+    .sum-label {
+      font-size: .65rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; margin-bottom: .6rem;
+    }
+    .sum-block.dark  .sum-label { color: rgba(255,255,255,.45); }
+    .sum-block.light .sum-label,
+    .sum-block.white .sum-label { color: var(--navy); opacity: .55; }
+
+    .sum-block h2 {
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 800; letter-spacing: -.5px;
+      margin: 0 0 .4rem;
+    }
+    .sum-block.dark h2 { color: #fff; }
+    .sum-block.light h2,
+    .sum-block.white h2 { color: var(--navy); }
+
+    .sum-block .sub {
+      font-size: .88rem; line-height: 1.6;
+      margin: 0 0 2rem; max-width: 640px;
+    }
+    .sum-block.dark  .sub { color: rgba(255,255,255,.6); }
+    .sum-block.light .sub,
+    .sum-block.white .sub { color: #4a6480; }
+
+    /* ── STAT GRID ────────────────────────────────────── */
+    .stat-band {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .stat-cell {
+      background: #fff;
+      padding: 1.6rem 1.4rem;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .5s, transform .5s;
+    }
+    .stat-cell.visible { opacity: 1; transform: none; }
+    .stat-cell:nth-child(1) { transition-delay: .0s; }
+    .stat-cell:nth-child(2) { transition-delay: .08s; }
+    .stat-cell:nth-child(3) { transition-delay: .16s; }
+    .stat-cell:nth-child(4) { transition-delay: .24s; }
+    .stat-cell:nth-child(5) { transition-delay: .32s; }
+    .stat-cell:nth-child(6) { transition-delay: .40s; }
+
+    .stat-cell .big-num {
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin-bottom: .3rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-cell .big-num.red    { color: var(--red); }
+    .stat-cell .big-num.navy   { color: var(--navy); }
+    .stat-cell .big-num.amber  { color: #c26a00; }
+
+    .stat-cell .stat-label {
+      font-size: .78rem; font-weight: 700;
+      color: var(--navy); margin-bottom: .2rem;
+    }
+    .stat-cell .stat-note {
+      font-size: .7rem; color: #6b8099; line-height: 1.4;
+    }
+    .stat-cell .stat-trend {
+      display: inline-block;
+      font-size: .68rem; font-weight: 700;
+      padding: .15rem .45rem; border-radius: 4px;
+      margin-top: .45rem;
+    }
+    .stat-trend.up   { background: #fee2e2; color: #991b1b; }
+    .stat-trend.down { background: #dcfce7; color: #166534; }
+    .stat-trend.flat { background: #fef3c7; color: #92400e; }
+
+    /* ── CHART BLOCK ──────────────────────────────────── */
+    .chart-toolbar {
+      display: flex; gap: .5rem; margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .chart-btn {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.7);
+      border-radius: 6px;
+      padding: .3rem .8rem;
+      font-size: .75rem; font-weight: 600;
+      cursor: pointer; transition: all .15s;
+      font-family: inherit;
+    }
+    .chart-btn:hover { background: rgba(255,255,255,.18); }
+    .chart-btn.active {
+      background: var(--yellow);
+      border-color: var(--yellow);
+      color: var(--navy);
+    }
+    .chart-wrap {
+      position: relative; height: 260px;
+    }
+
+    /* ── COST BAR ─────────────────────────────────────── */
+    .cost-bar-wrap {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .cost-bar-track {
+      height: 52px;
+      display: flex;
+    }
+    .cost-seg {
+      height: 100%;
+      display: flex; align-items: center;
+      justify-content: center;
+      font-size: .72rem; font-weight: 700;
+      color: #fff; white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+    .cost-seg.a { background: var(--navy); }
+    .cost-seg.b { background: #1d6fd4; }
+    .cost-seg.c { background: #6b99cc; }
+
+    .cost-legend {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      padding: .85rem 1.2rem;
+      border-top: 1px solid var(--border);
+    }
+    .cost-leg-item {
+      display: flex; align-items: center; gap: .45rem;
+      font-size: .78rem; color: var(--navy);
+    }
+    .cost-dot {
+      width: 10px; height: 10px;
+      border-radius: 2px; flex-shrink: 0;
+    }
+    .cost-dot.a { background: var(--navy); }
+    .cost-dot.b { background: #1d6fd4; }
+    .cost-dot.c { background: #6b99cc; }
+    .cost-leg-item strong { font-weight: 800; }
+
+    .cost-total {
+      text-align: center;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: var(--red);
+      margin: 2rem 0 .4rem;
+      opacity: 0; transition: opacity .6s;
+    }
+    .cost-total.visible { opacity: 1; }
+    .cost-total-note {
+      text-align: center;
+      font-size: .82rem; color: #4a6480;
+      margin-bottom: 2rem;
+    }
+
+    /* ── EU VERGELIJKING ──────────────────────────────── */
+    .eu-rows { display: flex; flex-direction: column; gap: .85rem; }
+    .eu-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 70px;
+      align-items: center;
+      gap: .75rem;
+      opacity: 0; transform: translateX(-12px);
+      transition: opacity .5s, transform .5s;
+    }
+    .eu-row.visible { opacity: 1; transform: none; }
+    .eu-row:nth-child(1) { transition-delay: .0s; }
+    .eu-row:nth-child(2) { transition-delay: .08s; }
+    .eu-row:nth-child(3) { transition-delay: .16s; }
+    .eu-row:nth-child(4) { transition-delay: .24s; }
+    .eu-row:nth-child(5) { transition-delay: .32s; }
+    .eu-row:nth-child(6) { transition-delay: .40s; }
+
+    .eu-country {
+      font-size: .82rem; font-weight: 700; color: var(--navy);
+      white-space: nowrap;
+    }
+    .eu-country.hl { color: var(--red); }
+    .eu-bar-bg {
+      background: var(--border);
+      border-radius: 4px; height: 22px;
+      position: relative; overflow: hidden;
+    }
+    .eu-bar-fill {
+      height: 100%; border-radius: 4px;
+      background: #d1dbe8;
+      width: 0; transition: width 1s cubic-bezier(.4,0,.2,1);
+    }
+    .eu-bar-fill.hl { background: var(--red); }
+    .eu-bar-fill.avg { background: var(--navy); }
+    .eu-avg-line {
+      position: absolute; top: 0; bottom: 0; width: 2px;
+      background: var(--navy); opacity: .35;
+    }
+    .eu-val {
+      font-size: .82rem; font-weight: 800;
+      text-align: right; white-space: nowrap;
+    }
+    .eu-val.hl { color: var(--red); }
+    .eu-avg-note {
+      font-size: .72rem; color: #6b8099;
+      margin-top: .9rem;
+    }
+
+    /* ── UITDAGINGEN ──────────────────────────────────── */
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .challenge-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 1.6rem 1.4rem;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .5s, transform .5s;
+    }
+    .challenge-card.visible { opacity: 1; transform: none; }
+    .challenge-card:nth-child(1) { transition-delay: .0s; }
+    .challenge-card:nth-child(2) { transition-delay: .12s; }
+    .challenge-card:nth-child(3) { transition-delay: .24s; }
+
+    .ch-icon {
+      font-size: 2rem; margin-bottom: .8rem;
+      display: block;
+    }
+    .ch-num {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900; letter-spacing: -1px;
+      color: var(--yellow); line-height: 1;
+      margin-bottom: .35rem;
+    }
+    .ch-title {
+      font-size: .85rem; font-weight: 700;
+      color: #fff; margin-bottom: .4rem;
+    }
+    .ch-desc {
+      font-size: .75rem; color: rgba(255,255,255,.55);
+      line-height: 1.5;
+    }
+    .ch-src {
+      font-size: .65rem; color: rgba(255,255,255,.3);
+      margin-top: .6rem;
+    }
+
+    /* ── DEEP DIVE NAV ────────────────────────────────── */
+    .dive-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .75rem;
+    }
+    .dive-link {
+      display: flex; flex-direction: column;
+      background: var(--light);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1rem;
+      text-decoration: none;
+      transition: all .15s;
+      gap: .3rem;
+    }
+    .dive-link:hover {
+      border-color: var(--navy);
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(13,45,107,.1);
+    }
+    .dive-emoji { font-size: 1.4rem; }
+    .dive-title {
+      font-size: .82rem; font-weight: 700;
+      color: var(--navy);
+    }
+    .dive-desc {
+      font-size: .7rem; color: #6b8099;
+      line-height: 1.4;
+    }
+
+    /* ── SOURCE BAR ───────────────────────────────────── */
+    .src-bar {
+      background: var(--light);
+      border-top: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      text-align: center;
+      font-size: .72rem;
+      color: #6b8099;
+    }
+    .src-bar a { color: var(--navy); }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 720px) {
+      .stat-band { grid-template-columns: repeat(2, 1fr); }
+      .challenge-grid { grid-template-columns: 1fr; }
+      .dive-grid { grid-template-columns: repeat(2, 1fr); }
+      .eu-row { grid-template-columns: 90px 1fr 55px; }
+    }
+    @media (max-width: 480px) {
+      .stat-band { grid-template-columns: 1fr 1fr; }
+      .dive-grid { grid-template-columns: 1fr 1fr; }
+      .cost-seg span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="samenvatting.html" class="active">Samenvatting</a></li>
+      <li><a href="stabiliteit.html">Toestroom</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="nareizigers.html">Nareizigers</a></li>
+      <li><a href="europa.html">Europa</a></li>
+      <li><a href="tijdlijn.html">Tijdlijn</a></li>
+      <li><a href="trechters.html">Funnel</a></li>
+      <li><a href="ontmanteling.html">Asielstop</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="mythenbuster.html">Mythbuster</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+      <li><a href="reacties.html">Reacties</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ── 1. HERO ──────────────────────────────────────────── -->
+<div class="sum-hero">
+  <div class="sum-hero-inner">
+    <div class="sum-eyebrow">Samenvatting · prototype</div>
+    <h1>Nederland en de asielinstroom —<br><em>alles in één oogopslag</em></h1>
+    <p>Feiten, cijfers en uitdagingen op basis van officiële bronnen. Geen meningen — wel context.</p>
+    <div class="sum-scroll-hint">
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
+        <rect x="1" y="1" width="12" height="18" rx="6" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="7" cy="6" r="2" fill="currentColor"/>
+      </svg>
+      Scroll voor het verhaal
+    </div>
+  </div>
+</div>
+
+<!-- ── 2. DE GETALLEN ────────────────────────────────────── -->
+<div class="sum-block white" id="statsBlock">
+  <div class="sum-block-inner">
+    <div class="sum-label">De kerncijfers</div>
+    <h2>Zes getallen die tellen</h2>
+    <p class="sub">Alle cijfers zijn 2024–2025 en afkomstig van IND, COA, CBS en Eurostat.</p>
+
+    <div class="stat-band">
+
+      <div class="stat-cell" data-count="31500" data-prefix="" data-suffix="" data-dec="0">
+        <div class="big-num navy" data-target="31500">0</div>
+        <div class="stat-label">Asielaanvragen 2024</div>
+        <div class="stat-note">Gedaald t.o.v. 2022–piek van 46.660</div>
+        <span class="stat-trend down">↓ −32% vs 2022</span>
+      </div>
+
+      <div class="stat-cell" data-count="44100" data-prefix="" data-suffix="" data-dec="0">
+        <div class="big-num red" data-target="44100">0</div>
+        <div class="stat-label">Asielaanvragen 2025</div>
+        <div class="stat-note">Stijging na tijdelijke daling; prognose op basis van IND-data t/m april 2026</div>
+        <span class="stat-trend up">↑ +40% vs 2024</span>
+      </div>
+
+      <div class="stat-cell" data-count="4100" data-prefix="€" data-suffix=" mrd" data-dec="1">
+        <div class="big-num red" data-target="4100">0</div>
+        <div class="stat-label">Jaarlijkse opvangkosten</div>
+        <div class="stat-note">COA + IND-procedures + gemeentelijke lasten</div>
+        <span class="stat-trend up">↑ verdrievoudigd in 10 jaar</span>
+      </div>
+
+      <div class="stat-cell" data-count="50000" data-prefix="" data-suffix="+" data-dec="0">
+        <div class="big-num red" data-target="50000">0</div>
+        <div class="stat-label">Mensen in opvang (COA)</div>
+        <div class="stat-note">Record; opvangcapaciteit structureel onder druk</div>
+        <span class="stat-trend up">↑ historisch hoogtepunt</span>
+      </div>
+
+      <div class="stat-cell" data-count="35" data-prefix="" data-suffix="%" data-dec="0">
+        <div class="big-num amber" data-target="35">0</div>
+        <div class="stat-label">Erkenningspercentage 2024</div>
+        <div class="stat-note">Gedaald van 58% in 2022 — minder aanvragen gehonoreerd</div>
+        <span class="stat-trend down">↓ −23 pp vs 2022</span>
+      </div>
+
+      <div class="stat-cell" data-count="14" data-prefix="" data-suffix="%" data-dec="0">
+        <div class="big-num red" data-target="14">0</div>
+        <div class="stat-label">Terugkeerpercentage</div>
+        <div class="stat-note">Van afgewezen asielzoekers keert slechts 1 op 7 aantoonbaar terug</div>
+        <span class="stat-trend flat">→ al jaren structureel laag</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── 3. INSTROOM OVER TIJD ─────────────────────────────── -->
+<div class="sum-block dark">
+  <div class="sum-block-inner">
+    <div class="sum-label">Trend 2014 – 2025</div>
+    <h2>De instroom door de jaren heen</h2>
+    <p class="sub">Twee pieken, één COVID-dal, en een structureel hoog niveau. Bron: IND jaaroverzichten.</p>
+
+    <div class="chart-toolbar">
+      <button class="chart-btn" data-range="5">Laatste 5 jaar</button>
+      <button class="chart-btn active" data-range="all">Volledig overzicht</button>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="trendChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ── 4. KOSTEN ─────────────────────────────────────────── -->
+<div class="sum-block light" id="costsBlock">
+  <div class="sum-block-inner">
+    <div class="sum-label">Financieel</div>
+    <h2>Waar gaat het geld naartoe?</h2>
+    <p class="sub">De totale jaarlijkse kosten van opvang, procedures en voorzieningen in Nederland. Bron: COA jaarverslag 2024, IND begroting, Rekenkamer-rapport 2024.</p>
+
+    <div class="cost-total" id="costTotal">€ 4,1 mrd</div>
+    <div class="cost-total-note">per jaar — ter vergelijking: het volledige defensiebudget is €23 mrd</div>
+
+    <div class="cost-bar-wrap" id="costBar">
+      <div class="cost-bar-track">
+        <div class="cost-seg a" data-pct="68" style="width:0%"><span>COA opvang</span></div>
+        <div class="cost-seg b" data-pct="17" style="width:0%"><span>IND procedures</span></div>
+        <div class="cost-seg c" data-pct="15" style="width:0%"><span>Gemeenten</span></div>
+      </div>
+      <div class="cost-legend">
+        <div class="cost-leg-item"><div class="cost-dot a"></div><strong>€ 2,8 mrd</strong> COA opvang &amp; begeleiding</div>
+        <div class="cost-leg-item"><div class="cost-dot b"></div><strong>€ 0,7 mrd</strong> IND procedures</div>
+        <div class="cost-leg-item"><div class="cost-dot c"></div><strong>€ 0,6 mrd</strong> Gemeentelijke lasten</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 5. EUROPA ─────────────────────────────────────────── -->
+<div class="sum-block white" id="euBlock">
+  <div class="sum-block-inner">
+    <div class="sum-label">Europese vergelijking</div>
+    <h2>Asielaanvragen per 100.000 inwoners (2024)</h2>
+    <p class="sub">Nederland zit in 2024 onder het EU-gemiddelde — maar de relatieve positie versluiert hoge absolute aantallen. Bron: Eurostat MIGR_ASYAPPCTZA.</p>
+
+    <div class="eu-rows" id="euRows">
+      <div class="eu-row" data-val="37"  data-max="320">
+        <span class="eu-country">🇩🇰 Denemarken</span>
+        <div class="eu-bar-bg"><div class="eu-bar-fill" data-pct="11.6"></div></div>
+        <span class="eu-val">37</span>
+      </div>
+      <div class="eu-row" data-val="92"  data-max="320">
+        <span class="eu-country">🇫🇷 Frankrijk</span>
+        <div class="eu-bar-bg"><div class="eu-bar-fill" data-pct="28.8"></div></div>
+        <span class="eu-val">92</span>
+      </div>
+      <div class="eu-row" data-val="180" data-max="320">
+        <span class="eu-country hl">🇳🇱 Nederland</span>
+        <div class="eu-bar-bg"><div class="eu-bar-fill hl" data-pct="56.3"></div></div>
+        <span class="eu-val hl">180</span>
+      </div>
+      <div class="eu-row" data-val="203" data-max="320">
+        <span class="eu-country">🇪🇺 EU-27 gemiddelde</span>
+        <div class="eu-bar-bg">
+          <div class="eu-bar-fill avg" data-pct="63.4"></div>
+        </div>
+        <span class="eu-val">203</span>
+      </div>
+      <div class="eu-row" data-val="245" data-max="320">
+        <span class="eu-country">🇩🇪 Duitsland</span>
+        <div class="eu-bar-bg"><div class="eu-bar-fill" data-pct="76.6"></div></div>
+        <span class="eu-val">245</span>
+      </div>
+      <div class="eu-row" data-val="310" data-max="320">
+        <span class="eu-country">🇦🇹 Oostenrijk</span>
+        <div class="eu-bar-bg"><div class="eu-bar-fill" data-pct="96.9"></div></div>
+        <span class="eu-val">310</span>
+      </div>
+    </div>
+    <p class="eu-avg-note">* Ondanks lagere instroom per capita bleef de absolute instroom in NL hoog door de bevolkingsomvang. De achterstand (backlog 50.000+) is niet meegeteld in bovenstaande vergelijking.</p>
+  </div>
+</div>
+
+<!-- ── 6. UITDAGINGEN ─────────────────────────────────────── -->
+<div class="sum-block dark" id="challengeBlock">
+  <div class="sum-block-inner">
+    <div class="sum-label">Kernproblemen</div>
+    <h2>Drie structurele uitdagingen</h2>
+    <p class="sub">Ongeacht het politieke standpunt benoemen alle partijen deze knelpunten.</p>
+
+    <div class="challenge-grid">
+
+      <div class="challenge-card">
+        <span class="ch-icon">⏳</span>
+        <div class="ch-num">50.000<span style="font-size:1.3rem">+</span></div>
+        <div class="ch-title">De achterstand</div>
+        <div class="ch-desc">Meer dan 50.000 mensen wachten op een IND-beslissing. Gemiddelde doorlooptijd: 19 maanden — wettelijke norm is 6.</div>
+        <div class="ch-src">Bron: IND maandcijfers 2025</div>
+      </div>
+
+      <div class="challenge-card">
+        <span class="ch-icon">↩️</span>
+        <div class="ch-num">14<span style="font-size:1.3rem">%</span></div>
+        <div class="ch-title">De terugkeer</div>
+        <div class="ch-desc">Van alle afgewezen asielzoekers keert slechts 14% aantoonbaar terug. Vertrekplichtige personen verblijven soms jaren in Nederland.</div>
+        <div class="ch-src">Bron: DT&V rapportage 2024</div>
+      </div>
+
+      <div class="challenge-card">
+        <span class="ch-icon">📈</span>
+        <div class="ch-num">3×</div>
+        <div class="ch-title">De kostenstijging</div>
+        <div class="ch-desc">De opvangkosten zijn in tien jaar verdrievoudigd — van €1,4 mrd (2015) naar €4,1 mrd (2024). Zonder structurele aanpak stijgt dit door.</div>
+        <div class="ch-src">Bron: COA jaarverslagen 2015–2024</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── 7. DEEP DIVE ───────────────────────────────────────── -->
+<div class="sum-block white">
+  <div class="sum-block-inner">
+    <div class="sum-label">Verdieping</div>
+    <h2>Duik dieper in de data</h2>
+    <p class="sub">Elke sectie bevat interactieve visualisaties, bronvermelding en context.</p>
+
+    <div class="dive-grid">
+      <a href="stabiliteit.html" class="dive-link">
+        <span class="dive-emoji">📊</span>
+        <span class="dive-title">Toestroom</span>
+        <span class="dive-desc">Wekelijkse en jaarlijkse instroomdata</span>
+      </a>
+      <a href="economie.html" class="dive-link">
+        <span class="dive-emoji">💶</span>
+        <span class="dive-title">Economie</span>
+        <span class="dive-desc">Kosten, baten en fiscale impact</span>
+      </a>
+      <a href="werkgelegenheid.html" class="dive-link">
+        <span class="dive-emoji">👷</span>
+        <span class="dive-title">Werkgelegenheid</span>
+        <span class="dive-desc">Arbeidsmarkt en integratie</span>
+      </a>
+      <a href="nareizigers.html" class="dive-link">
+        <span class="dive-emoji">👨‍👩‍👧</span>
+        <span class="dive-title">Nareizigers</span>
+        <span class="dive-desc">Gezinshereniging in cijfers</span>
+      </a>
+      <a href="europa.html" class="dive-link">
+        <span class="dive-emoji">🇪🇺</span>
+        <span class="dive-title">Europa</span>
+        <span class="dive-desc">NL vs strengere EU-landen</span>
+      </a>
+      <a href="tijdlijn.html" class="dive-link">
+        <span class="dive-emoji">📅</span>
+        <span class="dive-title">Tijdlijn</span>
+        <span class="dive-desc">Beleidsmomenten 2014–2025</span>
+      </a>
+      <a href="calculator.html" class="dive-link">
+        <span class="dive-emoji">🧮</span>
+        <span class="dive-title">Calculator</span>
+        <span class="dive-desc">Taakstelling voor jouw gemeente</span>
+      </a>
+      <a href="quiz.html" class="dive-link">
+        <span class="dive-emoji">🧠</span>
+        <span class="dive-title">Quiz &amp; Mythbuster</span>
+        <span class="dive-desc">Wat weet jij echt?</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="src-bar">
+  Alle cijfers gebaseerd op officiële bronnen — IND, COA, CBS, Eurostat, DT&amp;V, Algemene Rekenkamer ·
+  <a href="bronnen.html">Volledige bronvermelding →</a>
+</div>
+
+<footer class="site-footer">
+  <p>GrenzenDicht — Data-journalistieke analyse van de asielindustrie in Nederland</p>
+  <p style="margin-top:.4rem;"><a href="bronnen.html">Bronvermelding</a> · Alle cijfers gebaseerd op officiële bronnen</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+/* ── DATA ──────────────────────────────────────────────────── */
+const YEARLY = {
+  labels: ['2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025*'],
+  values: [24495, 58880, 31642, 18170, 29310, 29370, 15255, 24685, 46660, 35530, 31500, 44100]
+};
+
+/* ── TREND CHART ───────────────────────────────────────────── */
+const ctx = document.getElementById('trendChart').getContext('2d');
+
+function buildColors(data) {
+  return data.map((v, i) => {
+    if (v >= 45000) return '#ef4444'; // red peak
+    if (i === data.length - 1) return '#fbbf24'; // current year
+    return 'rgba(255,255,255,.35)';
+  });
+}
+
+let currentRange = 'all';
+const trendChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: YEARLY.labels,
+    datasets: [{
+      data: YEARLY.values,
+      backgroundColor: buildColors(YEARLY.values),
+      borderRadius: 4,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 600, easing: 'easeInOutQuart' },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(13,45,107,.95)',
+        padding: 10,
+        callbacks: {
+          label: ctx => ' ' + ctx.parsed.y.toLocaleString('nl-NL') + ' aanvragen',
+          title: ctx => ctx[0].label + (ctx[0].label === '2025*' ? '  (prognose)' : '')
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: 'rgba(255,255,255,.55)', font: { size: 11 } },
+        border: { display: false }
+      },
+      y: {
+        grid: { color: 'rgba(255,255,255,.07)' },
+        ticks: {
+          color: 'rgba(255,255,255,.45)',
+          font: { size: 10 },
+          callback: v => (v / 1000) + 'k'
+        },
+        border: { display: false }
+      }
+    }
+  }
+});
+
+// Range buttons
+document.querySelectorAll('.chart-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const range = this.dataset.range;
+    const labels = range === '5' ? YEARLY.labels.slice(-5) : YEARLY.labels;
+    const values = range === '5' ? YEARLY.values.slice(-5) : YEARLY.values;
+    trendChart.data.labels = labels;
+    trendChart.data.datasets[0].data = values;
+    trendChart.data.datasets[0].backgroundColor = buildColors(values);
+    trendChart.update();
+  });
+});
+
+/* ── INTERSECTION OBSERVER ─────────────────────────────────── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    const el = entry.target;
+
+    // Animated number counters
+    if (el.classList.contains('stat-cell') && !el.classList.contains('visible')) {
+      el.classList.add('visible');
+      const numEl = el.querySelector('[data-target]');
+      if (numEl) animateNum(numEl);
+    }
+
+    // EU bars
+    if (el.classList.contains('eu-row') && !el.classList.contains('visible')) {
+      el.classList.add('visible');
+      const fill = el.querySelector('.eu-bar-fill');
+      if (fill) {
+        setTimeout(() => { fill.style.width = fill.dataset.pct + '%'; }, 80);
+      }
+    }
+
+    // Challenge cards
+    if (el.classList.contains('challenge-card') && !el.classList.contains('visible')) {
+      el.classList.add('visible');
+    }
+
+    // Cost bar
+    if (el.id === 'costsBlock' && !el.dataset.animated) {
+      el.dataset.animated = '1';
+      document.getElementById('costTotal').classList.add('visible');
+      setTimeout(() => {
+        document.querySelectorAll('.cost-seg').forEach(seg => {
+          seg.style.width = seg.dataset.pct + '%';
+        });
+      }, 200);
+    }
+  });
+}, { threshold: 0.15 });
+
+// Observe elements
+document.querySelectorAll('.stat-cell, .eu-row, .challenge-card').forEach(el => io.observe(el));
+io.observe(document.getElementById('costsBlock'));
+
+/* ── NUMBER COUNTER ────────────────────────────────────────── */
+function animateNum(el) {
+  const target = +el.dataset.target;
+  const cell   = el.closest('.stat-cell');
+  const prefix = cell ? (cell.dataset.prefix || '') : '';
+  const suffix = cell ? (cell.dataset.suffix || '') : '';
+  const dec    = cell ? +(cell.dataset.dec || 0) : 0;
+  const dur    = 900;
+  const start  = performance.now();
+
+  // Special formatting for large numbers
+  function fmt(v) {
+    if (dec === 1) {
+      // format as "€ X,X mrd"
+      return prefix + (v / 1000).toFixed(1).replace('.', ',') + suffix;
+    }
+    return prefix + Math.round(v).toLocaleString('nl-NL') + suffix;
+  }
+
+  function step(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = fmt(target * ease);
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = fmt(target);
+  }
+  requestAnimationFrame(step);
+}
+</script>
+</body>
+</html>
