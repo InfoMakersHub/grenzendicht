@@ -10,7 +10,7 @@ Volledige cross-check van alle kwantitatieve claims op de site tegen primaire br
 |---|---|---|
 | Geverifieerd correct | 22 | ✅ Gepubliceerd, geen actie |
 | Kritieke fouten | 4 | ✅ **Gecorrigeerd 20-05-2026** |
-| Interne inconsistenties | 5 | ⚠️ Deels opgelost (zie hieronder) |
+| Interne inconsistenties | 5 | ✅ **Allemaal opgelost 21-05-2026** |
 | Twijfelgevallen | 7 | ⏳ Methodologische verduidelijking nodig |
 | Ontbrekende bronvermelding | 12 | ⏳ Bronlinks toe te voegen |
 
@@ -62,18 +62,27 @@ Volledige cross-check van alle kwantitatieve claims op de site tegen primaire br
 
 ---
 
-## C. Interne inconsistenties
+## C. Interne inconsistenties — alle vijf opgelost ✅
 
-### C1. Vergelijkingsmaatstaf "20.000 FTE"
-- `werkgelegenheid.html` vergelijkt met **NS** (20.400 FTE)
-- `quiz.html`, `mythenbuster.html` vergelijken met **Nationale Politie** (~20.000 FTE)
-- **Aanbeveling:** Kies één — beide kloppen, maar maak het consistent
+### C1 (D1). Budget Min. A&M 2026: vier verschillende bedragen
+- **Status:** ✅ Opgelost via kritieke-fout-correctie (20-05-2026). €8,94 mrd nu overal consistent. De €9,7 mrd op `bronnen.html` is behouden als context-noot (PwC-raming vóór parlementaire behandeling).
 
-### C2. Inwilligingspercentage
-- 35% (NL 2025) vs 55% (NL 2023) — verschillende periodes
-- **Status:** Beide correct; periode duidelijker markeren
+### C2 (D2). Instroom 2024: 45.639 / 44.000 / 32.175
+- **Status:** ✅ Opgelost. "45.639" verwijderd uit `economie.html`. De "32.175" op `europa.html` blijft staan want betreft *alleen eerste aanvragen* — niet vergelijkbaar met het totaal van 44.000.
 
-### C3 t/m C5: opgelost via centraal data-bestand `js/figures.js`
+### C3 (D3). Kosten per asielzoeker per jaar — gecorrigeerd 21-05-2026
+- **Probleem:** €42.000/jaar vs €75–100/dag vs €40.000–€91.000/jaar
+- **Canoniek besluit:** €40.000/jaar regulier (= €110/dag × 365) en tot €91.000/jaar crisis. Vastgelegd in `js/figures.js`.
+- **Aangepast:** `economie.html` (€42.000 → €40.000 in stat-card en tabelregel), `mythenbuster.html` (dagtarief krijgt expliciete jaarcontext: ~€40.000 regulier / tot ~€91.000 crisis).
+
+### C4 (D4). Inwilligingspercentage 35% (2025) vs 55% (2023) — gecorrigeerd 21-05-2026
+- **Probleem:** Twee correcte cijfers uit verschillende jaren zonder duidelijke periode-context.
+- **Aangepast:** `mythenbuster.html` markeert nu expliciet de daling: "55% (2023) → 35% (2025)" met oorzaak (strengere IND-criteria, verschoven nationaliteitsmix). `europa.html` had al "sterk gedaald" als kwalificatie.
+
+### C5 (D5). Referentieorganisatie "~20.000 FTE" — gecorrigeerd 21-05-2026
+- **Probleem:** `werkgelegenheid.html` vergeleek met NS, `quiz.html` + `mythenbuster.html` met Nationale Politie.
+- **Canoniek besluit:** Nationale Politie als primaire referentie (al consistent op 2/3 pagina's), NS als secundair.
+- **Aangepast:** `werkgelegenheid.html` hero noemt nu Politie eerst, NS daarna; bar-chart bevat extra balk "Nationale Politie (20.000 FTE)".
 
 ---
 

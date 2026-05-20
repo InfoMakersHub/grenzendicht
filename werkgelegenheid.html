@@ -46,7 +46,7 @@
   <div class="hero-inner">
     <div class="hero-label">Hoofdstuk 3 — Werkgelegenheid</div>
     <h1>~20.500 FTE direct afhankelijk van de asielindustrie</h1>
-    <p>Bij volledige stopzetting verdwijnen 18.500–23.500 FTE. Vergelijkbaar met de gehele NS (20.400 FTE) of twee keer Rijkswaterstaat (9.800 FTE). Alle cijfers zijn in voltijdsequivalenten — het werkelijke aantal betrokken personen ligt hoger. Dit verklaart de politieke onbeweeglijkheid.</p>
+    <p>Bij volledige stopzetting verdwijnen 18.500–23.500 FTE. Vergelijkbaar met de gehele Nationale Politie (~20.000 FTE) of de NS (20.400 FTE) — twee keer Rijkswaterstaat (9.800 FTE). Alle cijfers zijn in voltijdsequivalenten — het werkelijke aantal betrokken personen ligt hoger. Dit verklaart de politieke onbeweeglijkheid.</p>
     <div class="stat-grid">
       <div class="stat-card"><div class="num">~20.000</div><div class="label">Totaal FTE direct afhankelijk</div></div>
       <div class="stat-card"><div class="num">6.438</div><div class="label">IND medewerkers (hard cijfer, 2024)</div></div>
@@ -217,11 +217,11 @@
   new Chart(document.getElementById('compareChart'), {
     type: 'bar',
     data: {
-      labels: ['Asielindustrie NL','NS (spoorwegen)','Gemeente Amsterdam','Rijkswaterstaat'],
+      labels: ['Asielindustrie NL','NS (spoorwegen)','Nationale Politie','Gemeente Amsterdam','Rijkswaterstaat'],
       datasets: [{
         label: 'FTE',
-        data: [20500,20400,14000,9800],
-        backgroundColor: ['#b91c1c','#1d6fd4','#0d2d6b','#4a90d9'],
+        data: [20500,20400,20000,14000,9800],
+        backgroundColor: ['#b91c1c','#1d6fd4','#2563eb','#0d2d6b','#4a90d9'],
         borderRadius: 5
       }]
     },

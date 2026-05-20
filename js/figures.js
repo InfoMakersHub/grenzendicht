@@ -69,6 +69,34 @@ const FIGURES = {
     url: 'https://ind.nl/nl/over-ind/cijfers-en-publicaties',
     verified: '2026-05-20'
   },
+  kosten_per_asielzoeker_regulier_2024: {
+    value: 40000,
+    unit: '€/jaar',
+    source: 'COA Jaarverslag 2024',
+    verified: '2026-05-20',
+    note: 'Reguliere COA-opvang: dagtarief €75–110/dag × 365 ≈ €40.000. CORRECTIE: eerder werd "€42.000" gebruikt — afgerond naar canoniek €40.000 voor consistentie.'
+  },
+  kosten_per_asielzoeker_crisis_2024: {
+    value: 91000,
+    unit: '€/jaar',
+    source: 'COA Jaarverslag 2024 + Rekenkamer rapport asielopvangkosten 2023',
+    verified: '2026-05-20',
+    note: 'Crisisnoodopvang: €200–€250/dag (hotels, externe inhuur) = tot €91.250/jaar. Ongeveer 2× regulier tarief.'
+  },
+  inwilliging_2023: {
+    value: 55,
+    unit: '%',
+    source: 'IND Kerncijfers 2023',
+    verified: '2026-05-20',
+    note: 'Sterk afhankelijk van nationaliteit: Syriërs >90%, Eritreeërs ~85%, Marokkanen/Algerijnen/Tunesiërs <5%.'
+  },
+  inwilliging_2025: {
+    value: 35,
+    unit: '%',
+    source: 'IND maandcijfers jan–okt 2025',
+    verified: '2026-05-20',
+    note: 'Gedaald van 55% (2023) → 35% (2025) door strengere IND-criteria en verschoven nationaliteitsmix.'
+  },
   rekenkamer_onderbegroting: {
     value: '21 van 23 jaar (2000–2023)',
     source: 'Algemene Rekenkamer, "Uitgaven asielopvang structureel te laag begroot", 18 januari 2023',
