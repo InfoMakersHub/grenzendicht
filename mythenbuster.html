@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4P90BFW1PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4P90BFW1PD');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mythenbuster — Klopt dit wel? — GrenzenDicht</title>
+  <meta name="description" content="10 veelgehoorde uitspraken over de asielindustrie getoetst op feiten. Raad eerst zelf: feit of fabel?">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .mb-hero {
+      background: var(--brand);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      color: #fff;
+    }
+    .mb-hero-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-bottom: .6rem;
+    }
+    .mb-hero h1 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin: 0 0 .6rem;
+    }
+    .mb-hero p {
+      font-size: .9rem;
+      color: rgba(255,255,255,.75);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* score bar */
+    .mb-scorebar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: .75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .mb-score-item {
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .82rem;
+      color: var(--text-2);
+    }
+    .mb-score-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .mb-score-dot.goed  { background: #16a34a; }
+    .mb-score-dot.fout  { background: #dc2626; }
+    .mb-score-dot.open  { background: var(--border); }
+    .mb-score-num {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* wrap */
+    .mb-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* claim card */
+    .mb-card {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .mb-card.revealed-feit    { border-color: #16a34a; }
+    .mb-card.revealed-fabel   { border-color: #dc2626; }
+    .mb-card.revealed-nuance  { border-color: #d97706; }
+
+    .mb-card-top {
+      padding: 1.25rem 1.4rem 1rem;
+    }
+    .mb-card-num {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: .45rem;
+    }
+    .mb-claim {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+    .mb-claim em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text-2);
+    }
+
+    /* guess buttons */
+    .mb-guess {
+      display: flex;
+      gap: .6rem;
+      padding: 0 1.4rem 1.25rem;
+    }
+    .mb-btn {
+      flex: 1;
+      padding: .6rem .5rem;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--bg3);
+      color: var(--text);
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .mb-btn:hover:not(:disabled) {
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+    .mb-btn:disabled { cursor: default; opacity: .5; }
+    .mb-btn.chosen-feit  { background: rgba(22,163,74,.12);  border-color: #16a34a; color: #16a34a; }
+    .mb-btn.chosen-fabel { background: rgba(220,38,38,.10);  border-color: #dc2626; color: #dc2626; }
+
+    /* reveal block */
+    .mb-reveal {
+      border-top: 1px solid var(--border);
+      padding: 1.1rem 1.4rem 1.25rem;
+      animation: mbReveal .28s ease;
+      display: none;
+    }
+    .mb-card.open .mb-reveal { display: block; }
+    @keyframes mbReveal {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .mb-verdict {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .3rem .75rem;
+      border-radius: 99px;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+    }
+    .mb-verdict.feit   { background: rgba(22,163,74,.15);  color: #16a34a; }
+    .mb-verdict.fabel  { background: rgba(220,38,38,.12);  color: #dc2626; }
+    .mb-verdict.nuance { background: rgba(217,119,6,.12);  color: #d97706; }
+
+    .mb-uitleg {
+      font-size: .88rem;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: .75rem;
+    }
+    .mb-uitleg strong { color: var(--text); }
+
+    .mb-bron {
+      font-size: .78rem;
+      color: var(--text-2);
+    }
+    .mb-bron a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .mb-bron a:hover { text-decoration: underline; }
+
+    /* result banner */
+    .mb-result-banner {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 1.4rem;
+      text-align: center;
+      display: none;
+      animation: mbReveal .35s ease;
+    }
+    .mb-result-banner.zichtbaar { display: block; }
+    .mb-result-score {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--brand);
+      line-height: 1;
+      margin-bottom: .4rem;
+    }
+    .mb-result-label {
+      font-size: .9rem;
+      color: var(--text-2);
+      margin-bottom: 1.25rem;
+    }
+    .mb-share-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      justify-content: center;
+    }
+    .mb-share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .6rem 1.1rem;
+      border-radius: 8px;
+      font-size: .83rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: opacity .15s;
+      text-decoration: none;
+    }
+    .mb-share-btn:hover { opacity: .85; }
+    .mb-share-btn.wa  { background: #25d366; color: #fff; }
+    .mb-share-btn.tw  { background: #000; color: #fff; }
+    .mb-share-btn.cp  { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="stabiliteit.html">Stabiliteit</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="nareizigers.html">Nareizigers</a></li>
+      <li><a href="tijdlijn.html">Tijdlijn</a></li>
+      <li><a href="kaart.html">Kaart</a></li>
+      <li><a href="trechters.html">Trechters</a></li>
+      <li><a href="ontmanteling.html">Ontmanteling</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="mythenbuster.html" class="active">Mythenbuster</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="mb-hero">
+  <div class="mb-hero-label">Mythenbuster</div>
+  <h1>Klopt dit wel?</h1>
+  <p>10 uitspraken die je regelmatig hoort. Raad eerst zelf — feit of fabel? — dan onthullen we het antwoord met bronvermelding.</p>
+</div>
+
+<div class="mb-scorebar">
+  <div class="mb-score-item">
+    <div class="mb-score-dot goed"></div>
+    Goed: <span class="mb-score-num" id="scoreGoed">0</span>
+  </div>
+  <div class="mb-score-item">
+    <div class="mb-score-dot fout"></div>
+    Fout: <span class="mb-score-num" id="scoreFout">0</span>
+  </div>
+  <div class="mb-score-item">
+    <div class="mb-score-dot open"></div>
+    Open: <span class="mb-score-num" id="scoreOpen">10</span>
+  </div>
+</div>
+
+<div class="mb-wrap" id="mbWrap">
+
+  <!-- KAART 1 -->
+  <div class="mb-card" id="card0">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 1 — Huisvesting</div>
+      <div class="mb-claim">"Vluchtelingen krijgen wettelijk voorrang op de sociale huurwoninglijst boven Nederlanders die al jaren wachten."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(0,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(0,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict feit">Feit</div>
+      <div class="mb-uitleg">
+        Op grond van <strong>artikel 26 van de Huisvestingswet 2014</strong> zijn gemeenten verplicht vergunninghouders (statushouders) te huisvesten vóór reguliere woningzoekenden. Deze voorrangsregel geldt ongeacht hoe lang andere woningzoekenden al op de wachtlijst staan. In 2025 gaat het om 28.000 personen nationaal — waarvan ~41% nareizigers (gezinshereniging).
+      </div>
+      <div class="mb-bron">Bron: <a href="https://wetten.overheid.nl/BWBR0034668" target="_blank">Huisvestingswet 2014, art. 26</a> · <a href="https://www.rijksoverheid.nl/onderwerpen/huisvesting-statushouders" target="_blank">Rijksoverheid.nl</a></div>
+    </div>
+  </div>
+
+  <!-- KAART 2 -->
+  <div class="mb-card" id="card1">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 2 — Budget</div>
+      <div class="mb-claim">"Nederland geeft nu meer uit aan asielopvang dan tijdens de vluchtelingencrisis van 2015."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(1,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(1,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict feit">Feit</div>
+      <div class="mb-uitleg">
+        In 2015–2016 bedroeg het asielbudget circa <strong>€1,5–2 miljard</strong>. Het geraamde budget voor 2025 is <strong>€8,5 miljard</strong> — een vervijfvoudiging. De kostenstijging zit in hogere opvangkosten per persoon (COA-tarief steeg van ~€35 naar ~€75/dag), langere verblijfsduren door IND-achterstanden en uitbreiding van begeleiding en juridische bijstand.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://www.rijksbegroting.nl" target="_blank">Rijksbegroting 2025, Hoofdstuk VI (J&V)</a> · CBS Statline asielstatistieken</div>
+    </div>
+  </div>
+
+  <!-- KAART 3 -->
+  <div class="mb-card" id="card2">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 3 — Kansen</div>
+      <div class="mb-claim">"Als je eenmaal in Nederland asiel aanvraagt, krijg je bijna altijd een verblijfsvergunning."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(2,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(2,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict nuance">Nuance</div>
+      <div class="mb-uitleg">
+        Het inwilligingspercentage verschilt sterk per nationaliteit. Syriërs (>90%), Eritreeërs (~85%) en Jemenieten (~80%) krijgen bijna altijd een vergunning. Marokkanen, Algerijnen en Tunesiërs worden vrijwel altijd afgewezen (&lt;5%). Het <strong>gemiddelde inwilligingspercentage in 2023 lag op circa 55%</strong>. Wie wordt afgewezen kan echter jarenlang in procedure blijven via herhaalaanvragen en hoger beroep.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://ind.nl/nl/cijfers" target="_blank">IND Kerncijfers 2023</a> · EUROSTAT migratiestatistieken</div>
+    </div>
+  </div>
+
+  <!-- KAART 4 -->
+  <div class="mb-card" id="card3">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 4 — Procedure</div>
+      <div class="mb-claim">"De IND beslist binnen zes maanden over een asielaanvraag, zoals de wet voorschrijft."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(3,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(3,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict fabel">Fabel</div>
+      <div class="mb-uitleg">
+        De wettelijke beslistermijn is zes maanden, maar de IND overschrijdt die structureel. In 2023–2024 wachtten tienduizenden asielzoekers <strong>langer dan twee jaar</strong> op een beslissing. De Staat werd meerdere malen door rechters veroordeeld tot het betalen van dwangsommen wegens termijnoverschrijding. De achterstanden zijn mede oorzaak van de oplopende opvangkosten.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://ind.nl/nl/cijfers" target="_blank">IND Jaarverslag 2023</a> · Rechtbank Den Haag, diverse uitspraken 2022–2024</div>
+    </div>
+  </div>
+
+  <!-- KAART 5 -->
+  <div class="mb-card" id="card4">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 5 — Gemeenten</div>
+      <div class="mb-claim">"Gemeenten kunnen weigeren statushouders te huisvesten als er een woningtekort is."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(4,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(4,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict fabel">Fabel</div>
+      <div class="mb-uitleg">
+        Er is <strong>geen opt-out</strong>. Artikel 26 Huisvestingswet verplicht elke gemeente — van Amsterdam tot een dorp van 2.000 inwoners — een evenredig aandeel te huisvesten op basis van bevolkingsaandeel. Gemeenten die hun taakstelling niet halen riskeren een indeplaatsstelling: de provincie neemt dan de taak over en verhaalt de kosten op de gemeente.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://wetten.overheid.nl/BWBR0034668" target="_blank">Huisvestingswet 2014, art. 26–28</a> · Ministerie van BZK circulaire taakstelling</div>
+    </div>
+  </div>
+
+  <!-- KAART 6 -->
+  <div class="mb-card" id="card5">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 6 — Nareizigers</div>
+      <div class="mb-claim">"Nareizigers komen direct mee met hun familielid dat asiel heeft gekregen."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(5,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(5,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict fabel">Fabel</div>
+      <div class="mb-uitleg">
+        Nareizigers doorlopen een <strong>aparte MVV-procedure</strong> (machtiging tot voorlopig verblijf) via de Nederlandse ambassade in het herkomstland of een buurland. De procedure duurt gemiddeld <strong>12 tot 24 maanden</strong> na erkenning van de hoofdpersoon. Pas daarna komen zij naar Nederland en worden zij als aparte taakstelling opgelegd aan gemeenten — vandaar de recordhoogte van 41% nareizigers in de taakstelling 2025.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://ind.nl/nl/gezinshereniging" target="_blank">IND.nl — Nareizen</a> · Staatscourant taakstelling 2025-I</div>
+    </div>
+  </div>
+
+  <!-- KAART 7 -->
+  <div class="mb-card" id="card6">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 7 — Werkgelegenheid</div>
+      <div class="mb-claim">"De asielindustrie heeft meer voltijdsbanen gecreëerd dan de gehele Nationale Politie."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(6,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(6,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict feit">Feit</div>
+      <div class="mb-uitleg">
+        De asielketen (COA, IND, DT&V, gemeentelijke opvang, rechtsbijstand, tolken en begeleiding) vertegenwoordigt in 2024 naar schatting <strong>20.500 voltijdsbanen</strong>. De Nationale Politie telt circa 20.000 fte. Ter vergelijking: in 2018 waren er ~12.000 fte in de asielketen, bij een vergelijkbare instroom — het personeelsbestand groeide dus sneller dan de instroom.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://www.coa.nl/nl/over-coa" target="_blank">COA Jaarverslag 2024</a> · IND Jaarverslag · Arbeidsmarkt in Cijfers (CBS 2024)</div>
+    </div>
+  </div>
+
+  <!-- KAART 8 -->
+  <div class="mb-card" id="card7">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 8 — Instroom</div>
+      <div class="mb-claim">"De asielinstroom in Nederland is de laatste jaren aan het dalen."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(7,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(7,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict nuance">Nuance</div>
+      <div class="mb-uitleg">
+        Afhankelijk van het referentiepunt. De instroom daalde van het recordjaar <strong>2023 (48.500)</strong> naar 2024 (44.000) — een daling van ~9%. Maar vergeleken met 2018 (26.975) of het COVID-dal van 2020 (17.585) is de huidige instroom historisch <strong>zeer hoog</strong>. De nareizigersstroom stijgt bovendien nog steeds, wat het totale aantal te huisvesten personen opdrijft los van de directe instroom.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://ind.nl/nl/cijfers" target="_blank">IND Kerncijfers 2018–2024</a> · CBS Asielstatistieken</div>
+    </div>
+  </div>
+
+  <!-- KAART 9 -->
+  <div class="mb-card" id="card8">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 9 — EU-verplichting</div>
+      <div class="mb-claim">"Nederland is door EU-verdragen verplicht elke asielzoeker op te vangen en zijn aanvraag te behandelen."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(8,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(8,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict nuance">Nuance</div>
+      <div class="mb-uitleg">
+        Gedeeltelijk juist. De <strong>EU-Opvangrichtlijn</strong> (2013/33/EU) verplicht lidstaten tot opvang van asielzoekers tijdens de procedure. De <strong>Dublin-Verordening</strong> bepaalt welk land verantwoordelijk is — in principe het eerste EU-land van binnenkomst. Nederland hoeft dus <em>niet</em> iedere asielzoeker te behandelen, maar in de praktijk weigeren andere lidstaten vaak terugname, waardoor Nederland de procedures zelf afhandelt. De verplichting geldt dus wel, maar het systeem lekt.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://eur-lex.europa.eu/legal-content/NL/TXT/?uri=CELEX:32013L0033" target="_blank">EU Opvangrichtlijn 2013/33/EU</a> · <a href="https://eur-lex.europa.eu/legal-content/NL/TXT/?uri=CELEX:32013R0604" target="_blank">Dublin III-Verordening 604/2013</a></div>
+    </div>
+  </div>
+
+  <!-- KAART 10 -->
+  <div class="mb-card" id="card9">
+    <div class="mb-card-top">
+      <div class="mb-card-num">Uitspraak 10 — Kosten per persoon</div>
+      <div class="mb-claim">"Een asielzoeker in de opvang kost de Nederlandse belastingbetaler minder dan €50 per dag."</div>
+    </div>
+    <div class="mb-guess">
+      <button class="mb-btn" onclick="raad(9,'feit')">Feit</button>
+      <button class="mb-btn" onclick="raad(9,'fabel')">Fabel</button>
+    </div>
+    <div class="mb-reveal">
+      <div class="mb-verdict fabel">Fabel</div>
+      <div class="mb-uitleg">
+        Het COA-dagtarief per opvangplaats steeg van circa €35 in 2018 naar <strong>€75–100 in 2024</strong>, afhankelijk van de opvanglocatie (regulier AZC, noodopvang of crisisnoodopvang). Crisisnoodopvang — ingezet bij capaciteitspieken — kost soms meer dan €150 per persoon per dag door hogere huurprijzen en externe inhuur. Bovenop de opvangkosten komen IND-procedures, rechtsbijstand en gemeentelijke begeleidingskosten.
+      </div>
+      <div class="mb-bron">Bron: <a href="https://www.coa.nl/nl/over-coa/financien" target="_blank">COA Jaarverslag 2024</a> · Rekenkamer rapport asielopvangkosten 2023</div>
+    </div>
+  </div>
+
+  <!-- Resultatenbanner -->
+  <div class="mb-result-banner" id="resultBanner">
+    <div class="mb-result-score" id="resultScore">—</div>
+    <div class="mb-result-label" id="resultLabel"></div>
+    <div class="mb-share-row">
+      <button class="mb-share-btn wa" onclick="deelWA()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </button>
+      <button class="mb-share-btn tw" onclick="deelTW()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.631L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+        X / Twitter
+      </button>
+      <button class="mb-share-btn cp" onclick="kopieer()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        <span id="mbCopyLabel">Kopieer link</span>
+      </button>
+    </div>
+  </div>
+
+</div><!-- /mb-wrap -->
+
+<script>
+const VERDICTS = ['feit','feit','nuance','fabel','fabel','fabel','feit','nuance','nuance','fabel'];
+let aantalGoed = 0, aantalFout = 0, aantalOpen = 10;
+
+function raad(idx, keuze) {
+  const card = document.getElementById('card' + idx);
+  if (card.classList.contains('open')) return;
+
+  const correct = VERDICTS[idx];
+  // feit-keuze telt als goed bij verdict feit; fabel-keuze als goed bij verdict fabel of nuance
+  const isGoed = (keuze === 'feit' && correct === 'feit') ||
+                 (keuze === 'fabel' && (correct === 'fabel' || correct === 'nuance'));
+
+  // style de knoppen
+  const btns = card.querySelectorAll('.mb-btn');
+  btns.forEach(b => b.disabled = true);
+  const gekozenBtn = keuze === 'feit' ? btns[0] : btns[1];
+  gekozenBtn.classList.add('chosen-' + keuze);
+
+  // open de kaart
+  card.classList.add('open', 'revealed-' + correct);
+
+  // score bijwerken
+  aantalOpen--;
+  if (isGoed) aantalGoed++; else aantalFout++;
+  document.getElementById('scoreGoed').textContent  = aantalGoed;
+  document.getElementById('scoreFout').textContent  = aantalFout;
+  document.getElementById('scoreOpen').textContent  = aantalOpen;
+
+  // scroll de reveal zachtjes in beeld
+  setTimeout(() => card.querySelector('.mb-reveal').scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+
+  // toon eindresultaat als alles beantwoord
+  if (aantalOpen === 0) toonResultaat();
+}
+
+function toonResultaat() {
+  const banner = document.getElementById('resultBanner');
+  const labels = [
+    'Verrassend, toch? Lees de analyses voor meer context.',
+    'Meer te leren. Deel de mythenbuster met anderen.',
+    'Onder het gemiddelde — maar de nuances zijn lastig!',
+    'Redelijk goed. Deel en test je vrienden.',
+    'Bovengemiddeld! Jij kent het systeem.',
+    'Uitstekend! Bijna alles correct.',
+    'Vrijwel alles goed. Indrukwekkend.',
+    'Bijna perfect — één foutje.',
+    'Bijna perfect — minimale vergissing.',
+    'Perfecte score! Deel en daag anderen uit.',
+    'Volledig correct! Jij kent de asielindustrie door en door.'
+  ];
+  document.getElementById('resultScore').textContent = aantalGoed + '/10';
+  document.getElementById('resultLabel').textContent = labels[aantalGoed] || labels[10];
+  banner.classList.add('zichtbaar');
+  setTimeout(() => banner.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+}
+
+const SHARE_URL = 'https://grenzendicht.nl/mythenbuster.html';
+function shareText() {
+  return `Ik scoorde ${aantalGoed}/10 op de Mythenbuster van GrenzenDicht — klopt dit wel over de asielindustrie?`;
+}
+function deelWA() {
+  window.open('https://wa.me/?text=' + encodeURIComponent(shareText() + ' ' + SHARE_URL), '_blank');
+}
+function deelTW() {
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText()) + '&url=' + encodeURIComponent(SHARE_URL), '_blank');
+}
+function kopieer() {
+  navigator.clipboard.writeText(SHARE_URL).then(() => {
+    document.getElementById('mbCopyLabel').textContent = 'Gekopieerd!';
+    setTimeout(() => { document.getElementById('mbCopyLabel').textContent = 'Kopieer link'; }, 2000);
+  });
+}
+</script>
+</body>
+</html>
