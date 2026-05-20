@@ -13,6 +13,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gemeentecalculator — GrenzenDicht</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    .calc-map-section {
+      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem 3rem;
+    }
+    .calc-map-title {
+      font-size: .75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--text-2);
+      margin-bottom: .5rem;
+    }
+    .calc-map-subtitle {
+      font-size: .88rem; color: var(--text-2); margin-bottom: 1.25rem; line-height: 1.5;
+    }
+    .calc-map-grid {
+      display: grid; grid-template-columns: 1fr 280px; gap: 1.25rem; align-items: start;
+    }
+    @media (max-width: 760px) { .calc-map-grid { grid-template-columns: 1fr; } }
+
+    #calcMap {
+      height: 540px; border-radius: 14px;
+      border: 1px solid var(--border); background: #f0f4fa; position: relative;
+    }
+    @media (max-width: 760px) { #calcMap { height: 65vw; min-height: 300px; } }
+
+    #calcMapLoading {
+      position: absolute; inset: 0; z-index: 999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: #f0f4fa; border-radius: 14px;
+      font-size: .88rem; color: var(--muted); gap: .75rem;
+    }
+    .map-spinner {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 3px solid var(--border); border-top-color: var(--brand);
+      animation: mapSpin .8s linear infinite;
+    }
+    @keyframes mapSpin { to { transform: rotate(360deg); } }
+
+    .calc-map-panel {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.15rem;
+      position: sticky; top: 80px;
+    }
+    .cmp-placeholder {
+      text-align: center; padding: 1.5rem .75rem;
+      color: var(--muted); font-size: .82rem; line-height: 1.6;
+    }
+    .cmp-placeholder svg { opacity: .3; display: block; margin: 0 auto .6rem; }
+    .cmp-naam { font-size: 1rem; font-weight: 900; color: var(--text); margin-bottom: .2rem; }
+    .cmp-inwoners { font-size: .72rem; color: var(--muted); margin-bottom: .9rem; }
+    .cmp-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: .85rem; }
+    .cmp-card {
+      background: var(--bg3); border-radius: 8px; padding: .65rem .6rem;
+      text-align: center;
+    }
+    .cmp-label { font-size: .55rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: .2rem; }
+    .cmp-val   { font-size: 1.2rem; font-weight: 900; line-height: 1; }
+    .cmp-unit  { font-size: .58rem; color: var(--muted); margin-top: .1rem; }
+    .cmp-cta {
+      width: 100%; padding: .6rem; border: none; border-radius: 8px;
+      background: var(--brand); color: #fff;
+      font-weight: 700; font-size: .8rem; cursor: pointer; transition: opacity .15s;
+    }
+    .cmp-cta:hover { opacity: .85; }
+
+    .calc-map-legend {
+      display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+      margin-top: .9rem;
+    }
+    .cml-label { font-size: .68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+    .cml-scale { display: flex; gap: .25rem; align-items: center; flex-wrap: wrap; }
+    .cml-item  { display: flex; align-items: center; gap: .3rem; font-size: .68rem; color: var(--muted); }
+    .cml-sw    { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+    .calc-map-note { font-size: .7rem; color: var(--muted); margin-top: .6rem; line-height: 1.5; }
+  </style>
 </head>
 <body>
 
@@ -26,7 +100,6 @@
       <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
       <li><a href="nareizigers.html">Nareizigers</a></li>
       <li><a href="tijdlijn.html">Tijdlijn</a></li>
-      <li><a href="kaart.html">Kaart</a></li>
       <li><a href="trechters.html">Funnel</a></li>
       <li><a href="ontmanteling.html">Asielstop</a></li>
       <li><a href="calculator.html" class="active">Calculator</a></li>
@@ -179,6 +252,72 @@
   </div>
 
 </div>
+
+<!-- ── INTERACTIEVE KAART ─────────────────────────────────────── -->
+<div class="calc-map-section">
+  <div class="calc-map-title">Interactieve kaart</div>
+  <p class="calc-map-subtitle">Klik op een gemeente om de berekening direct in te laden in de calculator hierboven.</p>
+
+  <div class="calc-map-grid">
+    <div style="position:relative;">
+      <div id="calcMap">
+        <div id="calcMapLoading">
+          <div class="map-spinner"></div>
+          <span>Gemeentegrenzen laden…</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-map-panel" id="calcInfoPanel">
+      <div class="cmp-placeholder" id="cmpPlaceholder">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 0 1 3 16.382V5.618a1 1 0 0 1 1.447-.894L9 7m0 13 6-3m-6 3V7m6 10 4.553 2.276A1 1 0 0 0 21 18.382V7.618a1 1 0 0 0-1.447-.894L15 9m0 8V9M9 7l6-2"/></svg>
+        Klik op een gemeente
+      </div>
+      <div id="cmpContent" style="display:none;">
+        <div class="cmp-naam" id="cmp-naam"></div>
+        <div class="cmp-inwoners" id="cmp-inwoners"></div>
+        <div class="cmp-cards">
+          <div class="cmp-card">
+            <div class="cmp-label">Taakstelling 2025</div>
+            <div class="cmp-val" id="cmp-t2025" style="color:var(--brand);"></div>
+            <div class="cmp-unit">per jaar</div>
+          </div>
+          <div class="cmp-card">
+            <div class="cmp-label">Nareizigers</div>
+            <div class="cmp-val" id="cmp-narei" style="color:var(--red);"></div>
+            <div class="cmp-unit">~41%</div>
+          </div>
+          <div class="cmp-card">
+            <div class="cmp-label">Per maand</div>
+            <div class="cmp-val" id="cmp-maand" style="color:var(--text);"></div>
+            <div class="cmp-unit">gemiddeld</div>
+          </div>
+          <div class="cmp-card">
+            <div class="cmp-label">2026-I</div>
+            <div class="cmp-val" id="cmp-t2026" style="color:var(--blue);"></div>
+            <div class="cmp-unit">jan–jun</div>
+          </div>
+        </div>
+        <button class="cmp-cta" onclick="laadInCalculator()">Bereken volledig voor deze gemeente ↑</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="calc-map-legend">
+    <span class="cml-label">Taakstelling 2025</span>
+    <div class="cml-scale">
+      <div class="cml-item"><div class="cml-sw" style="background:#cfe1f5;"></div>&lt;20</div>
+      <div class="cml-item"><div class="cml-sw" style="background:#93c4e8;"></div>20–50</div>
+      <div class="cml-item"><div class="cml-sw" style="background:#4a90d9;"></div>50–100</div>
+      <div class="cml-item"><div class="cml-sw" style="background:#1d6fd4;"></div>100–250</div>
+      <div class="cml-item"><div class="cml-sw" style="background:#1d4ed8;"></div>250–500</div>
+      <div class="cml-item"><div class="cml-sw" style="background:#0d2d6b;"></div>&gt;500</div>
+      <div class="cml-item"><div class="cml-sw" style="background:#dde3ea;border:1px solid #c0c8d4;"></div>Geen data</div>
+    </div>
+  </div>
+  <div class="calc-map-note">Berekening: (bevolking ÷ 17.900.000) × 28.000. Grenzen: CBS/CartoMap NL 2024.</div>
+</div>
+
 </main>
 
 <footer class="site-footer">
@@ -400,6 +539,120 @@
     geselecteerdeGemeente = naam;
     toonResultaat(naam, GEMEENTEN[naam]);
   })();
+</script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // ── KAART ────────────────────────────────────────────────────────
+  const MAP_ALIASSEN = {
+    "'s-Gravenhage": 'Den Haag', 'Den Haag': 'Den Haag',
+    "'s-Hertogenbosch": "'s-Hertogenbosch", 'Den Bosch': "'s-Hertogenbosch",
+    'Súdwest-Fryslân': 'Súdwest-Fryslân',
+  };
+
+  function mapZoekGemeente(statnaam) {
+    if (GEMEENTEN[statnaam] !== undefined) return statnaam;
+    if (MAP_ALIASSEN[statnaam] && GEMEENTEN[MAP_ALIASSEN[statnaam]] !== undefined) return MAP_ALIASSEN[statnaam];
+    const lower = statnaam.toLowerCase().trim();
+    return Object.keys(GEMEENTEN).find(k => k.toLowerCase().trim() === lower) || null;
+  }
+
+  function mapGetColor(t) {
+    if (t === null) return '#dde3ea';
+    if (t >= 500)  return '#0d2d6b';
+    if (t >= 250)  return '#1d4ed8';
+    if (t >= 100)  return '#1d6fd4';
+    if (t >= 50)   return '#4a90d9';
+    if (t >= 20)   return '#93c4e8';
+    return '#cfe1f5';
+  }
+
+  let mapKaartGemeente = null;
+
+  function mapToonPanel(statnaam) {
+    const naam     = mapZoekGemeente(statnaam);
+    const inwoners = naam ? GEMEENTEN[naam] : null;
+    mapKaartGemeente = naam || null;
+
+    document.getElementById('cmpPlaceholder').style.display = 'none';
+    document.getElementById('cmpContent').style.display = 'block';
+    document.getElementById('cmp-naam').textContent = naam || statnaam;
+
+    if (inwoners) {
+      const t2025  = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2025);
+      const t2026h = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2026_H1);
+      const maand  = Math.round(t2025 / 12);
+      const narei  = Math.round(t2025 * 0.41);
+      document.getElementById('cmp-inwoners').textContent =
+        inwoners.toLocaleString('nl-NL') + ' inwoners · ' +
+        ((inwoners / NL_BEVOLKING) * 100).toFixed(2) + '% van NL';
+      document.getElementById('cmp-t2025').textContent = t2025.toLocaleString('nl-NL');
+      document.getElementById('cmp-narei').textContent = narei.toLocaleString('nl-NL');
+      document.getElementById('cmp-maand').textContent = maand.toLocaleString('nl-NL');
+      document.getElementById('cmp-t2026').textContent = t2026h.toLocaleString('nl-NL');
+    } else {
+      document.getElementById('cmp-inwoners').textContent = 'Geen data beschikbaar';
+      ['cmp-t2025','cmp-narei','cmp-maand','cmp-t2026'].forEach(id => {
+        document.getElementById(id).textContent = '—';
+      });
+    }
+  }
+
+  function laadInCalculator() {
+    if (!mapKaartGemeente) return;
+    document.getElementById('gemeenteInput').value = mapKaartGemeente;
+    geselecteerdeGemeente = mapKaartGemeente;
+    toonResultaat(mapKaartGemeente, GEMEENTEN[mapKaartGemeente]);
+    document.querySelector('.calc-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  const calcMap = L.map('calcMap', { center: [52.2, 5.28], zoom: 7, zoomControl: true, attributionControl: true });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+    subdomains: 'abcd', maxZoom: 19, pane: 'shadowPane'
+  }).addTo(calcMap);
+
+  let calcGeojsonLayer, calcActiveLayer = null;
+
+  fetch('https://cartomap.github.io/nl/wgs84/gemeente_2024.geojson')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(data => {
+      document.getElementById('calcMapLoading').style.display = 'none';
+      calcGeojsonLayer = L.geoJSON(data, {
+        style(feature) {
+          const naam = mapZoekGemeente(feature.properties.statnaam || feature.properties.name || '');
+          const inv  = naam ? GEMEENTEN[naam] : null;
+          const t    = inv ? Math.round((inv / NL_BEVOLKING) * TAAKSTELLING_2025) : null;
+          return { fillColor: mapGetColor(t), fillOpacity: t ? 0.82 : 0.45, color: '#fff', weight: 0.8, opacity: 1 };
+        },
+        onEachFeature(feature, layer) {
+          const statnaam = feature.properties.statnaam || feature.properties.name || '';
+          const naam     = mapZoekGemeente(statnaam);
+          const inv      = naam ? GEMEENTEN[naam] : null;
+          const t        = inv ? Math.round((inv / NL_BEVOLKING) * TAAKSTELLING_2025) : null;
+          layer.bindTooltip(
+            t ? `<strong>${naam}</strong><br>${t.toLocaleString('nl-NL')} vergunninghouders`
+              : `<strong>${statnaam}</strong><br><span style="color:#888">Geen data</span>`,
+            { sticky: true, opacity: 0.95 }
+          );
+          layer.on({
+            mouseover(e) { e.target.setStyle({ fillOpacity: 1, weight: 1.5, color: '#0d2d6b' }); e.target.bringToFront(); },
+            mouseout(e)  { if (calcActiveLayer !== e.target) calcGeojsonLayer.resetStyle(e.target); },
+            click(e) {
+              if (calcActiveLayer && calcActiveLayer !== e.target) calcGeojsonLayer.resetStyle(calcActiveLayer);
+              e.target.setStyle({ fillOpacity: 1, weight: 2, color: '#0d2d6b' });
+              calcActiveLayer = e.target;
+              mapToonPanel(statnaam);
+            }
+          });
+        }
+      }).addTo(calcMap);
+      calcMap.fitBounds(calcGeojsonLayer.getBounds(), { padding: [10, 10] });
+    })
+    .catch(() => {
+      document.getElementById('calcMapLoading').innerHTML =
+        '<span style="color:#b91c1c;font-size:.82rem;padding:1rem;text-align:center;">Kaart kon niet geladen worden.</span>';
+    });
 </script>
 
 </body>
