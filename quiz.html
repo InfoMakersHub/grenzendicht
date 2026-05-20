@@ -326,6 +326,24 @@
     .ri-dot.fout { background: #dc2626; }
     .ri-vraag { font-weight: 600; color: var(--text); }
     .ri-answer { color: var(--text-2); font-size: .82rem; }
+
+    /* ── RESPONSIEF ── */
+    @media (max-width: 600px) {
+      .quiz-hero { padding: 2rem 1rem 1.75rem; }
+      .quiz-wrap { padding: 1.5rem .9rem 3rem; }
+      .quiz-card { padding: 1.25rem 1rem; }
+      .quiz-question { font-size: 1rem; margin-bottom: 1.1rem; }
+      .quiz-option { padding: .75rem .85rem; font-size: .87rem; gap: .65rem; }
+      .quiz-option .opt-letter { width: 24px; height: 24px; font-size: .7rem; }
+      .share-btn { padding: .6rem .9rem; font-size: .82rem; }
+      .result-title { font-size: 1.2rem; }
+    }
+    @media (max-width: 380px) {
+      .quiz-question { font-size: .95rem; }
+      .quiz-option { font-size: .84rem; }
+      .result-share { flex-direction: column; align-items: stretch; }
+      .share-btn { justify-content: center; }
+    }
   </style>
 </head>
 <body>

@@ -249,14 +249,47 @@
     .eu-sources a { color: var(--blue); }
 
     /* ─── RESPONSIVE ─── */
+    @media (max-width: 820px) {
+      .eu-wrap { padding: 0 1rem 3rem; }
+      .eu-hero { padding: 2.25rem 1rem 2rem; }
+      .eu-section-label { margin-top: 2.25rem; }
+      .eu-scoreboard-head { font-size: .82rem; padding: .8rem 1rem; }
+      .eu-score-row { padding: .6rem 1rem; font-size: .8rem; }
+      .eu-card-stat-num { font-size: 1.1rem; }
+      .eu-why-answer { padding: .6rem .9rem .75rem 2.5rem; }
+    }
     @media (max-width: 680px) {
       .eu-chart-grid { grid-template-columns: 1fr; }
-      .eu-score-row { grid-template-columns: 1.4fr 1fr 1fr; font-size: .75rem; }
+      .eu-score-row { grid-template-columns: 1.6fr 1fr 1fr; font-size: .75rem; }
       .eu-score-row .eu-avg { display: none; }
       .eu-intro { padding: 1.25rem; }
+      .eu-card-stat-row { gap: .65rem; }
     }
     @media (max-width: 480px) {
+      .eu-hero h1 { font-size: 1.35rem; }
+      .eu-hero { padding: 1.75rem 1rem 1.75rem; }
+      .eu-wrap { padding: 0 .85rem 2.5rem; }
       .eu-country-grid { grid-template-columns: 1fr; }
+      .eu-lesson-grid { grid-template-columns: 1fr; }
+      .eu-score-row {
+        grid-template-columns: 1.5fr 1fr;
+        font-size: .72rem;
+        padding: .55rem .75rem;
+      }
+      .eu-score-row .best-eu { display: none; }
+      .eu-score-row .eu-avg  { display: none; }
+      .eu-scoreboard-head { font-size: .75rem; padding: .75rem .85rem; }
+      .eu-card-stat { min-width: 75px; padding: .5rem .6rem; }
+      .eu-card-stat-num { font-size: 1rem; }
+      .eu-card-stat-label { font-size: .63rem; }
+      .eu-card-body { padding: 1rem; }
+      .eu-card-header { padding: .9rem 1rem .75rem; }
+      .eu-why-btn { font-size: .79rem; padding: .65rem .85rem; }
+      .eu-why-answer { font-size: .77rem; padding: .55rem .85rem .65rem 2.2rem; }
+      .eu-callout { font-size: .84rem; }
+      .eu-table { font-size: .78rem; }
+      .eu-table thead th { font-size: .65rem; padding: .6rem .75rem; }
+      .eu-table tbody td { padding: .55rem .75rem; }
     }
   </style>
 </head>
