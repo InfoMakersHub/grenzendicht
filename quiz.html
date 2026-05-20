@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4P90BFW1PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4P90BFW1PD');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz — Wat weet jij over de asielindustrie? — GrenzenDicht</title>
+  <meta name="description" content="Test je kennis over de Nederlandse asielindustrie. 5 vragen met verrassende antwoorden over kosten, aantallen en wetgeving.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .quiz-hero {
+      background: var(--brand);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      color: #fff;
+    }
+    .quiz-hero-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-bottom: .6rem;
+    }
+    .quiz-hero h1 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin: 0 0 .6rem;
+    }
+    .quiz-hero p {
+      font-size: .9rem;
+      color: rgba(255,255,255,.75);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── QUIZ CONTAINER ── */
+    .quiz-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+
+    /* progress bar */
+    .quiz-progress {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 1.75rem;
+    }
+    .quiz-progress-label {
+      font-size: .78rem;
+      color: var(--text-2);
+      white-space: nowrap;
+    }
+    .progress-track {
+      flex: 1;
+      height: 5px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--brand);
+      border-radius: 99px;
+      transition: width .4s ease;
+    }
+
+    /* question card */
+    .quiz-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      animation: cardIn .3s ease;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .quiz-q-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: .6rem;
+    }
+    .quiz-question {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    /* answer options */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+    }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      padding: .85rem 1rem;
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      text-align: left;
+      font-size: .9rem;
+      color: var(--text);
+      width: 100%;
+    }
+    .quiz-option:hover:not(:disabled) {
+      border-color: var(--brand);
+      background: var(--bg2);
+    }
+    .quiz-option .opt-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: background .15s, color .15s;
+    }
+    .quiz-option .opt-text {
+      flex: 1;
+      line-height: 1.35;
+    }
+
+    /* answered states */
+    .quiz-option.correct {
+      border-color: #16a34a;
+      background: rgba(22,163,74,.08);
+    }
+    .quiz-option.correct .opt-letter {
+      background: #16a34a;
+      color: #fff;
+    }
+    .quiz-option.wrong {
+      border-color: #dc2626;
+      background: rgba(220,38,38,.07);
+      opacity: .6;
+    }
+    .quiz-option.wrong .opt-letter {
+      background: #dc2626;
+      color: #fff;
+    }
+    .quiz-option:disabled {
+      cursor: default;
+    }
+
+    /* reveal block */
+    .quiz-reveal {
+      margin-top: 1.25rem;
+      padding: 1rem 1.1rem;
+      background: var(--bg3);
+      border-left: 3px solid var(--brand);
+      border-radius: 0 8px 8px 0;
+      font-size: .88rem;
+      color: var(--text);
+      line-height: 1.55;
+      animation: revealIn .25s ease;
+    }
+    @keyframes revealIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .quiz-reveal strong { color: var(--text); }
+    .reveal-verdict {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: .35rem;
+    }
+    .reveal-verdict.goed { color: #16a34a; }
+    .reveal-verdict.fout { color: #dc2626; }
+
+    /* next button */
+    .quiz-next-btn {
+      margin-top: 1.25rem;
+      width: 100%;
+      padding: .8rem;
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .95rem;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .quiz-next-btn:hover { opacity: .88; }
+
+    /* ── RESULT SCREEN ── */
+    .quiz-result {
+      text-align: center;
+      animation: cardIn .35s ease;
+    }
+    .result-score-ring {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--brand);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+    .result-score-ring .score-num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+    .result-score-ring .score-den {
+      font-size: .75rem;
+      color: rgba(255,255,255,.7);
+    }
+    .result-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: .5rem;
+    }
+    .result-subtitle {
+      font-size: .9rem;
+      color: var(--text-2);
+      max-width: 420px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.5;
+    }
+    .result-share {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .65rem 1.15rem;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+    .share-btn:hover { opacity: .85; }
+    .share-btn.wa  { background: #25d366; color: #fff; }
+    .share-btn.tw  { background: #000; color: #fff; }
+    .share-btn.cp  { background: var(--bg2); color: var(--text); border: 1px solid var(--border); }
+    .result-restart {
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: .55rem 1.2rem;
+      font-size: .85rem;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: border-color .15s;
+    }
+    .result-restart:hover { border-color: var(--brand); color: var(--text); }
+
+    /* review list */
+    .result-review {
+      margin-top: 2rem;
+      text-align: left;
+    }
+    .result-review h3 {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 1rem;
+    }
+    .review-item {
+      padding: .85rem 1rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: .6rem;
+      font-size: .86rem;
+      line-height: 1.45;
+    }
+    .review-item .ri-top {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      margin-bottom: .35rem;
+    }
+    .ri-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .ri-dot.goed { background: #16a34a; }
+    .ri-dot.fout { background: #dc2626; }
+    .ri-vraag { font-weight: 600; color: var(--text); }
+    .ri-answer { color: var(--text-2); font-size: .82rem; }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="stabiliteit.html">Stabiliteit</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="nareizigers.html">Nareizigers</a></li>
+      <li><a href="tijdlijn.html">Tijdlijn</a></li>
+      <li><a href="kaart.html">Kaart</a></li>
+      <li><a href="trechters.html">Trechters</a></li>
+      <li><a href="ontmanteling.html">Ontmanteling</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="quiz.html" class="active">Quiz</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="quiz-hero">
+  <div class="quiz-hero-label">Kennistest</div>
+  <h1>Wat weet jij over de asielindustrie?</h1>
+  <p>5 vragen. Verrassende antwoorden. Gebaseerd op officiële CBS- en rijksoverheidsdata.</p>
+</div>
+
+<div class="quiz-wrap">
+  <div id="progressBar" class="quiz-progress">
+    <span class="quiz-progress-label" id="progressLabel">Vraag 1 van 5</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div id="quizCard" class="quiz-card">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<script>
+const VRAGEN = [
+  {
+    vraag: "Hoeveel gemeenten zijn wettelijk verplicht vergunninghouders te huisvesten?",
+    opties: [
+      "Alleen de 50 grootste gemeenten",
+      "Gemeenten met meer dan 25.000 inwoners",
+      "Alle 342 Nederlandse gemeenten"
+    ],
+    correct: 2,
+    uitleg: "<strong>Alle 342 gemeenten</strong> — ongeacht grootte. Op basis van artikel 26 van de Huisvestingswet 2014 krijgt elke gemeente een taakstelling die evenredig is aan haar bevolkingsaandeel. Ook een gemeente van 2.000 inwoners moet meedoen."
+  },
+  {
+    vraag: "Hoeveel kost de asielopvang de Nederlandse overheid per jaar (2025, geraamd)?",
+    opties: [
+      "Circa €2 miljard",
+      "Circa €4,5 miljard",
+      "Meer dan €8 miljard"
+    ],
+    correct: 2,
+    uitleg: "<strong>Meer dan €8 miljard</strong> — het geraamde budget voor 2025 bedraagt circa €8,5 miljard. Dat is een verviervoudiging ten opzichte van 2018 (€2 miljard), toen de instroom vergelijkbaar was. De kostenstijging zit in hogere opvangkosten, meer juridische procedures en langere verblijfsduren."
+  },
+  {
+    vraag: "Hoeveel procent van de gemeentelijke taakstelling in 2025 bestaat uit nareizigers — familieleden van al erkende vluchtelingen?",
+    opties: [
+      "Minder dan 15%",
+      "Ongeveer 25%",
+      "Meer dan 40%"
+    ],
+    correct: 2,
+    uitleg: "<strong>Meer dan 40%</strong> — van de 28.000 vergunninghouders die gemeenten in 2025 moeten huisvesten zijn er naar schatting ~11.500 nareizigers (41%). Nareizigers krijgen op grond van de Gezinsherenigingsrichtlijn voorrang boven reguliere woningzoekenden op de sociale huurmarkt."
+  },
+  {
+    vraag: "In welk jaar piekte het aantal asielzoekers dat Nederland binnenkwam in de periode 2018–2025?",
+    opties: [
+      "2021 — door de val van Kabul (Afghanistan)",
+      "2022 — door de oorlog in Oekraïne",
+      "2023 — het absolute record: 48.500 instroom"
+    ],
+    correct: 2,
+    uitleg: "<strong>2023 met 48.500 asielzoekers</strong> — het hoogste aantal in de meetperiode. Oekraïense ontheemden tellen mee, maar ook de reguliere asielinstroom bereikte een piek. In 2022 arriveerden 46.665 personen; 2021 telde 34.865. De COVID-dip in 2020 (17.585) maakt het contrast nog scherper."
+  },
+  {
+    vraag: "Hoeveel voltijdsbanen heeft de Nederlandse asielindustrie gecreëerd in 2024?",
+    opties: [
+      "Circa 5.000 fte — vergelijkbaar met een middelgroot ziekenhuis",
+      "Circa 12.000 fte — ongeveer de grootte van de Belastingdienst",
+      "Meer dan 20.000 fte — meer dan de gehele Nederlandse politie"
+    ],
+    correct: 2,
+    uitleg: "<strong>Meer dan 20.000 fte</strong> — de asielketen (COA, IND, DT&V, gemeentelijke opvang, rechtsbijstand, tolken, begeleiding) vertegenwoordigt in 2024 naar schatting 20.500 voltijdsbanen. Dat is vergelijkbaar met de totale personeelsomvang van de Nationale Politie (~20.000 fte)."
+  }
+];
+
+let huidig = 0;
+let score  = 0;
+let antwoorden = [];
+let beantwoord = false;
+
+function renderVraag() {
+  beantwoord = false;
+  const v = VRAGEN[huidig];
+  const pct = (huidig / VRAGEN.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `Vraag ${huidig + 1} van ${VRAGEN.length}`;
+
+  document.getElementById('quizCard').innerHTML = `
+    <div class="quiz-q-label">Vraag ${huidig + 1} — ${categorie(huidig)}</div>
+    <div class="quiz-question">${v.vraag}</div>
+    <div class="quiz-options" id="optiesLijst">
+      ${v.opties.map((o, i) => `
+        <button class="quiz-option" onclick="kiesOptie(${i})" id="opt${i}">
+          <span class="opt-letter">${['A','B','C'][i]}</span>
+          <span class="opt-text">${o}</span>
+        </button>
+      `).join('')}
+    </div>
+    <div id="revealZone"></div>
+    <button class="quiz-next-btn" id="nextBtn" style="display:none" onclick="volgende()">
+      ${huidig < VRAGEN.length - 1 ? 'Volgende vraag →' : 'Bekijk mijn score →'}
+    </button>
+  `;
+}
+
+function categorie(i) {
+  return ['Gemeenten','Budget','Nareizigers','Instroom','Werkgelegenheid'][i];
+}
+
+function kiesOptie(gekozen) {
+  if (beantwoord) return;
+  beantwoord = true;
+  const v = VRAGEN[huidig];
+  const goed = gekozen === v.correct;
+  if (goed) score++;
+  antwoorden.push({ goed, vraag: v.vraag, juistAntwoord: v.opties[v.correct] });
+
+  // Disable all buttons and style them
+  v.opties.forEach((_, i) => {
+    const btn = document.getElementById('opt' + i);
+    btn.disabled = true;
+    if (i === v.correct) btn.classList.add('correct');
+    else if (i === gekozen) btn.classList.add('wrong');
+  });
+
+  // Reveal explanation
+  document.getElementById('revealZone').innerHTML = `
+    <div class="quiz-reveal">
+      <div class="reveal-verdict ${goed ? 'goed' : 'fout'}">${goed ? 'Correct!' : 'Niet juist'}</div>
+      ${v.uitleg}
+    </div>
+  `;
+
+  document.getElementById('nextBtn').style.display = 'block';
+}
+
+function volgende() {
+  huidig++;
+  if (huidig < VRAGEN.length) {
+    renderVraag();
+  } else {
+    renderResultaat();
+  }
+}
+
+function renderResultaat() {
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressLabel').textContent = 'Quiz afgerond';
+
+  const labels = ['Bijna raak!', 'Niet slecht!', 'Goed bezig!', 'Bijna perfect!', 'Bijna perfect!', 'Volledig correct!'];
+  const subtitels = [
+    'De asielindustrie is ingewikkelder dan ze lijkt. Lees de analyses op GrenzenDicht en daag iemand anders uit.',
+    'Een paar verrassingen, toch? Deel de quiz en kijk of jouw vrienden het beter doen.',
+    'Meer dan gemiddeld! Deel de quiz om anderen te testen.',
+    'Je weet goed hoe het systeem werkt. Deel de quiz met wie denkt het te weten.',
+    'Bijna alles klopt. Deel de quiz — de meeste mensen scoren lager.',
+    'Uitstekende kennis van de feiten. Deel de quiz — de meeste mensen scoren lager.'
+  ];
+
+  const shareMsg = `Ik scoorde ${score}/5 op de asielindustrie-quiz van GrenzenDicht. Doe jij het beter?`;
+  const shareUrl = 'https://grenzendicht.nl/quiz.html';
+
+  const reviewHtml = antwoorden.map((a, i) => `
+    <div class="review-item">
+      <div class="ri-top">
+        <div class="ri-dot ${a.goed ? 'goed' : 'fout'}"></div>
+        <span class="ri-vraag">${VRAGEN[i].vraag}</span>
+      </div>
+      <div class="ri-answer">Juiste antwoord: ${a.juistAntwoord}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('quizCard').innerHTML = `
+    <div class="quiz-result">
+      <div class="result-score-ring">
+        <span class="score-num">${score}</span>
+        <span class="score-den">van 5</span>
+      </div>
+      <div class="result-title">${labels[score]}</div>
+      <div class="result-subtitle">${subtitels[score]}</div>
+      <div class="result-share">
+        <button class="share-btn wa" onclick="deelWA()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </button>
+        <button class="share-btn tw" onclick="deelTW()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.631L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+          X / Twitter
+        </button>
+        <button class="share-btn cp" id="copyBtn" onclick="kopieer()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <span id="copyLabel">Kopieer link</span>
+        </button>
+      </div>
+      <button class="result-restart" onclick="herstart()">Opnieuw spelen</button>
+
+      <div class="result-review">
+        <h3>Jouw antwoorden</h3>
+        ${reviewHtml}
+      </div>
+    </div>
+  `;
+
+  window._quizShare = { msg: shareMsg, url: shareUrl };
+}
+
+function deelWA() {
+  const d = window._quizShare;
+  window.open('https://wa.me/?text=' + encodeURIComponent(d.msg + ' ' + d.url), '_blank');
+}
+function deelTW() {
+  const d = window._quizShare;
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(d.msg) + '&url=' + encodeURIComponent(d.url), '_blank');
+}
+function kopieer() {
+  navigator.clipboard.writeText(window._quizShare.url).then(() => {
+    document.getElementById('copyLabel').textContent = 'Gekopieerd!';
+    setTimeout(() => { document.getElementById('copyLabel').textContent = 'Kopieer link'; }, 2000);
+  });
+}
+function herstart() {
+  huidig = 0; score = 0; antwoorden = [];
+  renderVraag();
+}
+
+renderVraag();
+</script>
+</body>
+</html>
