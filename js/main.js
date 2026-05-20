@@ -46,3 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (a.getAttribute('href') === path) a.classList.add('active');
   });
 });
+
+// Sluit mobiel menu bij klik buiten nav
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('.site-nav');
+  if (nav && nav.classList.contains('nav-open') && !nav.contains(e.target)) {
+    nav.classList.remove('nav-open');
+  }
+});
