@@ -439,7 +439,7 @@
     document.getElementById('reductieLabel').textContent = slider.value + '%';
     document.getElementById('calcInstroom').textContent = Math.round(850 * (1 - r));
     document.getElementById('calcBanen').textContent = Math.round(20500 * r).toLocaleString('nl-NL');
-    document.getElementById('calcBesparing').textContent = '€' + (9.7 * r).toFixed(1) + ' mrd';
+    document.getElementById('calcBesparing').textContent = '€' + (8.94 * r).toFixed(2) + ' mrd';
     document.getElementById('calcCOA').textContent = '€' + (4.2 * (1 - r * 0.85)).toFixed(1) + ' mrd';
   }
   slider.addEventListener('input', updateCalc);

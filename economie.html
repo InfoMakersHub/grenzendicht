@@ -46,9 +46,9 @@
   <div class="hero-inner">
     <div class="hero-label">Hoofdstuk 2 — Economie</div>
     <h1>Wie verdient hoeveel?</h1>
-    <p>De volledige €10+ miljard breakdown: overheidsbudgetten, mensensmokkelnetwerken, juridische sector en secundaire dienstverlening. Alle partijen in de keten hebben financieel belang bij continuering.</p>
+    <p>De volledige €10+ miljard breakdown: overheidsbudget van €8,94 mrd (2026) plus mensensmokkelnetwerken, juridische sector en secundaire dienstverlening. Alle partijen in de keten hebben financieel belang bij continuering.</p>
     <div class="stat-grid">
-      <div class="stat-card"><div class="num">€9,7 mrd</div><div class="label">Begroting Min. A&amp;M 2026</div></div>
+      <div class="stat-card"><div class="num">€8,94 mrd</div><div class="label">Begroting Min. A&amp;M 2026</div></div>
       <div class="stat-card"><div class="num">€4,2 mrd</div><div class="label">COA opvangkosten</div></div>
       <div class="stat-card"><div class="num">€550 mln</div><div class="label">Mensensmokkel NL (schatting)</div></div>
       <div class="stat-card"><div class="num">€42.000</div><div class="label">Kosten per asielzoeker/jaar</div></div>
@@ -61,9 +61,9 @@
   <div class="section">
     <div class="two-col" style="align-items:start;">
       <div class="chart-box">
-        <h3>Overheidsbudget 2026 — breakdown (€9,7 mrd)</h3>
+        <h3>Overheidsbudget 2026 — breakdown (€8,94 mrd)</h3>
         <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
-        <p class="chart-note">Bron: PwC Begroting 2025 / SGP Eerste Kamer.</p>
+        <p class="chart-note">Bron: Rijksbegroting 2026 hoofdstuk XX (Asiel &amp; Migratie), Tweede Kamer 36 800 XX.</p>
       </div>
       <div class="chart-box">
         <h3>Totale geldstromen incl. buiten overheid</h3>
@@ -107,23 +107,23 @@
           </tr>
           <tr>
             <td><strong>Overig</strong> (DT&amp;V, gemeenten)</td>
-            <td class="num-col">€4,68 miljard</td>
+            <td class="num-col">€3,92 miljard</td>
             <td>n.b.</td>
             <td>Terugkeer, gemeentelijke opvang, overig</td>
           </tr>
           <tr style="background:var(--bg3);">
             <td><strong>Totaal overheid</strong></td>
-            <td class="num-col"><strong>€9,7 miljard</strong></td>
+            <td class="num-col"><strong>€8,94 miljard</strong></td>
             <td>11.000+ FTE</td>
-            <td>Begroting 2026</td>
+            <td>Vastgestelde Rijksbegroting 2026</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="callout callout-amber" style="margin-top:1.25rem;">
-      <strong>Structurele onderbegroting — 21 van 24 jaar</strong>
-      In 21 van 24 jaar (1995–2018) waren de werkelijke uitgaven hoger dan begroot (Algemene Rekenkamer, 2023). De permanente "crisis" rechtvaardigt telkens extra budget — een cyclus die zichzelf voedt en institutionele afbouw systematisch blokkeert.
+      <strong>Structurele onderbegroting — 21 van 23 jaar</strong>
+      In 21 van 23 jaar (2000–2023) waren de werkelijke uitgaven hoger dan begroot (Algemene Rekenkamer, 18 januari 2023). De permanente "crisis" rechtvaardigt telkens extra budget — een cyclus die zichzelf voedt en institutionele afbouw systematisch blokkeert.
     </div>
   </div>
 
@@ -136,7 +136,7 @@
         </thead>
         <tbody>
           <tr><td>Prijs per persoon (volledig traject)</td><td class="num-col">€12.000–€15.000</td><td>VRT NWS / Europol</td></tr>
-          <tr><td>Nederlandse instroom 2024</td><td class="num-col">~45.000 personen</td><td>CBS (45.639 totaal)</td></tr>
+          <tr><td>Nederlandse instroom 2024</td><td class="num-col">~44.000 personen</td><td>CBS (32.100 eerste aanvragen + 11.900 nareizigers)</td></tr>
           <tr><td>Geschatte jaaromzet (NL-deel)</td><td class="num-col">€490–€610 mln</td><td>Berekening</td></tr>
           <tr><td>Europese context (Europol 2015)</td><td class="num-col">€3–5 miljard/jaar</td><td>Europol schatting</td></tr>
         </tbody>
@@ -224,7 +224,7 @@
     data: {
       labels: ['COA opvang', 'IND procedures', 'Nidos (AMV)', 'Overig (DT&V, gemeenten)'],
       datasets: [{
-        data: [4200, 720, 100, 4680],
+        data: [4200, 720, 100, 3920],
         backgroundColor: ['#b91c1c','#1d6fd4','#4a90d9','#0d2d6b'],
         borderWidth: 2, borderColor: '#ffffff'
       }]
@@ -233,7 +233,7 @@
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { position: 'bottom', labels: { color: '#7a90a8', boxWidth: 12, padding: 14 } },
-        tooltip: { callbacks: { label: ctx => ` €${ctx.parsed.toLocaleString('nl-NL')} mln (${Math.round(ctx.parsed/9700*100)}%)` } }
+        tooltip: { callbacks: { label: ctx => ` €${ctx.parsed.toLocaleString('nl-NL')} mln (${Math.round(ctx.parsed/8940*100)}%)` } }
       }
     }
   });
@@ -244,7 +244,7 @@
       labels: ['COA','Overig overheid','IND','Secundair','Smokkel (NL)','Nidos','Juridisch'],
       datasets: [{
         label: 'Bedrag (mln €)',
-        data: [4200, 4680, 720, 1250, 550, 100, 300],
+        data: [4200, 3920, 720, 1250, 550, 100, 300],
         backgroundColor: ['#b91c1c','#0d2d6b','#1d6fd4','#4a90d9','#991b1b','#2563eb','#dc2626'],
         borderRadius: 5
       }]
