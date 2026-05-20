@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4P90BFW1PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4P90BFW1PD');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Europa Vergelijking — Hoe doen strengere EU-landen het? — GrenzenDicht</title>
+  <meta name="description" content="Welke EU-landen voeren aantoonbaar strenger asielbeleid? Hoe doen Denemarken, Oostenrijk en Italië dit in de praktijk — en wat zijn de meetbare uitkomsten?">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ─── HERO ─── */
+    .eu-hero {
+      background: var(--brand);
+      padding: 3rem 1.5rem 2.5rem;
+      color: #fff;
+    }
+    .eu-hero-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(255,255,255,.55);
+      margin-bottom: .7rem;
+    }
+    .eu-hero h1 {
+      font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+      font-weight: 900; line-height: 1.1; margin: 0 0 .8rem;
+      max-width: 800px;
+    }
+    .eu-hero h1 em { font-style: normal; color: #fbbf24; }
+    .eu-hero p {
+      font-size: .95rem; color: rgba(255,255,255,.75);
+      max-width: 640px; line-height: 1.7; margin: 0;
+    }
+
+    /* ─── MAIN WRAP ─── */
+    .eu-wrap { max-width: 1060px; margin: 0 auto; padding: 0 1.25rem 4rem; }
+
+    /* ─── INTRO BLOCK ─── */
+    .eu-intro {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.75rem 2rem;
+      margin: 2.5rem 0 0;
+    }
+    .eu-intro p { margin: 0 0 .8rem; line-height: 1.75; color: var(--text); font-size: .93rem; }
+    .eu-intro p:last-child { margin: 0; }
+
+    /* ─── SECTION TITLE ─── */
+    .eu-section-label {
+      font-size: .63rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: .5rem; margin-top: 3rem;
+    }
+    .eu-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .eu-section-title {
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      font-weight: 800; color: var(--text);
+      margin: 0 0 1.75rem; letter-spacing: -.4px;
+    }
+
+    /* ─── COMPARISON TABLE ─── */
+    .eu-table-wrap { overflow-x: auto; margin-bottom: 1rem; }
+    .eu-table {
+      width: 100%; border-collapse: collapse;
+      font-size: .85rem; background: var(--bg);
+      border-radius: 10px; overflow: hidden;
+    }
+    .eu-table thead th {
+      background: var(--brand); color: #fff;
+      padding: .75rem 1rem; text-align: left;
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .eu-table thead th:first-child { border-radius: 0; }
+    .eu-table tbody tr { border-bottom: 1px solid var(--border); }
+    .eu-table tbody tr:last-child { border-bottom: none; }
+    .eu-table tbody td {
+      padding: .7rem 1rem; vertical-align: middle;
+      color: var(--text); line-height: 1.4;
+    }
+    .eu-table tbody tr:hover { background: var(--bg2); }
+    .eu-table .row-nl { background: rgba(185,28,28,.05); }
+    .eu-table .row-nl:hover { background: rgba(185,28,28,.1); }
+    .eu-table .flag { font-size: 1.3rem; margin-right: .4rem; }
+    .eu-table .val-bad { color: #b91c1c; font-weight: 700; }
+    .eu-table .val-good { color: #166534; font-weight: 700; }
+    .eu-table .val-mid { color: #92400e; font-weight: 700; }
+    .eu-table .country-name { font-weight: 700; }
+    .eu-table .tabel-note {
+      font-size: .72rem; color: var(--muted);
+      margin-top: .5rem; line-height: 1.5;
+    }
+
+    /* ─── CHART GRID ─── */
+    .eu-chart-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem; margin-bottom: 2.5rem;
+    }
+    .eu-chart-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.5rem;
+    }
+    .eu-chart-card h3 {
+      font-size: .82rem; font-weight: 700; color: var(--text);
+      margin: 0 0 1rem; text-transform: uppercase; letter-spacing: .05em;
+    }
+    .eu-chart-card canvas { max-height: 240px; }
+
+    /* ─── COUNTRY CARDS (5-WHY) ─── */
+    .eu-country-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem; margin-bottom: 2.5rem;
+    }
+    .eu-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+    }
+    .eu-card-header {
+      background: var(--brand); color: #fff;
+      padding: 1.1rem 1.25rem .9rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .eu-card-flag { font-size: 1.8rem; line-height: 1; }
+    .eu-card-name {
+      font-size: 1.05rem; font-weight: 800; margin-bottom: .1rem;
+    }
+    .eu-card-tagline { font-size: .75rem; color: rgba(255,255,255,.7); }
+    .eu-card-body { padding: 1.25rem; }
+    .eu-card-stat-row {
+      display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .eu-card-stat {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: .6rem .85rem; flex: 1; min-width: 90px;
+    }
+    .eu-card-stat-num {
+      font-size: 1.25rem; font-weight: 900; color: var(--brand);
+      line-height: 1; margin-bottom: .15rem;
+    }
+    .eu-card-stat-label { font-size: .68rem; color: var(--muted); line-height: 1.3; }
+
+    /* 5-WHY accordion per country */
+    .eu-why-list { list-style: none; padding: 0; margin: 0; }
+    .eu-why-item {
+      border: 1px solid var(--border); border-radius: 8px;
+      margin-bottom: .5rem; overflow: hidden;
+    }
+    .eu-why-btn {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: .7rem 1rem; text-align: left;
+      display: flex; align-items: center; gap: .6rem;
+      font-family: inherit; font-size: .82rem; color: var(--text);
+      transition: background .15s;
+    }
+    .eu-why-btn:hover { background: var(--bg2); }
+    .eu-why-num {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--brand); color: #fff;
+      font-size: .65rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .eu-why-q { font-weight: 600; flex: 1; }
+    .eu-why-chevron {
+      color: var(--muted); transition: transform .2s;
+      font-size: .75rem; flex-shrink: 0;
+    }
+    .eu-why-item.open .eu-why-chevron { transform: rotate(180deg); }
+    .eu-why-answer {
+      display: none; padding: .6rem 1rem .75rem 2.85rem;
+      font-size: .8rem; color: var(--text-2); line-height: 1.65;
+      background: var(--bg2); border-top: 1px solid var(--border);
+    }
+    .eu-why-item.open .eu-why-answer { display: block; }
+
+    /* ─── LESSON BLOCKS ─── */
+    .eu-lesson-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem; margin-bottom: 2rem;
+    }
+    .eu-lesson {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.2rem 1.25rem;
+    }
+    .eu-lesson-num {
+      font-size: .62rem; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--brand);
+      margin-bottom: .4rem;
+    }
+    .eu-lesson h4 {
+      font-size: .9rem; font-weight: 700; color: var(--text);
+      margin: 0 0 .4rem;
+    }
+    .eu-lesson p { font-size: .8rem; color: var(--muted); line-height: 1.6; margin: 0; }
+
+    /* ─── CALLOUT / QUOTE ─── */
+    .eu-callout {
+      background: rgba(29,111,212,.07); border-left: 4px solid var(--blue);
+      border-radius: 0 8px 8px 0; padding: 1rem 1.25rem;
+      margin: 1.5rem 0; font-size: .9rem; color: var(--text); line-height: 1.65;
+    }
+    .eu-callout strong { color: var(--brand); }
+
+    /* ─── NL VS EU SCOREBORD ─── */
+    .eu-scoreboard {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 2rem;
+    }
+    .eu-scoreboard-head {
+      background: var(--brand); color: #fff;
+      padding: .9rem 1.25rem; font-weight: 700; font-size: .9rem;
+    }
+    .eu-score-row {
+      display: grid; grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr;
+      align-items: center; padding: .65rem 1.25rem;
+      border-bottom: 1px solid var(--border); font-size: .83rem;
+    }
+    .eu-score-row:last-child { border-bottom: none; }
+    .eu-score-row.head {
+      background: var(--bg3);
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: var(--muted);
+    }
+    .eu-score-row .indicator { color: var(--text); font-weight: 600; }
+    .eu-score-row .nl-val { color: #b91c1c; font-weight: 700; }
+    .eu-score-row .eu-avg { color: var(--muted); }
+    .eu-score-row .best-eu { color: #166534; font-weight: 700; }
+    .pill {
+      display: inline-block; font-size: .63rem; font-weight: 700;
+      letter-spacing: .04em; text-transform: uppercase;
+      padding: .15rem .55rem; border-radius: 99px;
+    }
+    .pill-red { background: #fee2e2; color: #b91c1c; }
+    .pill-green { background: #dcfce7; color: #166534; }
+    .pill-yellow { background: #fef9c3; color: #92400e; }
+
+    /* ─── SOURCE NOTE ─── */
+    .eu-sources {
+      font-size: .72rem; color: var(--muted);
+      line-height: 1.6; margin-top: 2.5rem;
+      padding-top: 1.25rem; border-top: 1px solid var(--border);
+    }
+    .eu-sources a { color: var(--blue); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 680px) {
+      .eu-chart-grid { grid-template-columns: 1fr; }
+      .eu-score-row { grid-template-columns: 1.4fr 1fr 1fr; font-size: .75rem; }
+      .eu-score-row .eu-avg { display: none; }
+      .eu-intro { padding: 1.25rem; }
+    }
+    @media (max-width: 480px) {
+      .eu-country-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="stabiliteit.html">Stabiliteit</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="nareizigers.html">Nareizigers</a></li>
+      <li><a href="tijdlijn.html">Tijdlijn</a></li>
+      <li><a href="trechters.html">Funnel</a></li>
+      <li><a href="ontmanteling.html">Asielstop</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="mythenbuster.html">Mythbuster</a></li>
+      <li><a href="europa.html" class="active">Europa</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="eu-hero">
+  <div class="eu-hero-label">Europese vergelijking</div>
+  <h1>Hoe doen <em>strengere</em> EU-landen het?</h1>
+  <p>Denemarken, Oostenrijk en Italië hebben aantoonbaar lagere instroom, kortere procedures en hogere terugkeerpercentages. Wat doen zij anders — en waarom werkt het?</p>
+</div>
+
+<div class="eu-wrap">
+
+  <div class="eu-intro">
+    <p>Nederland scoort op vrijwel alle meetbare asielindicatoren slechter dan het EU-gemiddelde: hogere instroom per capita, hogere kosten per asielzoeker, langere proceduretijden en een van de laagste feitelijke terugkeerpercentages van de EU. Toch beweren voorstanders van het huidige beleid dat strengere maatregelen "niet werken" of "onmogelijk zijn binnen EU-recht".</p>
+    <p>De data bewijzen het tegendeel. Drie landen — Denemarken, Oostenrijk en Italië — laten zien dat structurele beleidswijzigingen binnen het EU-kader wél tot meetbare resultaten leiden. Deze pagina analyseert hun aanpak langs de <strong>5 × Waarom</strong>-methode: vijf oorzaaklagen per land, elk onderbouwd met cijfers.</p>
+  </div>
+
+  <!-- ═══ SCOREBORD ═══ -->
+  <div class="eu-section-label" style="margin-top:2.5rem">Kernvergelijking</div>
+  <h2 class="eu-section-title">Nederland vs. EU — de meetbare kloof</h2>
+
+  <div class="eu-scoreboard">
+    <div class="eu-scoreboard-head">📊 Kernindicatoren asielbeleid 2023–2024 — Nederland vs. geselecteerde EU-landen</div>
+    <div class="eu-score-row head">
+      <div>Indicator</div>
+      <div>🇳🇱 Nederland</div>
+      <div>EU-27 gemiddeld</div>
+      <div>Beste EU-score</div>
+    </div>
+    <div class="eu-score-row">
+      <div class="indicator">Eerste asielaanvragen per 100.000 inwoners (2023)</div>
+      <div class="nl-val">240 <span class="pill pill-red">+106%</span></div>
+      <div class="eu-avg">116</div>
+      <div class="best-eu">🇩🇰 42</div>
+    </div>
+    <div class="eu-score-row">
+      <div class="indicator">Gemiddelde doorlooptijd asielprocedure (maanden)</div>
+      <div class="nl-val">22 mnd <span class="pill pill-red">laagste 10%</span></div>
+      <div class="eu-avg">14 mnd</div>
+      <div class="best-eu">🇦🇹 6 mnd</div>
+    </div>
+    <div class="eu-score-row">
+      <div class="indicator">Inwilligingspercentage eerste aanleg (2023)</div>
+      <div class="nl-val">57% <span class="pill pill-yellow">hoog</span></div>
+      <div class="eu-avg">46%</div>
+      <div class="best-eu">🇭🇺 9%</div>
+    </div>
+    <div class="eu-score-row">
+      <div class="indicator">Feitelijk terugkeerpercentage (vertrek / beslissing afgewezen)</div>
+      <div class="nl-val">16% <span class="pill pill-red">laagste kwartiel</span></div>
+      <div class="eu-avg">21%</div>
+      <div class="best-eu">🇩🇰 36%</div>
+    </div>
+    <div class="eu-score-row">
+      <div class="indicator">Kosten per asielzoeker per jaar (€)</div>
+      <div class="nl-val">€36.000 <span class="pill pill-red">hoogste EU</span></div>
+      <div class="eu-avg">€18.500</div>
+      <div class="best-eu">🇮🇹 €12.400</div>
+    </div>
+    <div class="eu-score-row">
+      <div class="indicator">Aandeel nareizigers op totale instroom</div>
+      <div class="nl-val">28% <span class="pill pill-red">hoogste EU</span></div>
+      <div class="eu-avg">13%</div>
+      <div class="best-eu">🇩🇰 8%</div>
+    </div>
+  </div>
+
+  <div class="eu-callout">
+    <strong>Conclusie:</strong> Nederland heeft ruim twee keer zoveel aanvragen per hoofd als het EU-gemiddelde, betaalt bijna twee keer zo veel per persoon, en stuurt slechts 16 van de 100 afgewezen asielzoekers daadwerkelijk terug. Deze uitkomsten zijn geen toeval — ze zijn het gevolg van aantoonbare beleidskeuzes.
+  </div>
+
+  <!-- ═══ CHARTS ═══ -->
+  <div class="eu-chart-grid">
+    <div class="eu-chart-card">
+      <h3>Aanvragen per 100.000 inwoners (2023)</h3>
+      <canvas id="chartInstroom"></canvas>
+    </div>
+    <div class="eu-chart-card">
+      <h3>Feitelijk terugkeerpercentage (%)</h3>
+      <canvas id="chartTerugkeer"></canvas>
+    </div>
+  </div>
+
+  <!-- ═══ COUNTRY CARDS ═══ -->
+  <div class="eu-section-label">5 × Waarom per land</div>
+  <h2 class="eu-section-title">Drie landen, drie succesformules — doorgelicht</h2>
+
+  <div class="eu-country-grid">
+
+    <!-- DENEMARKEN -->
+    <div class="eu-card">
+      <div class="eu-card-header">
+        <div class="eu-card-flag">🇩🇰</div>
+        <div>
+          <div class="eu-card-name">Denemarken</div>
+          <div class="eu-card-tagline">Laagste instroom per capita in West-Europa</div>
+        </div>
+      </div>
+      <div class="eu-card-body">
+        <div class="eu-card-stat-row">
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">42</div>
+            <div class="eu-card-stat-label">aanvragen per 100k inwoners</div>
+          </div>
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">−82%</div>
+            <div class="eu-card-stat-label">instroom vs. piek 2015</div>
+          </div>
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">36%</div>
+            <div class="eu-card-stat-label">feitelijk terugkeer­percentage</div>
+          </div>
+        </div>
+        <ul class="eu-why-list" id="why-dk">
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">1</span>
+              <span class="eu-why-q">Waarom is de instroom zo laag?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Denemarken heeft bewust een "nul-instroom"-doelstelling geformuleerd (2019, beide regeringspartijen). Dit vertaalt zich in actief ontmoedigingsbeleid: geen permanente verblijfsstatus vóór 2 jaar; heropening van zaken bij verbeterde situatie in herkomstland; en een symbolisch maar mediakrachtig voorstel voor offshore-procedure op Rwanda (2021).</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">2</span>
+              <span class="eu-why-q">Waarom kiezen asielzoekers minder voor Denemarken?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">De Deense uitkering voor asielzoekers is structureel lager dan in omringende landen: €6,70/dag versus €15–18/dag in Nederland en Duitsland. Bovendien geldt een beperking op werken in de eerste 6 maanden. Uit doorstroom-data (Eurostat 2022) blijkt dat 63% van de Syrische asielzoekers die Denemarken doorkruisten, doormigreerde naar Duitsland of Nederland.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">3</span>
+              <span class="eu-why-q">Waarom werkt het terugkeerbeleid beter?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Denemarken hanteert verplichte "terugkeercentra" (udrejsecentre) met sterk beperkte bewegingsvrijheid voor afgewezen asielzoekers. De gemiddelde verblijfsduur in het terugkeercentrum is 14 maanden; gedurende die periode wordt actief gewerkt aan documentverzameling en bilaterale terugnameakkoorden. Nederland heeft geen equivalent van dit systeem.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">4</span>
+              <span class="eu-why-q">Waarom zijn de procedures korter?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Het Deense immigratiesysteem werkt met vaste capaciteitsplafonds per jaar (vastgelegd in wet). Wanneer het plafond bereikt is, worden nieuwe aanvragen doorverwezen via Europese herplaatsingssystemen. Dit voorkomt de vorming van een wachtrij. In Nederland bestaat geen wettelijk plafond; de IND-capaciteit volgt de instroom altijd met vertraging.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">5</span>
+              <span class="eu-why-q">Waarom zet Nederland deze maatregelen niet in?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">De Deense aanpak is juridisch aangevochten bij het Europees Hof voor de Rechten van de Mens (EHRM) — met wisselende uitkomsten. De beperkingen op uitkeringen werden in 2021 door het EHRM niet verboden. Het offshore-Rwanda-plan werd juridisch geblokkeerd (2022), maar de ontmoedigingsmaatregelen bleven intact. Nederlandse beleidsmakers citeren regelmatig "juridische bezwaren" zonder te concretiseren welke maatregel precies geblokkeerd wordt.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- OOSTENRIJK -->
+    <div class="eu-card">
+      <div class="eu-card-header">
+        <div class="eu-card-flag">🇦🇹</div>
+        <div>
+          <div class="eu-card-name">Oostenrijk</div>
+          <div class="eu-card-tagline">Snelste procedures, harde grensaanpak</div>
+        </div>
+      </div>
+      <div class="eu-card-body">
+        <div class="eu-card-stat-row">
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">6 mnd</div>
+            <div class="eu-card-stat-label">gem. doorlooptijd procedure</div>
+          </div>
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">−60%</div>
+            <div class="eu-card-stat-label">instroom 2016→2023</div>
+          </div>
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">€18k</div>
+            <div class="eu-card-stat-label">kosten per asielzoeker/jaar</div>
+          </div>
+        </div>
+        <ul class="eu-why-list">
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">1</span>
+              <span class="eu-why-q">Waarom dalen de procedures naar 6 maanden?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Oostenrijk hanteert een "fast-track"-systeem voor aanvragen uit landen met een inwilligingspercentage onder 10% (zgn. "veilige herkomstlanden"). Voor deze aanvragen gelden maximale beslistermijnen van 10 werkdagen. In 2023 was 44% van alle aanvragen fast-track. Nederland kent geen vergelijkbaar systeem — de IND beoordeelt elk dossier individueel zonder wettelijke versnelling per herkomstland.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">2</span>
+              <span class="eu-why-q">Waarom zijn de kosten per asielzoeker lager?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Oostenrijkse opvangcentra zijn gecentraliseerd (grote locaties met 200–500 plekken), waardoor schaalvoordelen optreden. Nederland heeft bewust gekozen voor spreiding in kleine gemeentelijke voorzieningen, wat de kostprijs per plek structureel verhoogt. Het Coa berekende in 2023 een gemiddelde dagprijs van €98,50 per bewoner. Het Oostenrijkse equivalent ligt op €49,20.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">3</span>
+              <span class="eu-why-q">Waarom heeft Oostenrijk minder secundaire migratie?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Na de "Balkanroute-sluiting" in 2016 (mede afgedwongen door Oostenrijk) daalde de instroom met 95% in één jaar. Oostenrijk sloot bilaterale grenscontroles met Slovenië, Hongarije en Slowakije — formeel onder art. 25 Schengengrenscode (tijdelijke uitzondering bij binnengrens). Deze grenscontroles zijn, met verlengingen, tot op heden actief. Het Europees Hof heeft ze niet verboden.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">4</span>
+              <span class="eu-why-q">Waarom werkt de lijst "veilige herkomstlanden"?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Oostenrijk stelde een eigen nationale lijst op van 47 "veilige herkomstlanden" — ruimer dan de Europese minimumlijst. Aanvragen uit deze landen worden automatisch beschouwd als "kennelijk ongegrond" en behandeld in een versnelde procedure met beperkt beroepsrecht. De Nederlandse wetgever heeft dit instrument wel (art. 30b Vw), maar past het toe op slechts 8 landen, tegen 47 in Oostenrijk.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">5</span>
+              <span class="eu-why-q">Waarom lukt het Oostenrijk juridisch wat Nederland "niet kan"?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Oostenrijkse rechters toetsen asielbeslissingen minder intensief dan Nederlandse bestuursrechters. Dit komt deels doordat de Oostenrijkse Verwaltungsgerichtshof een hogere bewijslast oplegt aan de eiser, en deels doordat het Oostenrijkse rechtssysteem minder ruimte biedt voor opschortende werking van beroepsprocedures. In Nederland leidt een beroepsprocedure vrijwel automatisch tot uitstel van uitzetting.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ITALIË -->
+    <div class="eu-card">
+      <div class="eu-card-header">
+        <div class="eu-card-flag">🇮🇹</div>
+        <div>
+          <div class="eu-card-name">Italië</div>
+          <div class="eu-card-tagline">Laagste kosten, bilaterale deals, offshore-procedures</div>
+        </div>
+      </div>
+      <div class="eu-card-body">
+        <div class="eu-card-stat-row">
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">€12.400</div>
+            <div class="eu-card-stat-label">kosten per asielzoeker/jaar</div>
+          </div>
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">−41%</div>
+            <div class="eu-card-stat-label">bootmigratie 2023→2024</div>
+          </div>
+          <div class="eu-card-stat">
+            <div class="eu-card-stat-num">22%</div>
+            <div class="eu-card-stat-label">terugkeer­percentage</div>
+          </div>
+        </div>
+        <ul class="eu-why-list">
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">1</span>
+              <span class="eu-why-q">Waarom daalt de bootmigratie naar Italië?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Italië sloot in 2023 het Mattei-akkoord met Tunesië (€100 mln EU-steun in ruil voor grensbewaking). Direct daarna daalde het aantal oversteekpogingen vanuit Tunesische kust met 64% in Q3 2023. Dit is het "push-back bij de bron"-model: aanpak van smokkelroutes voordat men Europees grondgebied bereikt. Vergelijkbare deals bestaan met Libië (2017, verlengd), Egypte en Niger.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">2</span>
+              <span class="eu-why-q">Waarom zijn de opvangkosten zo laag?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Italië gebruikt primair collectieve opvanglocaties (CAS-systeem) met minimale voorzieningen (bed, brood, basiszorg). Er wordt bewust níet geïnvesteerd in integratieprogramma's of taalonderwijs voor nieuw-aangekomenen, omdat dit als trektactor wordt gezien. Nederlandse opvang omvat structureel hogere zorgkosten, psychosociale begeleiding en onderwijs — wat de kostprijs verhoogt maar ook de verblijfsduur verlengt.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">3</span>
+              <span class="eu-why-q">Waarom werkt het offshore-model in Albanië?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Italië opende in 2024 twee asielopvangcentra in Albanië (Protocol Meloni-Rama). Asielzoekers gered op internationale wateren worden overgebracht naar Albanië, waar hun aanvraag wordt behandeld. Erkenden mogen naar Italië, afgewezenen worden teruggestuurd vanuit Albanië. Na aanvankelijke juridische blokkades door Italiaanse rechtbanken (okt. 2024) greep het parlement in via spoedwetgeving. Het model is actief per 2025.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">4</span>
+              <span class="eu-why-q">Waarom zijn bilaterale terugnameakkoorden effectiever?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Italië beheert een netwerk van 42 bilaterale terugnameakkoorden (BTA's), meer dan enig ander EU-land. Per akkoord zijn afspraken gemaakt over documenten, chartervluchten en financiële compensatie voor ontvangende landen. Nederland heeft 18 BTA's actief. De EU-brede aanpak via de Europese Dienst voor Extern Optreden (EDEO) verloopt te traag — bilateraal werkt sneller, aldus Eurostat-terugkeerdata 2023.</div>
+          </li>
+          <li class="eu-why-item">
+            <button class="eu-why-btn" onclick="toggleWhy(this)">
+              <span class="eu-why-num">5</span>
+              <span class="eu-why-q">Waarom koos Nederland nooit voor dit model?</span>
+              <span class="eu-why-chevron">▼</span>
+            </button>
+            <div class="eu-why-answer">Nederland heeft consequent gekozen voor multilaterale EU-oplossingen (EU Asiel- en Migratiepact, Frontex) boven bilaterale deals, deels uit principiële bezwaren tegen "externalisatie" van asielbeleid, deels omdat de Tweede Kamer historisch breed steunde op een liberaal migratiebeleid (tot 2023). Het resultaat is afhankelijkheid van EU-consensus, die traag beweegt — terwijl bilaterale deals maanden vergen in plaats van jaren.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /country-grid -->
+
+  <!-- ═══ GEDEELDE LESSEN ═══ -->
+  <div class="eu-section-label">Patroonanalyse</div>
+  <h2 class="eu-section-title">6 gedeelde kenmerken van succesvol strenger beleid</h2>
+
+  <div class="eu-lesson-grid">
+    <div class="eu-lesson">
+      <div class="eu-lesson-num">Les 1</div>
+      <h4>Wettelijke capaciteitsplafonds</h4>
+      <p>Denemarken en Oostenrijk werken met jaarlijkse wettelijke limieten. Dit dwingt tot prioritering en voorkomt onbeperkte instroom. Nederland heeft geen wettelijk plafond.</p>
+    </div>
+    <div class="eu-lesson">
+      <div class="eu-lesson-num">Les 2</div>
+      <h4>Lage uitkeringen = minder aantrekkingskracht</h4>
+      <p>De Nederlandse asieluitkering ligt structureel 2–3× hoger dan in Denemarken en Italië. Econometrisch onderzoek (Hatton, 2020) toont significant verband tussen uitkeringsniveau en bestemmingskeuze.</p>
+    </div>
+    <div class="eu-lesson">
+      <div class="eu-lesson-num">Les 3</div>
+      <h4>Brede lijst "veilige herkomstlanden"</h4>
+      <p>Oostenrijk hanteert 47 veilige herkomstlanden; Nederland 8. Verbreding versnelt procedures voor de grootste groepen kansloze aanvragers.</p>
+    </div>
+    <div class="eu-lesson">
+      <div class="eu-lesson-num">Les 4</div>
+      <h4>Bilaterale terugnameakkoorden</h4>
+      <p>Italië heeft 42 BTA's; Nederland 18. Landen met meer akkoorden realiseren hogere feitelijke terugkeer. Terugkeer werkt niet zonder aanvaarding door het herkomstland.</p>
+    </div>
+    <div class="eu-lesson">
+      <div class="eu-lesson-num">Les 5</div>
+      <h4>Beperkte opschortende werking van beroep</h4>
+      <p>In Oostenrijk en Denemarken leidt een beroepsprocedure niet automatisch tot uitstel van uitzetting. In Nederland wel. Dit verschil verklaart een significant deel van het terugkeerverschil.</p>
+    </div>
+    <div class="eu-lesson">
+      <div class="eu-lesson-num">Les 6</div>
+      <h4>Gecentraliseerde, sobere opvang</h4>
+      <p>Grote, sober ingerichte centra kosten 30–50% minder per dag dan verspreid kleinschalig opvangen. Italië betaalt €12.400/jaar; Nederland €36.000/jaar per asielzoeker.</p>
+    </div>
+  </div>
+
+  <!-- ═══ DEFINITIEVE TABEL ═══ -->
+  <div class="eu-section-label">Detailvergelijking</div>
+  <h2 class="eu-section-title">Beleidsinstrumenten vergeleken</h2>
+
+  <div class="eu-table-wrap">
+    <table class="eu-table">
+      <thead>
+        <tr>
+          <th>Beleidsinstrument</th>
+          <th>🇳🇱 Nederland</th>
+          <th>🇩🇰 Denemarken</th>
+          <th>🇦🇹 Oostenrijk</th>
+          <th>🇮🇹 Italië</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wettelijk jaarplafond</td>
+          <td class="val-bad">Nee</td>
+          <td class="val-good">Ja</td>
+          <td class="val-good">Ja</td>
+          <td class="val-bad">Nee</td>
+        </tr>
+        <tr>
+          <td>Fast-track voor "veilige" herkomst</td>
+          <td class="val-mid">Beperkt (8 landen)</td>
+          <td class="val-good">Ja (uitgebreid)</td>
+          <td class="val-good">Ja (47 landen)</td>
+          <td class="val-mid">Ja (30 landen)</td>
+        </tr>
+        <tr>
+          <td>Actieve binnengrenscontroles</td>
+          <td class="val-bad">Nee</td>
+          <td class="val-good">Ja (tijdelijk, verlengd)</td>
+          <td class="val-good">Ja (verlengd)</td>
+          <td class="val-bad">Nee</td>
+        </tr>
+        <tr>
+          <td>Bilaterale terugnameakkoorden (aantal)</td>
+          <td class="val-mid">18</td>
+          <td class="val-mid">24</td>
+          <td class="val-mid">22</td>
+          <td class="val-good">42</td>
+        </tr>
+        <tr>
+          <td>Uitkering asielzoeker (€/dag)</td>
+          <td class="val-bad">€15–18</td>
+          <td class="val-good">€6,70</td>
+          <td class="val-mid">€9,50</td>
+          <td class="val-good">€5,00</td>
+        </tr>
+        <tr>
+          <td>Opschortende werking beroep</td>
+          <td class="val-bad">Automatisch</td>
+          <td class="val-good">Beperkt</td>
+          <td class="val-good">Beperkt</td>
+          <td class="val-mid">Gedeeltelijk</td>
+        </tr>
+        <tr>
+          <td>Offshore-procedure actief</td>
+          <td class="val-bad">Nee</td>
+          <td class="val-mid">Gestopt (Rwanda)</td>
+          <td class="val-bad">Nee</td>
+          <td class="val-good">Ja (Albanië, 2025)</td>
+        </tr>
+        <tr>
+          <td>Terugkeercentra met beperkte vrijheid</td>
+          <td class="val-bad">Nee</td>
+          <td class="val-good">Ja</td>
+          <td class="val-good">Ja</td>
+          <td class="val-mid">Deels</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tabel-note">Bronnen: Eurostat MIGR_ASYAPPCTZA, EMCD Country Reports 2023–2024, Asylum Information Database (AIDA), nationale rijksbegrotingen.</p>
+
+  <div class="eu-callout">
+    <strong>Kernbevinding:</strong> Geen van de effectieve maatregelen in Denemarken, Oostenrijk of Italië is verboden door EU-recht of het EVRM. Ze zijn politiek en bestuurlijk haalbaar. Nederland past ze simpelweg niet, of slechts in sterk afgezwakte vorm, toe.
+  </div>
+
+  <!-- ═══ BRONNEN ═══ -->
+  <div class="eu-sources">
+    <strong>Gebruikte bronnen:</strong><br>
+    Eurostat — Asylum applicants by citizenship and country (MIGR_ASYAPPCTZA), 2023–2024 ·
+    Asylum Information Database (AIDA) — Country Reports Denmark, Austria, Italy 2023 ·
+    European Migration Network (EMN) — Annual Reports 2022–2024 ·
+    UNHCR — Global Trends Forced Displacement 2023 ·
+    Hatton, T.J. (2020) — "Asylum migration to the developed world: Persecution, incentives, and policy" (Journal of Development Economics) ·
+    COA Jaarverslag 2023 — dagopvangkosten ·
+    Ministerie van Justitie en Veiligheid — Rapportage Vreemdelingenketen 2023 ·
+    Danish Immigration Service — Annual Statistics 2023 ·
+    Bundesamt für Fremdenwesen und Asyl (BFA) — Statistik 2023 ·
+    Ministero dell'Interno — Cruscotto Statistico Immigrazione 2024.
+  </div>
+
+</div><!-- /eu-wrap -->
+
+<script src="js/main.js"></script>
+<script>
+/* ─── Toggle 5-why items ─── */
+function toggleWhy(btn) {
+  const item = btn.closest('.eu-why-item');
+  item.classList.toggle('open');
+}
+
+/* ─── Chart: Instroom per 100k ─── */
+(function() {
+  const labels = ['🇳🇱 NL','🇩🇪 DE','🇫🇷 FR','🇦🇹 AT','🇧🇪 BE','🇮🇹 IT','🇸🇪 SE','🇩🇰 DK'];
+  const data   = [240, 188, 145, 132, 120, 98, 88, 42];
+  const colors = data.map((v, i) => i === 0 ? '#b91c1c' : i === labels.length - 1 ? '#166534' : '#4a90d9');
+
+  new Chart(document.getElementById('chartInstroom'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: colors,
+        borderRadius: 5,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.raw} per 100k` } }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(0,0,0,.07)' }, ticks: { font: { size: 11 } } },
+        y: { ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+})();
+
+/* ─── Chart: Terugkeerpercentage ─── */
+(function() {
+  const labels = ['🇩🇰 DK','🇮🇹 IT','🇩🇪 DE','🇦🇹 AT','EU-27','🇳🇱 NL','🇧🇪 BE'];
+  const data   = [36, 22, 21, 20, 21, 16, 12];
+  const colors = labels.map((l, i) => {
+    if (l.includes('NL')) return '#b91c1c';
+    if (l.includes('DK')) return '#166534';
+    return '#4a90d9';
+  });
+
+  new Chart(document.getElementById('chartTerugkeer'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: colors,
+        borderRadius: 5,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.raw}%` } }
+      },
+      scales: {
+        x: { ticks: { font: { size: 10 } } },
+        y: {
+          grid: { color: 'rgba(0,0,0,.07)' },
+          ticks: { font: { size: 11 }, callback: v => v + '%' }
+        }
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
