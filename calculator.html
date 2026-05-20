@@ -606,7 +606,13 @@
     document.querySelector('.calc-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  const calcMap = L.map('calcMap', { center: [52.2, 5.28], zoom: 7, zoomControl: true, attributionControl: true });
+  const calcMap = L.map('calcMap', {
+    center: [52.2, 5.28], zoom: 7,
+    minZoom: 7,
+    maxBounds: [[50.3, 2.8], [53.9, 7.5]],
+    maxBoundsViscosity: 1.0,
+    zoomControl: true, attributionControl: true
+  });
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
     subdomains: 'abcd', maxZoom: 19, pane: 'shadowPane'
