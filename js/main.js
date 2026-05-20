@@ -54,3 +54,68 @@ document.addEventListener('click', function(e) {
     nav.classList.remove('nav-open');
   }
 });
+
+// ── Waarderingswidget ──────────────────────────────────────────────────────
+// Verschijnt boven de footer op alle pagina's behalve index & reacties.
+(function () {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  const skip = ['index.html', 'reacties.html', ''];
+  if (skip.includes(page)) return;
+
+  const storageKey = 'gd_appr_' + page;
+  const already    = localStorage.getItem(storageKey);
+
+  const widget = document.createElement('div');
+  widget.id    = 'apprWidget';
+  widget.style.cssText = [
+    'background:var(--bg2)',
+    'border-top:1px solid var(--border)',
+    'padding:1.25rem 1.5rem',
+    'text-align:center',
+    'font-size:.88rem',
+    'color:var(--text-2)',
+  ].join(';');
+
+  if (already) {
+    widget.innerHTML = '<span style="color:var(--brand);font-weight:600;">✓ Bedankt voor je reactie!</span> <a href="reacties.html" style="margin-left:.75rem;color:var(--muted);font-size:.8rem;">Uitgebreid reageren →</a>';
+  } else {
+    widget.innerHTML = `
+      <span style="margin-right:.75rem;">Vond je deze pagina nuttig?</span>
+      <button id="apprYes" style="
+        background:var(--bg3);border:1.5px solid var(--border);
+        border-radius:6px;padding:.35rem .9rem;font-size:.85rem;
+        cursor:pointer;margin-right:.5rem;transition:all .15s;
+        color:var(--text);font-family:inherit;
+      ">👍 Ja, bedankt!</button>
+      <a href="reacties.html" style="
+        display:inline-block;border:1.5px solid var(--border);
+        border-radius:6px;padding:.35rem .9rem;font-size:.85rem;
+        text-decoration:none;color:var(--text-2);
+        background:var(--bg3);transition:all .15s;
+      ">💬 Laat een bericht achter →</a>
+    `;
+  }
+
+  // Inject vóór de footer
+  const footer = document.querySelector('.site-footer');
+  if (footer) footer.parentNode.insertBefore(widget, footer);
+
+  // Klik-handler voor thumbs-up
+  const btn = document.getElementById('apprYes');
+  if (btn) {
+    btn.addEventListener('mouseenter', function () {
+      this.style.borderColor = 'var(--brand)';
+      this.style.background  = 'var(--bg)';
+    });
+    btn.addEventListener('mouseleave', function () {
+      this.style.borderColor = 'var(--border)';
+      this.style.background  = 'var(--bg3)';
+    });
+    btn.addEventListener('click', function () {
+      localStorage.setItem(storageKey, '1');
+      widget.innerHTML = '<span style="color:var(--brand);font-weight:600;">✓ Bedankt voor je reactie!</span> <a href="reacties.html" style="margin-left:.75rem;color:var(--muted);font-size:.8rem;">Uitgebreid reageren →</a>';
+      // GA event
+      if (window.gtag) gtag('event', 'pagina_nuttig', { event_category: 'engagement', event_label: page });
+    });
+  }
+})();

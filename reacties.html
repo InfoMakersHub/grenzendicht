@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4P90BFW1PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4P90BFW1PD');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reacties — GrenzenDicht</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Formulier ───────────────────────────────── */
+    .feedback-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: .45rem;
+    }
+    .form-group label .opt {
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: .65rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg2);
+      color: var(--text);
+      font-size: .95rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: border-color .15s, box-shadow .15s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(13,45,107,.12);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.6;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6480' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right .9rem center;
+      padding-right: 2.4rem;
+    }
+    .btn-submit {
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      padding: .75rem 2.25rem;
+      border-radius: 8px;
+      font-size: .97rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .15s, transform .1s;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .btn-submit:hover { opacity: .88; }
+    .btn-submit:active { transform: scale(.98); }
+    .btn-submit:disabled { opacity: .55; cursor: not-allowed; }
+    .form-note {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: .6rem;
+      line-height: 1.5;
+    }
+    /* Honeypot */
+    .hp-field { display: none !important; }
+
+    /* Success / error state */
+    .form-feedback {
+      display: none;
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      margin-top: 1.5rem;
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+    .form-feedback.success {
+      background: #d1fae5;
+      border: 1.5px solid #6ee7b7;
+      color: #065f46;
+    }
+    .form-feedback.error {
+      background: #fee2e2;
+      border: 1.5px solid #fca5a5;
+      color: #7f1d1d;
+    }
+
+    /* ── Intro-blokken ───────────────────────────── */
+    .react-intro {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .react-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      text-align: center;
+    }
+    .react-card .icon { font-size: 1.7rem; margin-bottom: .4rem; }
+    .react-card h4 {
+      font-size: .82rem;
+      font-weight: 700;
+      margin: 0 0 .2rem;
+      color: var(--text);
+    }
+    .react-card p {
+      font-size: .75rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 620px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .react-intro { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">GrenzenDicht</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="stabiliteit.html">Toestroom</a></li>
+      <li><a href="economie.html">Economie</a></li>
+      <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
+      <li><a href="nareizigers.html">Nareizigers</a></li>
+      <li><a href="europa.html">Europa</a></li>
+      <li><a href="tijdlijn.html">Tijdlijn</a></li>
+      <li><a href="trechters.html">Funnel</a></li>
+      <li><a href="ontmanteling.html">Asielstop</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="mythenbuster.html">Mythbuster</a></li>
+      <li><a href="bronnen.html">Bronnen</a></li>
+      <li><a href="reacties.html" class="active">Reacties</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.closest('.site-nav').classList.toggle('nav-open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Jouw stem</div>
+    <h1>Laat een <em style="font-style:normal;color:#fbbf24;">reactie</em> achter</h1>
+    <p>Heb je een vraag, een opmerking of wil je iets toevoegen? We lezen alles — en nemen elke reactie serieus.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    <div class="feedback-wrap">
+
+      <!-- Intro-blokken -->
+      <div class="react-intro">
+        <div class="react-card">
+          <div class="icon">💬</div>
+          <h4>Opmerking of vraag</h4>
+          <p>Klopt iets niet, of wil je meer weten over een cijfer?</p>
+        </div>
+        <div class="react-card">
+          <div class="icon">⚠️</div>
+          <h4>Fout gevonden?</h4>
+          <p>Help ons de analyse zo accuraat mogelijk te houden.</p>
+        </div>
+        <div class="react-card">
+          <div class="icon">👍</div>
+          <h4>Waardering</h4>
+          <p>Vond je de pagina nuttig? Dat horen we graag.</p>
+        </div>
+      </div>
+
+      <!--
+        INSTELLING FORMSPREE
+        ─────────────────────────────────────────────────
+        1. Ga naar https://formspree.io/register (gratis, geen creditcard)
+        2. Klik "New Form" → geef het een naam (bijv. "GrenzenDicht Reacties")
+        3. Kopieer de form-endpoint, bijv.:  https://formspree.io/f/abcd1234
+        4. Vervang hieronder  YOUR_FORM_ID  door jouw eigen ID (bijv. abcd1234)
+        ─────────────────────────────────────────────────
+      -->
+      <form
+        id="reactieForm"
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+      >
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_subject" value="Nieuwe reactie via GrenzenDicht.nl">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="naam">Naam <span class="opt">(optioneel)</span></label>
+            <input type="text" id="naam" name="naam" placeholder="Jan Janssen" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="email">E-mailadres <span class="opt">(optioneel)</span></label>
+            <input type="email" id="email" name="email" placeholder="jan@voorbeeld.nl" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="type">Type reactie</label>
+            <select id="type" name="type">
+              <option value="waardering">👍 Waardering</option>
+              <option value="vraag">❓ Vraag over de inhoud</option>
+              <option value="opmerking">💬 Opmerking of aanvulling</option>
+              <option value="fout">⚠️ Fout of onjuistheid gevonden</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pagina">Over welke pagina? <span class="opt">(optioneel)</span></label>
+            <select id="pagina" name="pagina">
+              <option value="">— Algemeen / alle pagina's</option>
+              <option value="Toestroom">Toestroom</option>
+              <option value="Economie">Economie</option>
+              <option value="Werkgelegenheid">Werkgelegenheid</option>
+              <option value="Nareizigers">Nareizigers</option>
+              <option value="Europa">Europa</option>
+              <option value="Tijdlijn">Tijdlijn</option>
+              <option value="Funnel">Funnel</option>
+              <option value="Asielstop">Asielstop</option>
+              <option value="Calculator">Calculator</option>
+              <option value="Quiz">Quiz</option>
+              <option value="Mythbuster">Mythbuster</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="bericht">Bericht <span style="color:var(--red)">*</span></label>
+            <textarea id="bericht" name="bericht" placeholder="Schrijf hier je bericht…" required></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Verstuur reactie <span>→</span>
+        </button>
+        <p class="form-note">
+          Reacties worden <strong>niet</strong> publiek gepubliceerd. Je e-mailadres wordt nooit gedeeld of doorgegeven.
+        </p>
+      </form>
+
+      <div class="form-feedback success" id="successMsg">
+        ✅ <strong>Bedankt voor je reactie!</strong> We lezen hem zo snel mogelijk.
+      </div>
+      <div class="form-feedback error" id="errorMsg">
+        ❌ <strong>Er ging iets mis.</strong> Probeer het opnieuw of stuur een e-mail naar de beheerder.
+      </div>
+
+    </div><!-- /feedback-wrap -->
+  </div><!-- /container -->
+</div><!-- /section -->
+
+</main>
+
+<footer class="site-footer">
+  <p>GrenzenDicht — Data-journalistieke analyse van de asielindustrie in Nederland</p>
+  <p style="margin-top:.4rem;"><a href="bronnen.html">Bronvermelding</a> · Alle cijfers gebaseerd op officiële bronnen</p>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  (function () {
+    const form      = document.getElementById('reactieForm');
+    const btn       = document.getElementById('submitBtn');
+    const successEl = document.getElementById('successMsg');
+    const errorEl   = document.getElementById('errorMsg');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      // Honeypot check
+      if (form._gotcha && form._gotcha.value) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Bezig met verzenden…';
+
+      try {
+        const resp = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (resp.ok) {
+          form.style.display = 'none';
+          successEl.style.display = 'block';
+          // Scroll into view
+          successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // GA event
+          if (window.gtag) gtag('event', 'reactie_verzonden', { event_category: 'engagement' });
+        } else {
+          throw new Error('server error');
+        }
+      } catch (err) {
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = 'Verstuur reactie <span>→</span>';
+      }
+    });
+  })();
+</script>
+</body>
+</html>
