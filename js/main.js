@@ -1,3 +1,8 @@
+// ── Laatste update ──────────────────────────────────────────────────────
+// Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
+// JS hieronder injecteert deze waarde onderaan elke .site-footer.
+const LAST_UPDATE = '21 mei 2026, 00:15';
+
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
   // 2025
@@ -39,11 +44,21 @@ Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', san
 Chart.defaults.color = '#64748b';
 Chart.defaults.plugins.legend.labels.boxWidth = 12;
 
-// Active nav
+// Active nav + Laatste-update-timestamp in elke footer
 document.addEventListener('DOMContentLoaded', () => {
   const path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(a => {
     if (a.getAttribute('href') === path) a.classList.add('active');
+  });
+
+  // Inject "Laatste update" onderaan elke site-footer
+  document.querySelectorAll('.site-footer').forEach(footer => {
+    if (footer.querySelector('.last-update')) return; // dubbel-injectie voorkomen
+    const p = document.createElement('p');
+    p.className = 'last-update';
+    p.style.cssText = 'font-size:.7rem;color:var(--muted);margin-top:.6rem;opacity:.6;letter-spacing:.02em;';
+    p.textContent = 'Laatste update: ' + LAST_UPDATE;
+    footer.appendChild(p);
   });
 });
 

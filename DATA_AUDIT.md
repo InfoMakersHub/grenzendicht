@@ -10,9 +10,9 @@ Volledige cross-check van alle kwantitatieve claims op de site tegen primaire br
 |---|---|---|
 | Geverifieerd correct | 22 | ✅ Gepubliceerd, geen actie |
 | Kritieke fouten | 4 | ✅ **Gecorrigeerd 20-05-2026** |
-| Interne inconsistenties | 5 | ✅ **Allemaal opgelost 21-05-2026** |
-| Twijfelgevallen | 7 | ⏳ Methodologische verduidelijking nodig |
-| Ontbrekende bronvermelding | 12 | ⏳ Bronlinks toe te voegen |
+| Interne inconsistenties | 5 | ✅ **Opgelost 21-05-2026** |
+| Twijfelgevallen | 7 | ✅ **Methodologisch verduidelijkt 21-05-2026** |
+| Ontbrekende bronvermelding | 12 | ✅ **Bronlinks toegevoegd 21-05-2026** |
 
 ---
 
@@ -48,17 +48,17 @@ Volledige cross-check van alle kwantitatieve claims op de site tegen primaire br
 
 ---
 
-## B. Twijfelgevallen — methodologische verduidelijking nodig
+## B. Twijfelgevallen — alle zeven verduidelijkt ✅ (21-05-2026)
 
-| # | Claim | Pagina | Wat ontbreekt |
+| # | Claim | Pagina | Oplossing |
 |---|---|---|---|
-| B1 | "Doorlooptijd 22+ maanden" | europa.html | Definitie: alleen IND, of incl. bezwaar/beroep? |
-| B2 | "Deens terugkeerpercentage ~95%" | europa.html | Methodologische noot: omvat vrijwillig vertrek (NL 18% alleen gedwongen). Niet appels-met-appels. |
-| B3 | "Kosten per asielzoeker €42.000/jaar" | economie.html | Bron + definitie: alleen COA-tarief (€75–100/dag = €27–36k), of inclusief IND + rechtsbijstand? |
-| B4 | "IND-achterstand 50.000+" | europa.html | Orde van grootte klopt; directe bronlink IND-rapport 2024 toevoegen |
-| B5 | "COA-begroting 2025: €4,0 mrd" | europa.html | Plausibel, maar geen primaire bron geciteerd |
-| B6 | "Smokkelprijs €12.000–€15.000 p.p." | economie.html, trechters.html | VRT NWS/Europol vermeld zonder publicatiedatum |
-| B7 | "63% Syrische asielzoekers Denemarken→DE/NL" | europa.html | Eurostat-jaar (2022) genoemd zonder specifieke tabel |
+| B1 | "Doorlooptijd 22+ maanden" | europa.html | Voetnoot toegevoegd: betreft totale wachttijd inclusief bezwaar en beroep (IND-tijdigheidsdashboard 2024). Wettelijke beslistermijn = 6 mnd; reguliere IND-doorlooptijd eerste aanleg 9–12 mnd. |
+| B2 | "Deens terugkeerpercentage ~95%" | europa.html | Bestaande voetnoot uitgebreid: omvat vrijwillig vertrek (UK Home Office briefing CBP-10391, 2025). EU-gemiddelde = alleen gedwongen terugkeer (Eurostat MIGR_EIRTN). "Niet appels-met-appels" expliciet vermeld. |
+| B3 | "Kosten per asielzoeker per jaar" | economie.html | Reeds opgelost in D3: €40.000/jaar regulier of tot €91.000/jaar crisis, met bron COA Jaarverslag 2024. |
+| B4 | "IND-achterstand 50.000+" | europa.html | Inline bron toegevoegd: IND Jaarcijfers 2024 (april 2025). |
+| B5 | "COA-begroting 2025: €4,0 mrd" | europa.html | Voetnoot toegevoegd: Rijksbegroting 2025 hoofdstuk XIX/XX, COA-onderdeel. Vergelijkingsbasis 2022 = €1,6 mrd (COA Jaarverslag 2022). |
+| B6 | "Smokkelprijs €12.000–€15.000 p.p." | economie.html, trechters.html | Bron uitgebreid naar Europol EMSC jaarrapport 2023, met disclaimer over routevariatie. |
+| B7 | "63% Syrische asielzoekers Denemarken→DE/NL" | europa.html | Eurostat-tabel geconcretiseerd: MIGR_ASYAPPCTZA longitudinaal 2018–2022. |
 
 ---
 
@@ -103,12 +103,30 @@ Volledige cross-check van alle kwantitatieve claims op de site tegen primaire br
 
 ---
 
-## E. Volgende stappen (optioneel)
+## E. Ontbrekende bronvermelding — alle twaalf opgelost ✅ (21-05-2026)
 
-1. **Definities verduidelijken** voor B1–B7 — toevoegen als hover-tooltips of voetnoten
-2. **Bronvermeldingen toevoegen** voor 12 claims die nu zonder bron staan (zie audit-export voor lijst)
-3. **Single source of truth** `js/figures.js` aangelegd — bij toekomstige wijzigingen alleen dáár wijzigen, dan op de pagina overnemen
+| # | Claim | Pagina | Toegevoegde bron |
+|---|---|---|---|
+| E1 | "€9,7 mrd Begroting Min. A&M 2026" | meerdere | Gecorrigeerd naar €8,94 mrd (Rijksbegroting 2026 hoofdstuk XX) — zie A1 |
+| E2 | "COA €4,2 miljard Budget 2026" | economie.html | Tabel-voetnoot met Rijksbegroting 2026 toegevoegd |
+| E3 | "IND Budget 2026: €720 miljoen" | economie.html | Idem — gezamenlijke tabel-voetnoot |
+| E4 | "€42.000/jaar per persoon" | economie.html | Reeds opgelost in D3: €40.000/jaar met bron COA Jaarverslag 2024 |
+| E5 | "Syrië 27%, Eritrea 9%, ..." 2025-aandelen | trechters.html | Bronvermelding "IND Kerncijfers jan–dec 2025" toegevoegd |
+| E6 | "63% Syrische asielzoekers door DK" | europa.html | Eurostat-tabel geconcretiseerd (zie B7) |
+| E7 | "Oostenrijks COA-equivalent €49,20/dag" | europa.html | BBU GmbH Jahresbericht 2023 toegevoegd |
+| E8 | "Hatton 2020" | europa.html | Volledige citaat + DOI 10.1257/jep.34.1.75 toegevoegd |
+| E9 | "~€44 miljoen winst voor één tussenpersoon" | economie.html, index.html | FD-publicatie juli 2025 dossier "asielopvang-deals" + Rekenkamer-bevestiging |
+| E10 | "Deense daguitkering €6,70 vs NL €15–18" | europa.html | Udlændingestyrelsen 2024 / COA "leefgeld" 2024 toegevoegd |
+| E11 | "2026 Q1 instroom ~10.560 (CBS)" | stabiliteit.html | CBS StatLine 83102NED (gepubliceerd mei 2026) toegevoegd |
+| E12 | "Historisch patroon 1995–2018" | stabiliteit.html | Reeds opgelost via D2-correctie naar 2000–2023 + Rekenkamer-citaat |
 
 ---
 
-*Audit uitgevoerd op 20 mei 2026 — bronnen: IND.nl, COA.nl, CBS.nl, ec.europa.eu/eurostat, rijksfinancien.nl, rekenkamer.nl, dtenv.nl.*
+## F. Doorlopend onderhoud
+
+- **`js/figures.js`** blijft single source of truth voor alle kerncijfers
+- **`js/main.js`** bevat constante `LAST_UPDATE` die na elke push wordt bijgewerkt naar het exacte pushmoment — wordt onderaan elke footer getoond zodat bezoekers zien wanneer de site voor het laatst is geactualiseerd
+
+---
+
+*Volledige audit: 20–21 mei 2026 — bronnen: IND.nl, COA.nl, CBS.nl, ec.europa.eu/eurostat, rijksfinancien.nl, rekenkamer.nl, dtenv.nl, Udlændingestyrelsen.dk, BBU.gv.at, Europol EMSC.*
