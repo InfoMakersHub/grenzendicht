@@ -119,6 +119,26 @@
     <div class="hero-label">Tool — Gemeentecalculator</div>
     <h1>Hoeveel vergunninghouders moet jouw gemeente huisvesten?</h1>
     <p>Elke zes maanden stelt het Rijk een taakstelling vast: het aantal vergunninghouders (inclusief nareizigers) dat naar rato elke gemeente verplicht moet huisvesten. Bereken de verplichting voor jouw gemeente op basis van de officiële taakstellingsformule (bevolkingsaandeel × nationale taakstelling).</p>
+
+    <!-- ── CALC FORM IN HERO ── -->
+    <div style="margin:1.5rem 0 1.75rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:1.25rem 1.5rem;">
+      <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.9rem;">Bereken de taakstelling voor jouw gemeente</div>
+      <div style="display:flex;gap:.75rem;align-items:flex-end;flex-wrap:wrap;">
+        <div style="flex:0 0 auto;position:relative;">
+          <label style="font-size:.78rem;color:rgba(255,255,255,.8);display:block;margin-bottom:.4rem;">Gemeente</label>
+          <input type="text" id="gemeenteInput" placeholder="Typ je gemeente..." autocomplete="off"
+            style="width:calc(16ch + 1.7rem);padding:.65rem .85rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:8px;color:#fff;font-size:.9rem;box-sizing:border-box;"
+            oninput="filterSuggestions(this.value)" onkeydown="handleKey(event)">
+          <div id="suggestionList" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);border:1px solid var(--border);border-radius:0 0 8px 8px;z-index:99;max-height:220px;overflow-y:auto;"></div>
+        </div>
+        <button onclick="berekenGemeente()"
+          style="padding:.65rem 1.4rem;background:#fbbf24;color:#0d2d6b;border:none;border-radius:8px;font-weight:800;font-size:.9rem;cursor:pointer;white-space:nowrap;">
+          Bereken
+        </button>
+      </div>
+      <p style="margin:.75rem 0 0;font-size:.75rem;color:rgba(255,255,255,.55);">Niet gevonden? Gebruik het handmatige veld verderop met het inwoneraantal.</p>
+    </div>
+
     <div class="stat-grid">
       <div class="stat-card"><div class="num">28.000</div><div class="label">Nationale taakstelling 2025 (geheel jaar)</div></div>
       <div class="stat-card"><div class="num">15.000</div><div class="label">Taakstelling 2026-I (jan–jun)</div></div>
@@ -131,23 +151,8 @@
 <div class="content">
 
   <div class="section">
-    <div class="section-title">Bereken de taakstelling voor jouw gemeente</div>
-    <p style="margin-bottom:1.25rem;color:var(--text-2);font-size:.9rem;">Voer je gemeente in voor de berekening. Niet gevonden? Gebruik het handmatige veld met het inwoneraantal.</p>
 
     <div class="calc-box">
-      <div style="display:flex;gap:.75rem;align-items:flex-end;flex-wrap:wrap;">
-        <div style="flex:0 0 auto;position:relative;">
-          <label style="font-size:.78rem;color:var(--text-2);display:block;margin-bottom:.4rem;">Gemeente</label>
-          <input type="text" id="gemeenteInput" placeholder="Typ je gemeente..." autocomplete="off"
-            style="width:calc(16ch + 1.7rem);padding:.65rem .85rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9rem;box-sizing:border-box;"
-            oninput="filterSuggestions(this.value)" onkeydown="handleKey(event)">
-          <div id="suggestionList" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg2);border:1px solid var(--border);border-radius:0 0 8px 8px;z-index:99;max-height:220px;overflow-y:auto;"></div>
-        </div>
-        <button onclick="berekenGemeente()"
-          style="padding:.65rem 1.4rem;background:var(--brand);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;white-space:nowrap;">
-          Bereken
-        </button>
-      </div>
 
       <div id="calcResult" style="display:none;margin-top:1.5rem;">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.85rem;margin-bottom:1.25rem;">
