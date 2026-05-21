@@ -137,25 +137,9 @@
           Bereken
         </button>
       </div>
-      <p style="margin:.75rem 0 0;font-size:.75rem;color:rgba(255,255,255,.55);">Niet gevonden? Gebruik het handmatige veld verderop met het inwoneraantal.</p>
-    </div>
+      <p style="margin:.75rem 0 0;font-size:.75rem;color:rgba(255,255,255,.55);">Niet gevonden? Gebruik het handmatige veld hieronder.</p>
 
-    <div class="stat-grid">
-      <div class="stat-card"><div class="num">28.000</div><div class="label">Nationale taakstelling 2025 (geheel jaar)</div></div>
-      <div class="stat-card"><div class="num">15.000</div><div class="label">Taakstelling 2026-I (jan–jun)</div></div>
-      <div class="stat-card"><div class="num">41%</div><div class="label">Aandeel nareizigers (2025, record)</div></div>
-      <div class="stat-card"><div class="num">Art. 26</div><div class="label">Huisvestingswet 2014 — juridische basis</div></div>
-    </div>
-  </div>
-</div>
-
-<div class="content">
-
-  <div class="section">
-
-    <div class="calc-box">
-
-      <div id="calcResult" style="display:none;margin-top:1.5rem;">
+      <div id="calcResult" style="display:none;margin-top:1rem;background:#fff;border-radius:12px;padding:1.25rem;">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.85rem;margin-bottom:1.25rem;">
           <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
             <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Taakstelling 2025</div>
@@ -204,11 +188,11 @@
         </div>
       </div>
 
-      <div id="calcNotFound" style="display:none;margin-top:1rem;font-size:.85rem;color:var(--muted);">
-        Gemeente niet gevonden. <span style="color:var(--text-2);">Vul hieronder het inwonertal in voor een handmatige berekening:</span>
+      <div id="calcNotFound" style="display:none;margin-top:.75rem;background:#fff;border-radius:12px;padding:1rem;font-size:.85rem;color:#334155;">
+        Gemeente niet gevonden. <span style="color:#475569;">Vul hieronder het inwonertal in voor een handmatige berekening:</span>
         <div style="display:flex;gap:.75rem;align-items:flex-end;margin-top:.75rem;flex-wrap:wrap;">
           <div>
-            <label style="font-size:.78rem;color:var(--text-2);display:block;margin-bottom:.4rem;">Aantal inwoners</label>
+            <label style="font-size:.78rem;color:#475569;display:block;margin-bottom:.4rem;">Aantal inwoners</label>
             <input type="number" id="manuaalInwoners" placeholder="bijv. 45000"
               style="padding:.6rem .85rem;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.9rem;width:160px;">
           </div>
@@ -219,7 +203,17 @@
         </div>
       </div>
     </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">28.000</div><div class="label">Nationale taakstelling 2025 (geheel jaar)</div></div>
+      <div class="stat-card"><div class="num">15.000</div><div class="label">Taakstelling 2026-I (jan–jun)</div></div>
+      <div class="stat-card"><div class="num">41%</div><div class="label">Aandeel nareizigers (2025, record)</div></div>
+      <div class="stat-card"><div class="num">Art. 26</div><div class="label">Huisvestingswet 2014 — juridische basis</div></div>
+    </div>
   </div>
+</div>
+
+<div class="content">
 
   <div class="section">
     <div class="section-title">Achtergrond: hoe werkt de taakstelling?</div>
@@ -611,7 +605,7 @@
     document.getElementById('gemeenteInput').value = mapKaartGemeente;
     geselecteerdeGemeente = mapKaartGemeente;
     toonResultaat(mapKaartGemeente, GEMEENTEN[mapKaartGemeente]);
-    document.querySelector('.calc-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('calcResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   const calcMap = L.map('calcMap', {
