@@ -244,18 +244,18 @@
   </div>
 
   <div class="section">
-    <div class="section-title">Nareizigers 2025 — per herkomst</div>
+    <div class="section-title">Nareizigers per herkomstland — maandelijks 2015–2025</div>
     <div class="chart-box">
-      <h3>Aantal nareizigers in 2025, per herkomstland</h3>
+      <h3>Nareizigers per herkomstland — maandelijks 2015–2025</h3>
       <div class="chart-wrap-lg">
-        <div id="nareizigerChart" style="width:100%;height:100%;"></div>
+        <div id="nareizigersTijdChart" style="width:100%;height:100%;"></div>
       </div>
-      <p class="chart-note">Personen die in 2025 via de nareis-procedure (gezinshereniging met een eerder erkende vergunninghouder) naar Nederland kwamen. Bron: CBS Open Data 80059NED.</p>
+      <p class="chart-note">Maandelijkse nareizigers (gezinshereniging) per herkomstland. Klik op een land in de legenda om aan/uit te zetten. Bron: CBS Open Data 83102NED (maandcijfers).</p>
     </div>
 
     <div class="callout callout-amber" style="margin-top:1.25rem;">
       <strong>Over de nareis-procedure</strong>
-      Vergunninghouders mogen direct familieleden laten overkomen via een mvv-procedure in het herkomstland. De verwerking duurt typisch 9-18 maanden, dus de nareizigers van een bepaald jaar zijn gerelateerd aan vergunningen uit voorgaande jaren — niet aan dezelfde jaargang. Syrische nareizigers blijven dominant (12.110 in 2025 = 74% van alle nareizigers), gevolgd door Jemenitische (1.475).
+      Vergunninghouders mogen direct familieleden laten overkomen via een mvv-procedure in het herkomstland. De verwerking duurt typisch 9–18 maanden — nareizigers volgen dus met vertraging op de verleende vergunningen uit voorgaande jaren. In de tijdreeks is dat patroon duidelijk zichtbaar: de Syrische nareizigers-golf van 2016 (piek: 1.845/maand in nov 2016) volgde op de Syrische vergunningenpiek van 2015. In 2025 blijven Syrische nareizigers dominant: ~1.000/maand.
     </div>
   </div>
 
@@ -566,39 +566,56 @@
     ]
   });
 
-  // ── NAREIZIGERS 2025 PER HERKOMST ───────────────────────────────────
-  const nareizigerChart = echarts.init(document.getElementById('nareizigerChart'));
-  const _narSorted = [...HERKOMST_VERGUNNINGEN.series].sort((a, b) => a.nareizigers - b.nareizigers);
-  nareizigerChart.setOption({
+  // ── NAREIZIGERS PER HERKOMST — MAANDELIJKSE TIJDREEKS 2015-2025 ─────
+  const nareizigersTijdChart = echarts.init(document.getElementById('nareizigersTijdChart'));
+  nareizigersTijdChart.setOption({
     tooltip: {
-      trigger: 'axis', axisPointer: { type: 'shadow' },
+      trigger: 'axis',
       backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
       textStyle: { color: '#1e293b', fontSize: 12 },
       extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
-      formatter: p => `<div style="font-weight:700;margin-bottom:4px">${p[0].axisValue}</div>${p[0].marker} Nareizigers: <strong>${Number(p[0].value).toLocaleString('nl-NL')}</strong>`
+      formatter: params => {
+        const sorted = [...params].sort((a, b) => b.value - a.value);
+        let s = `<div style="font-weight:700;margin-bottom:4px">${_htFmtPeriod(sorted[0].axisValue)}</div>`;
+        sorted.forEach(p => {
+          if (p.value === 0 || p.value == null) return;
+          s += `<div>${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong></div>`;
+        });
+        return s;
+      }
     },
-    grid: { top: 12, right: 48, bottom: 24, left: 16, containLabel: true },
+    legend: {
+      bottom: 0, type: 'scroll',
+      textStyle: { color: '#7a90a8', fontSize: 11 },
+      icon: 'circle', itemWidth: 10, itemHeight: 10, itemGap: 14
+    },
+    grid: { top: 24, right: 24, bottom: 56, left: 16, containLabel: true },
     xAxis: {
-      type: 'value', name: 'Personen',
+      type: 'category', data: NAREIZIGERS_TIJDREEKS.maanden,
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: {
+        color: '#3d526b', fontSize: 11, fontWeight: 600,
+        interval: (idx, val) => val.endsWith('MM01'),
+        formatter: val => val.slice(0, 4)
+      }
+    },
+    yAxis: {
+      type: 'value', name: 'Nareizigers/maand',
       nameTextStyle: { color: '#7a90a8', fontSize: 10 },
       axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
       splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
       axisLine: { show: false }, axisTick: { show: false }
     },
-    yAxis: {
-      type: 'category', data: _narSorted.map(s => s.land),
-      axisLabel: { color: '#3d526b', fontSize: 12, fontWeight: 600 },
-      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
-    },
-    series: [{
-      type: 'bar', barMaxWidth: 22, itemStyle: { color: '#b91c1c', borderRadius: [0,4,4,0] },
-      data: _narSorted.map(s => s.nareizigers),
-      label: { show: true, position: 'right', color: '#7a90a8', fontSize: 11,
-               formatter: p => p.value.toLocaleString('nl-NL') }
-    }]
+    series: NAREIZIGERS_TIJDREEKS.series.map(s => ({
+      name: s.land, type: 'line', data: s.data,
+      lineStyle: { color: s.kleur, width: 2 },
+      itemStyle: { color: s.kleur },
+      symbol: 'none',
+      smooth: 0.3
+    }))
   });
 
-  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); vergunningTijdChart.resize(); nareizigerChart.resize(); });
+  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); vergunningTijdChart.resize(); nareizigersTijdChart.resize(); });
 </script>
 
 </body>
