@@ -74,6 +74,20 @@
   </div>
 
   <div class="section">
+    <div class="chart-box">
+      <h3>Overheidsbudget asiel &amp; migratie — breakdown per jaar (2015–2026)</h3>
+      <div class="chart-wrap-lg">
+        <div id="budgetTijdChart" style="width:100%;height:100%;"></div>
+      </div>
+      <p class="chart-note">COA realisatie 2015–2019 en 2021–2023: J&amp;V jaarverslagen / COA jaarverslagen; IND 2023: begroting agentschap; 2025–2026: Rijksbegroting hfdst XX. Jaren 2020 en 2024 = schatting (†). <strong>Let op:</strong> vanaf 2025 valt het budget onder het bredere hoofdstuk XX (Asiel &amp; Migratie, Schoof-kabinet), dat meer posten omvat dan het voormalige artikel 37 J&amp;V — de stijging na 2024 is deels definitie-uitbreiding, geen extra werkelijke uitgaven. Bron: Rijksbegroting, COA, IND.</p>
+    </div>
+    <div class="callout callout-amber" style="margin-top:1.25rem;">
+      <strong>Waarom zo'n sprong in 2025?</strong>
+      Het Schoof-kabinet richtte in juli 2024 een apart Ministerie van Asiel en Migratie op (hoofdstuk XX). Dit consolideerde posten die voorheen verspreid stonden over andere departementen: gemeentelijke opvang, integratie en overig beleid. De vergelijking 2015–2023 (artikel 37 J&amp;V) met 2025–2026 (hoofdstuk XX) is daardoor deels appels en peren.
+    </div>
+  </div>
+
+  <div class="section">
     <div class="section-title">A. Overheidsbudgetten</div>
     <div style="overflow-x:auto;">
       <table class="data-table">
@@ -269,7 +283,75 @@
     }]
   });
 
-  window.addEventListener('resize', () => { pieChart.resize(); totalChart.resize(); });
+  // ── Overheidsbudget tijdreeks ──────────────────────────────────────────────
+  const _btLabels = BUDGET_TIJDREEKS.jaren.map(j =>
+    BUDGET_TIJDREEKS.schatting.includes(j) ? j + '†' : String(j)
+  );
+  const budgetTijdChart = echarts.init(document.getElementById('budgetTijdChart'));
+  budgetTijdChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: function(params) {
+        const totaal = params.reduce((s, p) => s + (p.value || 0), 0);
+        let html = `<strong>${params[0].axisValue}</strong><br>`;
+        params.forEach(p => {
+          html += `${p.marker} ${p.seriesName}: <strong>€${Number(p.value).toLocaleString('nl-NL')} mln</strong><br>`;
+        });
+        html += `<span style="border-top:1px solid #e2e8f0;display:block;margin-top:4px;padding-top:4px;">Totaal: <strong>€${Number(totaal).toLocaleString('nl-NL')} mln</strong></span>`;
+        return html;
+      }
+    },
+    legend: {
+      bottom: '1%', textStyle: { color: '#7a90a8', fontSize: 11 },
+      icon: 'circle', itemWidth: 8, itemHeight: 8
+    },
+    grid: { top: 28, right: 20, bottom: 52, left: 12, containLabel: true },
+    xAxis: {
+      type: 'category', data: _btLabels,
+      axisLabel: { color: '#3d526b', fontSize: 11 },
+      axisLine: { lineStyle: { color: '#e2e8f0' } },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value', name: 'Miljoenen €',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => '€' + v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [
+      {
+        name: 'COA', type: 'bar', stack: 'budget', barMaxWidth: 44,
+        itemStyle: { color: '#b91c1c' },
+        data: BUDGET_TIJDREEKS.coa,
+        markLine: {
+          silent: true, symbol: ['none', 'none'],
+          lineStyle: { color: '#dc2626', type: 'dashed', width: 1.5, opacity: 0.65 },
+          label: {
+            show: true, position: 'insideEndTop',
+            formatter: '← art.37   hfdst.XX →',
+            color: '#dc2626', fontSize: 9, fontStyle: 'italic'
+          },
+          data: [{ xAxis: 9.5 }]
+        }
+      },
+      {
+        name: 'IND', type: 'bar', stack: 'budget',
+        itemStyle: { color: '#1d6fd4' },
+        data: BUDGET_TIJDREEKS.ind
+      },
+      {
+        name: 'Overig', type: 'bar', stack: 'budget',
+        itemStyle: { color: '#0d2d6b', borderRadius: [3, 3, 0, 0] },
+        data: BUDGET_TIJDREEKS.overig
+      }
+    ]
+  });
+
+  window.addEventListener('resize', () => { pieChart.resize(); totalChart.resize(); budgetTijdChart.resize(); });
 </script>
 
 </body>

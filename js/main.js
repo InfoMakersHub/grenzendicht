@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 17:00';
+const LAST_UPDATE = '22 mei 2026, 17:30';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -58,6 +58,22 @@ const INDUSTRIE = {
     { label: 'Nidos',          waarde:  100, kleur: '#2563eb' },
     { label: 'Juridisch',      waarde:  300, kleur: '#dc2626' },
   ],
+};
+
+// ── Overheidsbudget per jaar 2015–2026 ──────────────────────────────────────
+// COA: realisatie 2015-2019 (J&V jaarverslag), 2021-2023 (COA/NOS jaarverslagen),
+//      2025-2026 (begroting hfdst XX); 2020 + 2024 = schatting (†)
+// IND: realisatie 2015-2019 en 2023 (j.verslagen/begroting agentschap),
+//      2025-2026 (begroting hfdst XX); 2020-2022 + 2024 = schatting (†)
+// Overig = Nidos + DT&V + gemeenten + integratie + overig; berekend als totaal − COA − IND
+//   NB: 2025-2026 vallen onder ruimer hfdst XX — niet 1-op-1 vergelijkbaar met eerdere jaren
+const BUDGET_TIJDREEKS = {
+  jaren:  [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+  coa:    [1268, 1124,  965,  702,  638,  660,  726, 1600, 2700, 3800, 4009, 4190],
+  ind:    [ 390,  371,  366,  360,  405,  430,  480,  580,  579,  720,  966, 1020],
+  overig: [ 105,  192,  195,  274,  234,  210,  285,  400,  935, 1480, 3525, 3650],
+  // schattingsjaren: geen officieel realisatiecijfer beschikbaar
+  schatting: [2020, 2024],
 };
 
 // ── Werkgelegenheid (bron: IND Jaarcijfers 2024, COA Jaarverslag 2024) ─────
