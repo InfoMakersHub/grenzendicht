@@ -146,7 +146,6 @@
     }
     .obl-block { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
     .obl-block.blue   { border-color: #c7d8eb; }
-    .obl-block.amber  { border-color: #f5d27a; }
     .obl-head {
       padding: .8rem 1.1rem;
       display: flex; align-items: center; gap: .6rem;
@@ -154,14 +153,12 @@
       letter-spacing: .07em; text-transform: uppercase;
     }
     .obl-head.blue  { background: #eff6ff; color: #0d2d6b; }
-    .obl-head.amber { background: #fff7e6; color: #92400e; }
     .obl-head .meta {
       margin-left: auto; font-size: .6rem; font-weight: 700;
       padding: .15rem .55rem; border-radius: 4px;
       letter-spacing: .04em;
     }
     .obl-head.blue  .meta { background: #1d6fd4; color: #fff; }
-    .obl-head.amber .meta { background: #d97706; color: #fff; }
     .obl-body { padding: 1.1rem; background: #fff; }
     .obl-cards {
       display: grid; gap: .65rem;
@@ -178,31 +175,63 @@
     }
     .obl-card .val { font-size: 1.4rem; font-weight: 900; line-height: 1; }
     .obl-card.blue  .val { color: #1d6fd4; }
-    .obl-card.amber .val { color: #d97706; }
     .obl-card .unit { font-size: .62rem; color: var(--muted); margin-top: .2rem; }
     .obl-note {
       margin-top: .9rem; padding: .7rem .85rem;
       font-size: .76rem; line-height: 1.55; border-radius: 6px;
     }
     .obl-note.blue  { background: #eff6ff; color: #1e3a8a; }
-    .obl-note.amber { background: #fff7e6; color: #92400e; }
-    .obl-disclaimer {
-      margin-top: .65rem; padding: .65rem .85rem;
-      background: #fef3c7; color: #78350f;
-      border-left: 3px solid #d97706;
-      border-radius: 4px;
-      font-size: .72rem; line-height: 1.5;
-    }
-    .obl-disclaimer strong { color: inherit; }
 
-    /* Map-paneel — kleine spreidingswet-indicator */
+    /* Map-paneel — spreidingswet-indicator */
     .cmp-spreid-bar {
-      background: #fff7e6; border-radius: 8px;
+      background: #eef2ff; border-radius: 8px;
       padding: .5rem .65rem; margin-bottom: .65rem;
-      font-size: .72rem; color: #92400e;
+      font-size: .72rem; color: #312e81;
       display: flex; justify-content: space-between; align-items: center;
-      border: 1px solid #f5d27a;
+      border: 1px solid #a3b8e2;
     }
+
+    /* ─── INDIGO BLOK (Spreidingswet officieel — Fase 3) ─── */
+    .obl-block.indigo  { border-color: #a3b8e2; }
+    .obl-head.indigo   { background: #eef2ff; color: #312e81; }
+    .obl-head.indigo .meta { background: #4f46e5; color: #fff; }
+    .obl-card.indigo .val { color: #4f46e5; }
+    .obl-note.indigo   { background: #eef2ff; color: #312e81; }
+
+    /* Tekort/overschot card-styling */
+    .obl-card.tekort    .val { color: #b91c1c; }
+    .obl-card.overschot .val { color: #15803d; }
+
+    /* ─── ACTIVE-GREEN voor strip rechter kolom (Fase 3) ─── */
+    .verpl-col.active-green { background: #ecfdf5; }
+    .verpl-tag.active-green { background: #15803d; color: #fff; }
+
+    /* ─── MAP TOGGLE (Fase 3) ─── */
+    .map-toggle-wrap {
+      display: flex; align-items: center; gap: 1rem;
+      flex-wrap: wrap; margin-bottom: 1rem;
+    }
+    .map-toggle-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .map-toggle {
+      display: inline-flex; background: var(--bg3);
+      border-radius: 10px; padding: .25rem; gap: .25rem;
+      border: 1px solid var(--border);
+    }
+    .map-toggle button {
+      background: transparent; border: none;
+      padding: .5rem .95rem; border-radius: 8px;
+      font-size: .8rem; font-weight: 700;
+      color: var(--muted); cursor: pointer;
+      transition: all .15s; font-family: inherit;
+    }
+    .map-toggle button.on {
+      background: #fff; color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    .map-toggle button:hover:not(.on) { color: var(--text-2); background: rgba(255,255,255,.5); }
   </style>
 </head>
 <body>
@@ -263,11 +292,11 @@
         <div class="verpl-footnote">Een vergunninghouder is een asielzoeker wiens procedure positief is afgerond. Verlaat het AZC en krijgt voorrang op een sociale huurwoning. Nareizigers tellen mee.</div>
       </div>
 
-      <!-- Rechter kolom: SPREIDINGSWET (binnenkort) -->
-      <div class="verpl-col passive">
-        <span class="verpl-tag passive">
-          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          Niet in deze calculator — binnenkort op de site
+      <!-- Rechter kolom: SPREIDINGSWET (nu actief) -->
+      <div class="verpl-col active-green">
+        <span class="verpl-tag active-green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+          Ook actief in de calculator hieronder
         </span>
         <h3 class="verpl-title">Asielzoekers opvangen</h3>
         <div class="verpl-law">Spreidingswet 2024</div>
@@ -275,10 +304,10 @@
           <div class="verpl-row"><span>Wie</span><span>Wacht op beslissing</span></div>
           <div class="verpl-row"><span>Krijgt</span><span>Plek in opvanglocatie / AZC</span></div>
           <div class="verpl-row"><span>Telling</span><span>Aantal bedden totaal</span></div>
-          <div class="verpl-row"><span>Nationaal</span><span>~40.000 plekken</span></div>
+          <div class="verpl-row"><span>Nationaal</span><span>88.000 plekken (eis)</span></div>
           <div class="verpl-row"><span>Verdeling</span><span>Provinciale Regietafels</span></div>
         </div>
-        <div class="verpl-footnote">Een asielzoeker wacht in een opvanglocatie op de uitslag van zijn procedure. De NOS-cijfers van november 2025 gaan over deze verplichting.</div>
+        <div class="verpl-footnote">Een asielzoeker wacht in een opvanglocatie op de uitslag van zijn procedure. Cijfers per gemeente uit NOS Nieuwsuur / Datawrapper (november 2025).</div>
       </div>
 
     </div>
@@ -287,9 +316,9 @@
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-label">Tool — Gemeentecalculator (huisvestingstaakstelling)</div>
-    <h1>Hoeveel <em style="font-style:italic;color:#fbbf24;">vergunninghouders</em> moet jouw gemeente huisvesten?</h1>
-    <p>Elke zes maanden stelt het Rijk de <strong>huisvestingstaakstelling</strong> vast: het aantal vergunninghouders (inclusief nareizigers) dat naar rato elke gemeente verplicht in een sociale huurwoning moet plaatsen. <strong style="color:#fbbf24;">Dit is niet hetzelfde als de spreidingswet-opgave voor opvangplekken</strong> — zie het blok hierboven voor het verschil.</p>
+    <div class="hero-label">Tool — Gemeentecalculator (beide verplichtingen)</div>
+    <h1>Wat moet jouw gemeente <em style="font-style:italic;color:#fbbf24;">leveren</em>?</h1>
+    <p>Elke gemeente heeft <strong>twee aparte asielverplichtingen</strong> tegelijk: de <strong>huisvestingstaakstelling</strong> (vergunninghouders → sociale huurwoning) én de <strong>spreidingswet-opgave</strong> (asielzoekers → opvangplek). Bereken hieronder beide cijfers voor jouw gemeente op basis van officiële bronnen.</p>
 
     <!-- ── CALC FORM IN HERO ── -->
     <div style="margin:1.5rem 0 1.75rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:1.25rem 1.5rem;">
@@ -350,41 +379,43 @@
             </div>
           </div>
 
-          <!-- ═══ SPREIDINGSWET (schatting) ═══ -->
-          <div class="obl-block amber">
-            <div class="obl-head amber">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/></svg>
+          <!-- ═══ SPREIDINGSWET (officieel) ═══ -->
+          <div class="obl-block indigo">
+            <div class="obl-head indigo">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
               Spreidingswet-opgave
-              <span class="meta">SCHATTING · EERLIJKE AANDEEL</span>
+              <span class="meta">OFFICIEEL · SPREIDINGSWET 2024</span>
             </div>
             <div class="obl-body">
               <div class="obl-cards">
-                <div class="obl-card amber">
-                  <div class="lbl">Eerlijke aandeel</div>
-                  <div class="val" id="resSpreid"></div>
+                <div class="obl-card indigo">
+                  <div class="lbl">Indicatieve verdeling</div>
+                  <div class="val" id="resSwEis"></div>
                   <div class="unit">opvangplekken</div>
                 </div>
-                <div class="obl-card amber">
-                  <div class="lbl">% van nationaal tekort</div>
-                  <div class="val" id="resSpreidPct"></div>
-                  <div class="unit">van 40.000 plekken</div>
+                <div class="obl-card indigo">
+                  <div class="lbl">Huidige capaciteit</div>
+                  <div class="val" id="resSwHuidig"></div>
+                  <div class="unit" id="resSwHuidigUnit">regulier + nood</div>
                 </div>
-                <div class="obl-card amber">
-                  <div class="lbl">Komt boven op</div>
-                  <div class="val" id="resBovenOp"></div>
-                  <div class="unit">vergunninghouders/jr</div>
+                <div class="obl-card" id="resSwVerschilCard">
+                  <div class="lbl" id="resSwVerschilLbl">Tekort</div>
+                  <div class="val" id="resSwVerschil"></div>
+                  <div class="unit" id="resSwVerschilUnit">plekken te kort</div>
+                </div>
+                <div class="obl-card indigo">
+                  <div class="lbl">Status</div>
+                  <div class="val" id="resSwStatus" style="font-size:.95rem;line-height:1.2;"></div>
+                  <div class="unit">van indicatieve eis</div>
                 </div>
               </div>
-              <div class="obl-note amber" id="resNoteSpreid"></div>
-              <div class="obl-disclaimer">
-                <strong>⚠ Dit is een schatting, geen officieel cijfer.</strong> De feitelijke spreidingswet-opgave per gemeente wordt vastgesteld door de Provinciale Regietafels en houdt rekening met <em>bestaande</em> opvangcapaciteit. Gemeenten met grote bestaande locaties (zoals Westerwolde: 2.279 plekken) krijgen lagere eisen, terwijl gemeenten zonder opvang juist hogere eisen krijgen. De werkelijke aantallen kunnen <strong>30–50% afwijken</strong> van deze schatting.
-              </div>
+              <div class="obl-note indigo" id="resNoteSpreid"></div>
             </div>
           </div>
 
         </div>
 
-        <p style="font-size:.7rem;color:var(--muted);margin-top:.75rem;">Berekening huisvestingstaakstelling: (bevolking ÷ 17.900.000) × 28.000. Berekening spreidingswet-schatting: (bevolking ÷ 17.900.000) × 40.000. Bron: CBS bevolkingscijfers 2024 · Huisvestingswet 2014 art. 26 · Spreidingswet 2024 (nationaal tekort 40.000 plekken).</p>
+        <p style="font-size:.7rem;color:var(--muted);margin-top:.75rem;">Berekening huisvestingstaakstelling: (bevolking ÷ 17.900.000) × 28.000. Spreidingswet-cijfers: officiële indicatieve verdeling en huidige capaciteit per gemeente. Bron: CBS Open Data 70072NED · Huisvestingswet 2014 art. 26 · NOS Nieuwsuur / Datawrapper h2QlL (november 2025).</p>
 
         <!-- SHARE -->
         <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);">
@@ -426,10 +457,10 @@
     </div>
 
     <div class="stat-grid">
-      <div class="stat-card"><div class="num">28.000</div><div class="label">Nationale taakstelling 2025 (geheel jaar)</div></div>
-      <div class="stat-card"><div class="num">15.000</div><div class="label">Taakstelling 2026-I (jan–jun)</div></div>
-      <div class="stat-card"><div class="num">41%</div><div class="label">Aandeel nareizigers (2025, record)</div></div>
-      <div class="stat-card"><div class="num">Art. 26</div><div class="label">Huisvestingswet 2014 — juridische basis</div></div>
+      <div class="stat-card"><div class="num">28.000</div><div class="label">Huisvestingstaakstelling 2025 (vergunninghouders/jaar)</div></div>
+      <div class="stat-card"><div class="num">88.000</div><div class="label">Spreidingswet-eis (opvangplekken nationaal)</div></div>
+      <div class="stat-card"><div class="num">250</div><div class="label">van de 342 gemeenten in tekort (spreidingswet)</div></div>
+      <div class="stat-card"><div class="num">41%</div><div class="label">Aandeel nareizigers in taakstelling 2025</div></div>
     </div>
   </div>
 </div>
@@ -481,6 +512,15 @@
   <div class="calc-map-title">Interactieve kaart</div>
   <p class="calc-map-subtitle">Klik op een gemeente om de berekening direct in te laden in de calculator hierboven.</p>
 
+  <div class="map-toggle-wrap">
+    <span class="map-toggle-label">Kaart inkleuren op:</span>
+    <div class="map-toggle" id="mapToggle">
+      <button data-mode="huisv" class="on">Huisvestingstaakstelling</button>
+      <button data-mode="spreid">Spreidingswet-eis</button>
+      <button data-mode="tekort">Tekort / overschot</button>
+    </div>
+  </div>
+
   <div class="calc-map-grid">
     <div style="position:relative;">
       <div id="calcMap">
@@ -522,8 +562,12 @@
           </div>
         </div>
         <div class="cmp-spreid-bar">
-          <span><strong>+ Spreidingswet</strong> <span style="opacity:.7;">(schatting)</span></span>
+          <span><strong>+ Spreidingswet-eis</strong></span>
           <span><strong id="cmp-spreid">—</strong> plekken</span>
+        </div>
+        <div class="cmp-spreid-bar" id="cmp-spreid-status-bar" style="display:none;">
+          <span id="cmp-spreid-status-lbl"><strong>Status</strong></span>
+          <span><strong id="cmp-spreid-status">—</strong></span>
         </div>
         <button class="cmp-cta" onclick="laadInCalculator()">Bereken volledig voor deze gemeente ↑</button>
       </div>
@@ -554,80 +598,35 @@
 
 <script src="js/main.js"></script>
 <script>
-  const GEMEENTEN = {
-    'Amsterdam': 921402, 'Rotterdam': 665186, 'Den Haag': 550952, "'s-Gravenhage": 550952,
-    'Utrecht': 367984, 'Eindhoven': 244767, 'Groningen': 233218, 'Tilburg': 223505,
-    'Almere': 221296, 'Breda': 185374, 'Nijmegen': 179468, 'Apeldoorn': 163998,
-    'Haarlem': 162764, 'Arnhem': 162599, 'Amersfoort': 161593, 'Zaanstad': 156760,
-    "'s-Hertogenbosch": 155108, 'Den Bosch': 155108, 'Haarlemmermeer': 154742,
-    'Enschede': 159399, 'Zwolle': 130093, 'Leiden': 125535, 'Zoetermeer': 124424,
-    'Maastricht': 121051, 'Dordrecht': 118693, 'Alkmaar': 108225, 'Ede': 116982,
-    'Westland': 111027, 'Emmen': 107218, 'Delft': 105645, 'Venlo': 103476,
-    'Deventer': 101978, 'Leeuwarden': 101038, 'Helmond': 92558, 'Oss': 92168,
-    'Sittard-Geleen': 92671, 'Lelystad': 82649, 'Alphen aan den Rijn': 113200,
-    'Hilversum': 89979, 'Hengelo': 80892, 'Purmerend': 81578, 'Roosendaal': 77400,
-    'Schiedam': 78000, 'Hoorn': 72600, 'Gouda': 73440, 'Vlaardingen': 71844,
-    'Capelle aan den IJssel': 66850, 'Westerkwartier': 66000, 'Nissewaard': 86000,
-    'Spijkenisse': 73000, 'Middelburg': 49302, 'Hardenberg': 62000, 'Meierijstad': 82000,
-    'Westerwolde': 26000, 'Súdwest-Fryslân': 90145, 'Smallingerland': 55000,
-    'Dantumadiel': 19000, 'Waadhoeke': 46000, 'Noardeast-Fryslân': 46000,
-    'Emmeloord': 27000, 'Noordoostpolder': 47000, 'Kampen': 54000, 'Dalfsen': 30000,
-    'Oldebroek': 23000, 'Harderwijk': 48000, 'Ermelo': 27000, 'Nunspeet': 27000,
-    'Elburg': 24000, 'Zeewolde': 23000, 'Dronten': 42000, 'Urk': 21000,
-    'Delfzijl': 25000, 'Oldambt': 38000, 'Stadskanaal': 32000, 'Veendam': 27000,
-    'Midden-Groningen': 61000, 'Eemsdelta': 44000, 'Het Hogeland': 49000,
-    'Tynaarlo': 33000, 'Aa en Hunze': 25000, 'Borger-Odoorn': 26000,
-    'Coevorden': 36000, 'Meppel': 34000, 'Hoogeveen': 56000, 'De Wolden': 24000,
-    'Westerveld': 19000, 'Steenwijkerland': 44000, 'Staphorst': 17000,
-    'Zwartewaterland': 23000, 'Raalte': 37000, 'Ommen': 18000, 'Olst-Wijhe': 18000,
-    'Rijssen-Holten': 38000, 'Hellendoorn': 36000, 'Twenterand': 34000, 'Almelo': 72000,
-    'Wierden': 24000, 'Dinkelland': 26000, 'Tubbergen': 21000, 'Losser': 23000,
-    'Oldenzaal': 32000, 'Haaksbergen': 25000, 'Borne': 23000, 'Hof van Twente': 35000,
-    'Lochem': 33000, 'Zutphen': 47000, 'Bronckhorst': 37000, 'Doetinchem': 57000,
-    'Aalten': 27000, 'Oost Gelre': 29000, 'Winterswijk': 29000, 'Berkelland': 45000,
-    'Montferland': 36000, 'Zevenaar': 42000, 'Duiven': 26000, 'Westervoort': 15000,
-    'Lingewaard': 46000, 'Overbetuwe': 48000, 'Berg en Dal': 35000,
-    'Heumen': 16000, 'Wijchen': 42000, 'Druten': 19000, 'Beuningen': 25000,
-    'Maasdriel': 25000, 'Zaltbommel': 28000, 'Tiel': 42000, 'Neder-Betuwe': 24000,
-    'Wageningen': 38000, 'Rhenen': 20000, 'Veenendaal': 67000, 'Renswoude': 6000,
-    'Wijk bij Duurstede': 24000, 'Houten': 50000, 'IJsselstein': 35000,
-    'Nieuwegein': 64000, 'Stichtse Vecht': 66000, 'De Ronde Venen': 44000,
-    'Woerden': 53000, 'Montfoort': 14000, 'Oudewater': 10000, 'Lopik': 14000,
-    'Vijfheerenlanden': 57000, 'Gorinchem': 37000, 'Molenlanden': 44000,
-    'Alblasserdam': 20000, 'Papendrecht': 32000, 'Hendrik-Ido-Ambacht': 30000,
-    'Zwijndrecht': 44000, 'Sliedrecht': 25000, 'Hardinxveld-Giessendam': 18000,
-    'Ridderkerk': 46000, 'Barendrecht': 48000, 'Albrandswaard': 25000,
-    'Lansingerland': 62000, 'Zuidplas': 44000, 'Krimpen aan den IJssel': 29000,
-    'Maassluis': 33000, 'Brielle': 18000, 'Westvoorne': 14000, 'Hellevoetsluis': 40000,
-    'Goeree-Overflakkee': 49000, 'Hoeksche Waard': 87000, 'Oud-Beijerland': 24000,
-    'Lisse': 23000, 'Hillegom': 22000, 'Noordwijk': 43000, 'Katwijk': 68000,
-    'Wassenaar': 26000, 'Voorschoten': 25000, 'Leidschendam-Voorburg': 78000,
-    'Rijswijk': 56000, 'Pijnacker-Nootdorp': 56000, 'Midden-Delfland': 19000,
-    'Scherpenzeel': 10000, 'Barneveld': 61000, 'Nijkerk': 43000, 'Bunschoten': 22000,
-    'Soest': 47000, 'Baarn': 25000, 'Woudenberg': 14000, 'Leusden': 31000,
-    'Utrechtse Heuvelrug': 50000, 'Zeist': 65000, 'De Bilt': 43000, 'Bunnik': 15000,
-    'Vianen': 21000, 'Nieuwkoop': 29000, 'Kaag en Braassem': 27000,
-    'Leiderdorp': 27000, 'Oegstgeest': 24000, 'Teylingen': 36000, 'Sassenheim': 15000,
-    'Bergen op Zoom': 67000, 'Woensdrecht': 22000, 'Steenbergen': 24000,
-    'Halderberge': 30000, 'Rucphen': 23000, 'Moerdijk': 37000, 'Drimmelen': 27000,
-    'Oosterhout': 55000, 'Geertruidenberg': 22000, 'Dongen': 26000, 'Gilze en Rijen': 26000,
-    'Goirle': 23000, 'Hilvarenbeek': 16000, 'Oisterwijk': 26000, 'Loon op Zand': 24000,
-    'Waalwijk': 48000, 'Heusden': 44000, 'Altena': 56000, 'Werkendam': 27000,
-    'Zundert': 22000, 'Alphen-Chaam': 10000, 'Baarle-Nassau': 7000,
-    'Veldhoven': 45000, 'Waalre': 17000, 'Valkenswaard': 31000,
-    'Heeze-Leende': 16000, 'Cranendonck': 20000, 'Weert': 50000, 'Leudal': 37000,
-    'Maasgouw': 24000, 'Roermond': 58000, 'Echt-Susteren': 32000,
-    'Beekdaelen': 36000, 'Brunssum': 29000, 'Heerlen': 86000, 'Landgraaf': 38000,
-    'Kerkrade': 46000, 'Simpelveld': 11000, 'Voerendaal': 12000, 'Gulpen-Wittem': 14000,
-    'Vaals': 10000, 'Meerssen': 20000, 'Valkenburg aan de Geul': 17000,
-    'Eijsden-Margraten': 25000, 'Stein': 25000, 'Beek': 16000, 'Nuth': 15000,
-    'Schinnen': 13000
-  };
+  // ── DATA: wordt geladen uit data/gemeenten.json (Fase 3) ─────────────
+  let GEMEENTEN = {};       // gemeentenaam → bevolking
+  let SPREIDINGSWET = {};   // gemeentenaam → { verdeling, regulier, nood, totaal, verschil, status }
+  let META = {};            // landelijke totalen
 
   const NL_BEVOLKING = 17900000;
   const TAAKSTELLING_2025 = 28000;
   const TAAKSTELLING_2026_H1 = 15000;
-  const SPREIDINGSWET_TEKORT = 40000;   // nationaal tekort opvangplekken (NOS nov 2025)
+
+  // Promise die scripts kunnen awaiten — map-script onderaan gebruikt deze
+  window.dataReady = fetch('data/gemeenten.json')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(data => {
+      META = data.meta;
+      for (const [naam, info] of Object.entries(data.gemeenten)) {
+        if (info.bevolking) GEMEENTEN[naam] = info.bevolking;
+        if (info.sw)        SPREIDINGSWET[naam] = info.sw;
+      }
+      // Aliassen voor populaire schrijfwijzen
+      if (GEMEENTEN["'s-Gravenhage"]) GEMEENTEN['Den Haag'] = GEMEENTEN["'s-Gravenhage"];
+      if (GEMEENTEN["'s-Hertogenbosch"]) GEMEENTEN['Den Bosch'] = GEMEENTEN["'s-Hertogenbosch"];
+      if (SPREIDINGSWET["'s-Gravenhage"]) SPREIDINGSWET['Den Haag'] = SPREIDINGSWET["'s-Gravenhage"];
+      if (SPREIDINGSWET["'s-Hertogenbosch"]) SPREIDINGSWET['Den Bosch'] = SPREIDINGSWET["'s-Hertogenbosch"];
+      return data;
+    })
+    .catch(err => {
+      console.error('Kon gemeenten.json niet laden:', err);
+      alert('Datafout: gemeenten.json kon niet worden geladen. Calculator werkt mogelijk niet correct.');
+    });
 
   let geselecteerdeGemeente = null;
 
@@ -689,12 +688,11 @@
   let huidigNaam = null;
 
   function toonResultaat(naam, inwoners) {
-    const aandeel   = inwoners / NL_BEVOLKING;
-    const t2025     = Math.round(aandeel * TAAKSTELLING_2025);
-    const t2026h    = Math.round(aandeel * TAAKSTELLING_2026_H1);
-    const maand     = Math.round(t2025 / 12);
-    const narei     = Math.round(t2025 * 0.41);
-    const spreid    = Math.round(aandeel * SPREIDINGSWET_TEKORT);
+    const aandeel    = inwoners / NL_BEVOLKING;
+    const t2025      = Math.round(aandeel * TAAKSTELLING_2025);
+    const t2026h     = Math.round(aandeel * TAAKSTELLING_2026_H1);
+    const maand      = Math.round(t2025 / 12);
+    const narei      = Math.round(t2025 * 0.41);
     const aandeelPct = (aandeel * 100).toFixed(2);
 
     // Huisvestingsblok
@@ -705,12 +703,69 @@
     document.getElementById('resNoteHuisv').innerHTML =
       `<strong>${naam}</strong> moet in 2025 in totaal <strong>${t2025.toLocaleString('nl-NL')} vergunninghouders</strong> in een sociale huurwoning plaatsen — gemiddeld <strong>${maand} per maand</strong>. Allen krijgen voorrang op de sociale huurwachtlijst.`;
 
-    // Spreidingswetblok
-    document.getElementById('resSpreid').textContent    = '~' + spreid.toLocaleString('nl-NL');
-    document.getElementById('resSpreidPct').textContent = aandeelPct + '%';
-    document.getElementById('resBovenOp').textContent   = t2025.toLocaleString('nl-NL');
-    document.getElementById('resNoteSpreid').innerHTML =
-      `Bij een zuiver eerlijke verdeling van het nationale tekort van 40.000 spreidingswet-plekken naar bevolkingsaandeel, zou <strong>${naam}</strong> ongeveer <strong>${spreid.toLocaleString('nl-NL')} opvangplekken</strong> moeten leveren — gespreid over reguliere opvanglocaties.`;
+    // Spreidingswetblok — gebruikt officiële data uit gemeenten.json
+    const sw = SPREIDINGSWET[naam];
+    let swShared = null;
+    if (sw) {
+      const verschil   = sw.verschil;
+      const isTekort   = sw.status === 'tekort';
+      const isOverschot = sw.status === 'overschot';
+      const pctGevuld  = sw.verdeling > 0 ? Math.round((sw.totaal / sw.verdeling) * 100) : 0;
+
+      document.getElementById('resSwEis').textContent     = sw.verdeling.toLocaleString('nl-NL');
+      document.getElementById('resSwHuidig').textContent  = sw.totaal.toLocaleString('nl-NL');
+      const huidigUnit = (sw.regulier && sw.nood)
+        ? `${sw.regulier.toLocaleString('nl-NL')} regulier + ${sw.nood.toLocaleString('nl-NL')} nood`
+        : (sw.nood ? `${sw.nood.toLocaleString('nl-NL')} noodopvang` : 'reguliere opvang');
+      document.getElementById('resSwHuidigUnit').textContent = huidigUnit;
+
+      // Tekort/overschot-kaart kleuren + label
+      const verschilCard = document.getElementById('resSwVerschilCard');
+      verschilCard.classList.remove('tekort', 'overschot', 'indigo');
+      if (isTekort) {
+        verschilCard.classList.add('tekort');
+        document.getElementById('resSwVerschilLbl').textContent = 'Tekort';
+        document.getElementById('resSwVerschil').textContent = '−' + Math.abs(verschil).toLocaleString('nl-NL');
+        document.getElementById('resSwVerschilUnit').textContent = 'plekken te kort';
+      } else if (isOverschot) {
+        verschilCard.classList.add('overschot');
+        document.getElementById('resSwVerschilLbl').textContent = 'Overschot';
+        document.getElementById('resSwVerschil').textContent = '+' + Math.abs(verschil).toLocaleString('nl-NL');
+        document.getElementById('resSwVerschilUnit').textContent = 'plekken meer dan eis';
+      } else {
+        verschilCard.classList.add('indigo');
+        document.getElementById('resSwVerschilLbl').textContent = 'Verschil';
+        document.getElementById('resSwVerschil').textContent = verschil.toLocaleString('nl-NL');
+        document.getElementById('resSwVerschilUnit').textContent = 'plekken';
+      }
+
+      // Status-card
+      const statusEl = document.getElementById('resSwStatus');
+      statusEl.textContent = pctGevuld + '% gevuld';
+      statusEl.style.color = isTekort ? '#b91c1c' : (isOverschot ? '#15803d' : '#4f46e5');
+
+      // Note
+      if (isTekort) {
+        document.getElementById('resNoteSpreid').innerHTML =
+          `<strong>${naam}</strong> moet <strong>${sw.verdeling.toLocaleString('nl-NL')} opvangplekken</strong> beschikbaar hebben volgens de spreidingswet — heeft er nu <strong>${sw.totaal.toLocaleString('nl-NL')}</strong>. Er ontbreken <strong style="color:#b91c1c;">${Math.abs(verschil).toLocaleString('nl-NL')} plekken</strong>.`;
+      } else if (isOverschot) {
+        document.getElementById('resNoteSpreid').innerHTML =
+          `<strong>${naam}</strong> moet <strong>${sw.verdeling.toLocaleString('nl-NL')} opvangplekken</strong> beschikbaar hebben volgens de spreidingswet — heeft er <strong>${sw.totaal.toLocaleString('nl-NL')}</strong>. Dat is een <strong style="color:#15803d;">overschot van ${Math.abs(verschil).toLocaleString('nl-NL')} plekken</strong>.`;
+      } else {
+        document.getElementById('resNoteSpreid').innerHTML =
+          `<strong>${naam}</strong> voldoet exact aan de spreidingswet-eis van <strong>${sw.verdeling.toLocaleString('nl-NL')} opvangplekken</strong>.`;
+      }
+      swShared = { eis: sw.verdeling, huidig: sw.totaal, verschil, status: sw.status };
+    } else {
+      // Geen data (handmatige berekening)
+      document.getElementById('resSwEis').textContent     = '—';
+      document.getElementById('resSwHuidig').textContent  = '—';
+      document.getElementById('resSwVerschil').textContent = '—';
+      document.getElementById('resSwStatus').textContent  = 'Geen data';
+      document.getElementById('resSwStatus').style.color = 'var(--muted)';
+      document.getElementById('resNoteSpreid').innerHTML =
+        `Spreidingswet-data is niet beschikbaar voor handmatige berekeningen — selecteer een gemeente uit de lijst voor officiële cijfers.`;
+    }
 
     // Context-bar bovenaan
     document.getElementById('resContext').innerHTML =
@@ -719,7 +774,7 @@
 
     // sla op voor sharing
     huidigNaam = naam;
-    window._shareData = { naam, t2025, narei, maand, spreid };
+    window._shareData = { naam, t2025, narei, maand, sw: swShared };
 
     // update URL zodat de link deelbaar is (alleen voor bekende gemeenten)
     if (GEMEENTEN[naam]) {
@@ -736,7 +791,18 @@
   function shareText() {
     const d = window._shareData;
     if (!d) return '';
-    return `${d.naam} heeft twee asielverplichtingen: ${d.t2025.toLocaleString('nl-NL')} vergunninghouders/jaar huisvesten (Huisvestingswet) + naar schatting ~${d.spreid.toLocaleString('nl-NL')} opvangplekken (Spreidingswet, eerlijke aandeel). Bereken voor jouw gemeente:`;
+    let s = `${d.naam}: ${d.t2025.toLocaleString('nl-NL')} vergunninghouders/jaar huisvesten (Huisvestingswet)`;
+    if (d.sw) {
+      const v = Math.abs(d.sw.verschil).toLocaleString('nl-NL');
+      if (d.sw.status === 'tekort') {
+        s += ` + ${d.sw.eis.toLocaleString('nl-NL')} opvangplekken eis (Spreidingswet) — tekort van ${v} plekken.`;
+      } else if (d.sw.status === 'overschot') {
+        s += ` + ${d.sw.eis.toLocaleString('nl-NL')} opvangplekken eis (Spreidingswet) — overschot van ${v} plekken.`;
+      } else {
+        s += ` + ${d.sw.eis.toLocaleString('nl-NL')} opvangplekken eis (Spreidingswet).`;
+      }
+    }
+    return s + ' Bereken voor jouw gemeente:';
   }
 
   function shareUrl() {
@@ -764,8 +830,8 @@
     });
   }
 
-  // ── URL-PARAMETER: auto-bereken bij laden ────────────────────────
-  (function() {
+  // ── URL-PARAMETER: auto-bereken bij laden (wacht op data) ────────
+  window.dataReady.then(() => {
     const params = new URLSearchParams(window.location.search);
     const gem = params.get('gemeente');
     if (!gem) return;
@@ -774,7 +840,7 @@
     document.getElementById('gemeenteInput').value = naam;
     geselecteerdeGemeente = naam;
     toonResultaat(naam, GEMEENTEN[naam]);
-  })();
+  });
 </script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -783,7 +849,6 @@
   const MAP_ALIASSEN = {
     "'s-Gravenhage": 'Den Haag', 'Den Haag': 'Den Haag',
     "'s-Hertogenbosch": "'s-Hertogenbosch", 'Den Bosch': "'s-Hertogenbosch",
-    'Súdwest-Fryslân': 'Súdwest-Fryslân',
   };
 
   function mapZoekGemeente(statnaam) {
@@ -793,17 +858,89 @@
     return Object.keys(GEMEENTEN).find(k => k.toLowerCase().trim() === lower) || null;
   }
 
-  function mapGetColor(t) {
-    if (t === null) return '#dde3ea';
-    if (t >= 500)  return '#0d2d6b';
-    if (t >= 250)  return '#1d4ed8';
-    if (t >= 100)  return '#1d6fd4';
-    if (t >= 50)   return '#4a90d9';
-    if (t >= 20)   return '#93c4e8';
-    return '#cfe1f5';
-  }
+  // ── MAP MODI ───────────────────────────────────────────────────────
+  const MAP_MODES = {
+    huisv: {
+      label: 'Huisvestingstaakstelling 2025',
+      eenheid: 'vergunninghouders/jaar',
+      legenda: [
+        ['#cfe1f5', '<20'],['#93c4e8','20–50'],['#4a90d9','50–100'],
+        ['#1d6fd4','100–250'],['#1d4ed8','250–500'],['#0d2d6b','>500'],
+      ],
+      getValue: n => {
+        const inv = GEMEENTEN[n];
+        return inv ? Math.round((inv / NL_BEVOLKING) * TAAKSTELLING_2025) : null;
+      },
+      getColor: v => {
+        if (v === null) return '#dde3ea';
+        if (v >= 500) return '#0d2d6b';
+        if (v >= 250) return '#1d4ed8';
+        if (v >= 100) return '#1d6fd4';
+        if (v >= 50)  return '#4a90d9';
+        if (v >= 20)  return '#93c4e8';
+        return '#cfe1f5';
+      },
+      format: v => v == null ? 'Geen data' : v.toLocaleString('nl-NL') + ' vergunninghouders',
+    },
+    spreid: {
+      label: 'Spreidingswet-eis (opvangplekken)',
+      eenheid: 'opvangplekken (eis)',
+      legenda: [
+        ['#eef2ff','<50'],['#c7d2fe','50–100'],['#a5b4fc','100–250'],
+        ['#818cf8','250–500'],['#6366f1','500–1000'],['#4338ca','>1000'],
+      ],
+      getValue: n => SPREIDINGSWET[n] ? SPREIDINGSWET[n].verdeling : null,
+      getColor: v => {
+        if (v === null) return '#dde3ea';
+        if (v >= 1000) return '#4338ca';
+        if (v >= 500)  return '#6366f1';
+        if (v >= 250)  return '#818cf8';
+        if (v >= 100)  return '#a5b4fc';
+        if (v >= 50)   return '#c7d2fe';
+        return '#eef2ff';
+      },
+      format: v => v == null ? 'Geen data' : v.toLocaleString('nl-NL') + ' opvangplekken (eis)',
+    },
+    tekort: {
+      label: 'Tekort (rood) / Overschot (groen)',
+      eenheid: 'verschil capaciteit – eis',
+      legenda: [
+        ['#7f1d1d','tekort >500'],['#b91c1c','tekort 250–500'],['#ef4444','tekort 100–250'],
+        ['#fca5a5','tekort 0–100'],['#86efac','overschot 0–250'],['#15803d','overschot >250'],
+      ],
+      getValue: n => SPREIDINGSWET[n] ? SPREIDINGSWET[n].verschil : null,
+      getColor: v => {
+        if (v === null) return '#dde3ea';
+        if (v >= 250)  return '#15803d';
+        if (v >= 0)    return '#86efac';
+        if (v >= -100) return '#fca5a5';
+        if (v >= -250) return '#ef4444';
+        if (v >= -500) return '#b91c1c';
+        return '#7f1d1d';
+      },
+      format: v => {
+        if (v == null) return 'Geen data';
+        if (v > 0)  return '+' + v.toLocaleString('nl-NL') + ' (overschot)';
+        if (v < 0)  return v.toLocaleString('nl-NL') + ' (tekort)';
+        return '0 (exact)';
+      },
+    },
+  };
 
+  let mapModus = 'huisv';
   let mapKaartGemeente = null;
+
+  function renderLegenda() {
+    const m = MAP_MODES[mapModus];
+    const el = document.querySelector('.calc-map-legend');
+    if (!el) return;
+    let html = `<span class="cml-label">${m.label}</span><div class="cml-scale">`;
+    for (const [c, lbl] of m.legenda) {
+      html += `<div class="cml-item"><div class="cml-sw" style="background:${c};"></div>${lbl}</div>`;
+    }
+    html += `<div class="cml-item"><div class="cml-sw" style="background:#dde3ea;border:1px solid #c0c8d4;"></div>Geen data</div></div>`;
+    el.innerHTML = html;
+  }
 
   function mapToonPanel(statnaam) {
     const naam     = mapZoekGemeente(statnaam);
@@ -820,7 +957,6 @@
       const t2026h  = Math.round(aandeel * TAAKSTELLING_2026_H1);
       const maand   = Math.round(t2025 / 12);
       const narei   = Math.round(t2025 * 0.41);
-      const spreid  = Math.round(aandeel * SPREIDINGSWET_TEKORT);
       document.getElementById('cmp-inwoners').textContent =
         inwoners.toLocaleString('nl-NL') + ' inwoners · ' +
         (aandeel * 100).toFixed(2) + '% van NL';
@@ -828,12 +964,37 @@
       document.getElementById('cmp-narei').textContent = narei.toLocaleString('nl-NL');
       document.getElementById('cmp-maand').textContent = maand.toLocaleString('nl-NL');
       document.getElementById('cmp-t2026').textContent = t2026h.toLocaleString('nl-NL');
-      document.getElementById('cmp-spreid').textContent = '~' + spreid.toLocaleString('nl-NL');
+
+      // Spreidingswet bars
+      const sw = naam ? SPREIDINGSWET[naam] : null;
+      const statusBar = document.getElementById('cmp-spreid-status-bar');
+      if (sw) {
+        document.getElementById('cmp-spreid').textContent = sw.verdeling.toLocaleString('nl-NL');
+        statusBar.style.display = 'flex';
+        const lbl = document.getElementById('cmp-spreid-status-lbl');
+        const val = document.getElementById('cmp-spreid-status');
+        if (sw.status === 'tekort') {
+          lbl.innerHTML = '<strong style="color:#b91c1c;">Tekort</strong>';
+          val.textContent = '−' + Math.abs(sw.verschil).toLocaleString('nl-NL');
+          val.style.color = '#b91c1c';
+        } else if (sw.status === 'overschot') {
+          lbl.innerHTML = '<strong style="color:#15803d;">Overschot</strong>';
+          val.textContent = '+' + Math.abs(sw.verschil).toLocaleString('nl-NL');
+          val.style.color = '#15803d';
+        } else {
+          lbl.innerHTML = '<strong>Exact</strong>';
+          val.textContent = '0';
+        }
+      } else {
+        document.getElementById('cmp-spreid').textContent = '—';
+        statusBar.style.display = 'none';
+      }
     } else {
       document.getElementById('cmp-inwoners').textContent = 'Geen data beschikbaar';
       ['cmp-t2025','cmp-narei','cmp-maand','cmp-t2026','cmp-spreid'].forEach(id => {
         document.getElementById(id).textContent = '—';
       });
+      document.getElementById('cmp-spreid-status-bar').style.display = 'none';
     }
   }
 
@@ -855,45 +1016,81 @@
 
   let calcGeojsonLayer, calcActiveLayer = null;
 
-  fetch('https://cartomap.github.io/nl/wgs84/gemeente_2024.geojson')
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(data => {
-      document.getElementById('calcMapLoading').style.display = 'none';
-      calcGeojsonLayer = L.geoJSON(data, {
-        style(feature) {
-          const naam = mapZoekGemeente(feature.properties.statnaam || feature.properties.name || '');
-          const inv  = naam ? GEMEENTEN[naam] : null;
-          const t    = inv ? Math.round((inv / NL_BEVOLKING) * TAAKSTELLING_2025) : null;
-          return { fillColor: mapGetColor(t), fillOpacity: t ? 0.82 : 0.45, color: '#fff', weight: 0.8, opacity: 1 };
-        },
-        onEachFeature(feature, layer) {
-          const statnaam = feature.properties.statnaam || feature.properties.name || '';
-          const naam     = mapZoekGemeente(statnaam);
-          const inv      = naam ? GEMEENTEN[naam] : null;
-          const t        = inv ? Math.round((inv / NL_BEVOLKING) * TAAKSTELLING_2025) : null;
-          layer.bindTooltip(
-            t ? `<strong>${naam}</strong><br>${t.toLocaleString('nl-NL')} vergunninghouders`
-              : `<strong>${statnaam}</strong><br><span style="color:#888">Geen data</span>`,
-            { sticky: true, opacity: 0.95 }
-          );
-          layer.on({
-            mouseover(e) { e.target.setStyle({ fillOpacity: 1, weight: 1.5, color: '#0d2d6b' }); e.target.bringToFront(); },
-            mouseout(e)  { if (calcActiveLayer !== e.target) calcGeojsonLayer.resetStyle(e.target); },
-            click(e) {
-              if (calcActiveLayer && calcActiveLayer !== e.target) calcGeojsonLayer.resetStyle(calcActiveLayer);
-              e.target.setStyle({ fillOpacity: 1, weight: 2, color: '#0d2d6b' });
-              calcActiveLayer = e.target;
-              mapToonPanel(statnaam);
-            }
-          });
-        }
-      }).addTo(calcMap);
-      calcMap.fitBounds(calcGeojsonLayer.getBounds(), { padding: [10, 10] });
-    })
-    .catch(() => {
-      document.getElementById('calcMapLoading').innerHTML =
-        '<span style="color:#b91c1c;font-size:.82rem;padding:1rem;text-align:center;">Kaart kon niet geladen worden.</span>';
+  function refreshMapStyles() {
+    if (!calcGeojsonLayer) return;
+    const mode = MAP_MODES[mapModus];
+    calcGeojsonLayer.eachLayer(layer => {
+      const statnaam = layer.feature.properties.statnaam || layer.feature.properties.name || '';
+      const naam     = mapZoekGemeente(statnaam);
+      const v        = naam ? mode.getValue(naam) : null;
+      // basisstyle
+      const style = { fillColor: mode.getColor(v), fillOpacity: v != null ? 0.82 : 0.45, color: '#fff', weight: 0.8, opacity: 1 };
+      if (layer === calcActiveLayer) Object.assign(style, { fillOpacity: 1, weight: 2, color: '#0d2d6b' });
+      layer.setStyle(style);
+      // tooltip
+      layer.setTooltipContent(
+        v != null
+          ? `<strong>${naam}</strong><br>${mode.format(v)}`
+          : `<strong>${statnaam}</strong><br><span style="color:#888">Geen data</span>`
+      );
     });
+    renderLegenda();
+  }
+
+  // ── Toggle-handler ────────────────────────────────────────────────
+  document.getElementById('mapToggle').addEventListener('click', e => {
+    if (e.target.tagName !== 'BUTTON') return;
+    const newMode = e.target.dataset.mode;
+    if (!newMode || newMode === mapModus) return;
+    mapModus = newMode;
+    document.querySelectorAll('#mapToggle button').forEach(b => b.classList.toggle('on', b.dataset.mode === newMode));
+    refreshMapStyles();
+  });
+
+  // ── Init: wacht op data, dan laad geojson ─────────────────────────
+  window.dataReady.then(() => {
+    return fetch('https://cartomap.github.io/nl/wgs84/gemeente_2024.geojson');
+  })
+  .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(data => {
+    document.getElementById('calcMapLoading').style.display = 'none';
+    const mode = MAP_MODES[mapModus];
+    calcGeojsonLayer = L.geoJSON(data, {
+      style(feature) {
+        const naam = mapZoekGemeente(feature.properties.statnaam || feature.properties.name || '');
+        const v    = naam ? mode.getValue(naam) : null;
+        return { fillColor: mode.getColor(v), fillOpacity: v != null ? 0.82 : 0.45, color: '#fff', weight: 0.8, opacity: 1 };
+      },
+      onEachFeature(feature, layer) {
+        const statnaam = feature.properties.statnaam || feature.properties.name || '';
+        const naam     = mapZoekGemeente(statnaam);
+        const v        = naam ? mode.getValue(naam) : null;
+        layer.bindTooltip(
+          v != null
+            ? `<strong>${naam}</strong><br>${mode.format(v)}`
+            : `<strong>${statnaam}</strong><br><span style="color:#888">Geen data</span>`,
+          { sticky: true, opacity: 0.95 }
+        );
+        layer.on({
+          mouseover(e) { e.target.setStyle({ fillOpacity: 1, weight: 1.5, color: '#0d2d6b' }); e.target.bringToFront(); },
+          mouseout(e)  { if (calcActiveLayer !== e.target) calcGeojsonLayer.resetStyle(e.target); },
+          click(e) {
+            if (calcActiveLayer && calcActiveLayer !== e.target) calcGeojsonLayer.resetStyle(calcActiveLayer);
+            e.target.setStyle({ fillOpacity: 1, weight: 2, color: '#0d2d6b' });
+            calcActiveLayer = e.target;
+            mapToonPanel(statnaam);
+          }
+        });
+      }
+    }).addTo(calcMap);
+    calcMap.fitBounds(calcGeojsonLayer.getBounds(), { padding: [10, 10] });
+    renderLegenda();
+  })
+  .catch(err => {
+    console.error('Kaart-laadfout:', err);
+    document.getElementById('calcMapLoading').innerHTML =
+      '<span style="color:#b91c1c;font-size:.82rem;padding:1rem;text-align:center;">Kaart kon niet geladen worden.</span>';
+  });
 </script>
 
 </body>

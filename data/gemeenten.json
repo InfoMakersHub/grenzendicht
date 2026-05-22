@@ -1,0 +1,4122 @@
+{
+  "meta": {
+    "bron_bevolking": "CBS Open Data 70072NED (peildatum 2024)",
+    "bron_spreidingswet": "NOS Nieuwsuur / Datawrapper h2QlL (november 2025)",
+    "totaal_gemeenten": 342,
+    "met_bevolking": 342,
+    "met_spreidingswet": 342,
+    "met_beide": 342,
+    "totaal_indicatieve_verdeling": 88000,
+    "totaal_huidige_capaciteit": 74236,
+    "tekort_landelijk": -39489,
+    "overschot_landelijk": 25725,
+    "gemeenten_met_tekort": 250,
+    "gemeenten_met_overschot": 92
+  },
+  "gemeenten": {
+    "'s-Gravenhage": {
+      "code": "GM0518",
+      "bevolking": 566221,
+      "sw": {
+        "verdeling": 2306,
+        "regulier": 252,
+        "nood": 1274,
+        "totaal": 1526,
+        "verschil": -780,
+        "status": "tekort"
+      }
+    },
+    "'s-Hertogenbosch": {
+      "code": "GM0796",
+      "bevolking": 160757,
+      "sw": {
+        "verdeling": 809,
+        "regulier": 0,
+        "nood": 500,
+        "totaal": 500,
+        "verschil": -309,
+        "status": "tekort"
+      }
+    },
+    "Aa en Hunze": {
+      "code": "GM1680",
+      "bevolking": 25845,
+      "sw": {
+        "verdeling": 142,
+        "regulier": 87,
+        "nood": 0,
+        "totaal": 87,
+        "verschil": -55,
+        "status": "tekort"
+      }
+    },
+    "Aalsmeer": {
+      "code": "GM0358",
+      "bevolking": 33279,
+      "sw": {
+        "verdeling": 189,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -189,
+        "status": "tekort"
+      }
+    },
+    "Aalten": {
+      "code": "GM0197",
+      "bevolking": 27308,
+      "sw": {
+        "verdeling": 143,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -143,
+        "status": "tekort"
+      }
+    },
+    "Achtkarspelen": {
+      "code": "GM0059",
+      "bevolking": 28226,
+      "sw": {
+        "verdeling": 127,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -127,
+        "status": "tekort"
+      }
+    },
+    "Alblasserdam": {
+      "code": "GM0482",
+      "bevolking": 20314,
+      "sw": {
+        "verdeling": 99,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -99,
+        "status": "tekort"
+      }
+    },
+    "Albrandswaard": {
+      "code": "GM0613",
+      "bevolking": 26428,
+      "sw": {
+        "verdeling": 155,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -155,
+        "status": "tekort"
+      }
+    },
+    "Alkmaar": {
+      "code": "GM0361",
+      "bevolking": 112304,
+      "sw": {
+        "verdeling": 553,
+        "regulier": 155,
+        "nood": 0,
+        "totaal": 155,
+        "verschil": -398,
+        "status": "tekort"
+      }
+    },
+    "Almelo": {
+      "code": "GM0141",
+      "bevolking": 74317,
+      "sw": {
+        "verdeling": 299,
+        "regulier": 471,
+        "nood": 0,
+        "totaal": 471,
+        "verschil": 172,
+        "status": "overschot"
+      }
+    },
+    "Almere": {
+      "code": "GM0034",
+      "bevolking": 226500,
+      "sw": {
+        "verdeling": 1164,
+        "regulier": 864,
+        "nood": 80,
+        "totaal": 944,
+        "verschil": -220,
+        "status": "tekort"
+      }
+    },
+    "Alphen aan den Rijn": {
+      "code": "GM0484",
+      "bevolking": 114966,
+      "sw": {
+        "verdeling": 628,
+        "regulier": 445,
+        "nood": 0,
+        "totaal": 445,
+        "verschil": -183,
+        "status": "tekort"
+      }
+    },
+    "Alphen-Chaam": {
+      "code": "GM1723",
+      "bevolking": 10455,
+      "sw": {
+        "verdeling": 63,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -63,
+        "status": "tekort"
+      }
+    },
+    "Altena": {
+      "code": "GM1959",
+      "bevolking": 58277,
+      "sw": {
+        "verdeling": 314,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -314,
+        "status": "tekort"
+      }
+    },
+    "Ameland": {
+      "code": "GM0060",
+      "bevolking": 3839,
+      "sw": {
+        "verdeling": 20,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -20,
+        "status": "tekort"
+      }
+    },
+    "Amersfoort": {
+      "code": "GM0307",
+      "bevolking": 161852,
+      "sw": {
+        "verdeling": 883,
+        "regulier": 583,
+        "nood": 150,
+        "totaal": 733,
+        "verschil": -150,
+        "status": "tekort"
+      }
+    },
+    "Amstelveen": {
+      "code": "GM0362",
+      "bevolking": 95014,
+      "sw": {
+        "verdeling": 510,
+        "regulier": 385,
+        "nood": 0,
+        "totaal": 385,
+        "verschil": -125,
+        "status": "tekort"
+      }
+    },
+    "Amsterdam": {
+      "code": "GM0363",
+      "bevolking": 931298,
+      "sw": {
+        "verdeling": 4089,
+        "regulier": 1353,
+        "nood": 3588,
+        "totaal": 4941,
+        "verschil": 852,
+        "status": "overschot"
+      }
+    },
+    "Apeldoorn": {
+      "code": "GM0200",
+      "bevolking": 168211,
+      "sw": {
+        "verdeling": 828,
+        "regulier": 660,
+        "nood": 129,
+        "totaal": 789,
+        "verschil": -39,
+        "status": "tekort"
+      }
+    },
+    "Arnhem": {
+      "code": "GM0202",
+      "bevolking": 167632,
+      "sw": {
+        "verdeling": 679,
+        "regulier": 846,
+        "nood": 863,
+        "totaal": 1709,
+        "verschil": 1030,
+        "status": "overschot"
+      }
+    },
+    "Assen": {
+      "code": "GM0106",
+      "bevolking": 69701,
+      "sw": {
+        "verdeling": 331,
+        "regulier": 1015,
+        "nood": 0,
+        "totaal": 1015,
+        "verschil": 684,
+        "status": "overschot"
+      }
+    },
+    "Asten": {
+      "code": "GM0743",
+      "bevolking": 17302,
+      "sw": {
+        "verdeling": 93,
+        "regulier": 0,
+        "nood": 38,
+        "totaal": 38,
+        "verschil": -55,
+        "status": "tekort"
+      }
+    },
+    "Baarle-Nassau": {
+      "code": "GM0744",
+      "bevolking": 7076,
+      "sw": {
+        "verdeling": 38,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -38,
+        "status": "tekort"
+      }
+    },
+    "Baarn": {
+      "code": "GM0308",
+      "bevolking": 25065,
+      "sw": {
+        "verdeling": 140,
+        "regulier": 0,
+        "nood": 153,
+        "totaal": 153,
+        "verschil": 13,
+        "status": "overschot"
+      }
+    },
+    "Barendrecht": {
+      "code": "GM0489",
+      "bevolking": 48690,
+      "sw": {
+        "verdeling": 283,
+        "regulier": 0,
+        "nood": 65,
+        "totaal": 65,
+        "verschil": -218,
+        "status": "tekort"
+      }
+    },
+    "Barneveld": {
+      "code": "GM0203",
+      "bevolking": 62592,
+      "sw": {
+        "verdeling": 355,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -355,
+        "status": "tekort"
+      }
+    },
+    "Beek (L.)": {
+      "code": "GM0888",
+      "bevolking": 16215,
+      "sw": {
+        "verdeling": 81,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -81,
+        "status": "tekort"
+      }
+    },
+    "Beekdaelen": {
+      "code": "GM1954",
+      "bevolking": 35896,
+      "sw": {
+        "verdeling": 184,
+        "regulier": 253,
+        "nood": 0,
+        "totaal": 253,
+        "verschil": 69,
+        "status": "overschot"
+      }
+    },
+    "Beesel": {
+      "code": "GM0889",
+      "bevolking": 13394,
+      "sw": {
+        "verdeling": 65,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -65,
+        "status": "tekort"
+      }
+    },
+    "Berg en Dal": {
+      "code": "GM1945",
+      "bevolking": 35474,
+      "sw": {
+        "verdeling": 174,
+        "regulier": 0,
+        "nood": 110,
+        "totaal": 110,
+        "verschil": -64,
+        "status": "tekort"
+      }
+    },
+    "Bergeijk": {
+      "code": "GM1724",
+      "bevolking": 19196,
+      "sw": {
+        "verdeling": 112,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -112,
+        "status": "tekort"
+      }
+    },
+    "Bergen (L.)": {
+      "code": "GM0893",
+      "bevolking": 13154,
+      "sw": {
+        "verdeling": 66,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -66,
+        "status": "tekort"
+      }
+    },
+    "Bergen (NH.)": {
+      "code": "GM0373",
+      "bevolking": 29932,
+      "sw": {
+        "verdeling": 164,
+        "regulier": 0,
+        "nood": 30,
+        "totaal": 30,
+        "verschil": -134,
+        "status": "tekort"
+      }
+    },
+    "Bergen op Zoom": {
+      "code": "GM0748",
+      "bevolking": 69694,
+      "sw": {
+        "verdeling": 324,
+        "regulier": 328,
+        "nood": 0,
+        "totaal": 328,
+        "verschil": 4,
+        "status": "overschot"
+      }
+    },
+    "Berkelland": {
+      "code": "GM1859",
+      "bevolking": 43933,
+      "sw": {
+        "verdeling": 231,
+        "regulier": 60,
+        "nood": 0,
+        "totaal": 60,
+        "verschil": -171,
+        "status": "tekort"
+      }
+    },
+    "Bernheze": {
+      "code": "GM1721",
+      "bevolking": 32527,
+      "sw": {
+        "verdeling": 184,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -184,
+        "status": "tekort"
+      }
+    },
+    "Best": {
+      "code": "GM0753",
+      "bevolking": 31223,
+      "sw": {
+        "verdeling": 177,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -177,
+        "status": "tekort"
+      }
+    },
+    "Beuningen": {
+      "code": "GM0209",
+      "bevolking": 26725,
+      "sw": {
+        "verdeling": 147,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -147,
+        "status": "tekort"
+      }
+    },
+    "Beverwijk": {
+      "code": "GM0375",
+      "bevolking": 42866,
+      "sw": {
+        "verdeling": 206,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -206,
+        "status": "tekort"
+      }
+    },
+    "Bladel": {
+      "code": "GM1728",
+      "bevolking": 20985,
+      "sw": {
+        "verdeling": 121,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -121,
+        "status": "tekort"
+      }
+    },
+    "Blaricum": {
+      "code": "GM0376",
+      "bevolking": 12724,
+      "sw": {
+        "verdeling": 79,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -79,
+        "status": "tekort"
+      }
+    },
+    "Bloemendaal": {
+      "code": "GM0377",
+      "bevolking": 23786,
+      "sw": {
+        "verdeling": 151,
+        "regulier": 0,
+        "nood": 28,
+        "totaal": 28,
+        "verschil": -123,
+        "status": "tekort"
+      }
+    },
+    "Bodegraven-Reeuwijk": {
+      "code": "GM1901",
+      "bevolking": 36569,
+      "sw": {
+        "verdeling": 213,
+        "regulier": 0,
+        "nood": 100,
+        "totaal": 100,
+        "verschil": -113,
+        "status": "tekort"
+      }
+    },
+    "Boekel": {
+      "code": "GM0755",
+      "bevolking": 11293,
+      "sw": {
+        "verdeling": 67,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -67,
+        "status": "tekort"
+      }
+    },
+    "Borger-Odoorn": {
+      "code": "GM1681",
+      "bevolking": 26014,
+      "sw": {
+        "verdeling": 129,
+        "regulier": 19,
+        "nood": 0,
+        "totaal": 19,
+        "verschil": -110,
+        "status": "tekort"
+      }
+    },
+    "Borne": {
+      "code": "GM0147",
+      "bevolking": 24639,
+      "sw": {
+        "verdeling": 136,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -136,
+        "status": "tekort"
+      }
+    },
+    "Borsele": {
+      "code": "GM0654",
+      "bevolking": 23121,
+      "sw": {
+        "verdeling": 124,
+        "regulier": 0,
+        "nood": 135,
+        "totaal": 135,
+        "verschil": 11,
+        "status": "overschot"
+      }
+    },
+    "Boxtel": {
+      "code": "GM0757",
+      "bevolking": 33979,
+      "sw": {
+        "verdeling": 176,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -176,
+        "status": "tekort"
+      }
+    },
+    "Breda": {
+      "code": "GM0758",
+      "bevolking": 188078,
+      "sw": {
+        "verdeling": 932,
+        "regulier": 268,
+        "nood": 308,
+        "totaal": 576,
+        "verschil": -356,
+        "status": "tekort"
+      }
+    },
+    "Bronckhorst": {
+      "code": "GM1876",
+      "bevolking": 36119,
+      "sw": {
+        "verdeling": 199,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -199,
+        "status": "tekort"
+      }
+    },
+    "Brummen": {
+      "code": "GM0213",
+      "bevolking": 21286,
+      "sw": {
+        "verdeling": 110,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -110,
+        "status": "tekort"
+      }
+    },
+    "Brunssum": {
+      "code": "GM0899",
+      "bevolking": 27770,
+      "sw": {
+        "verdeling": 110,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -110,
+        "status": "tekort"
+      }
+    },
+    "Bunnik": {
+      "code": "GM0312",
+      "bevolking": 16108,
+      "sw": {
+        "verdeling": 102,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -102,
+        "status": "tekort"
+      }
+    },
+    "Bunschoten": {
+      "code": "GM0313",
+      "bevolking": 22619,
+      "sw": {
+        "verdeling": 129,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -129,
+        "status": "tekort"
+      }
+    },
+    "Buren": {
+      "code": "GM0214",
+      "bevolking": 27773,
+      "sw": {
+        "verdeling": 159,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -159,
+        "status": "tekort"
+      }
+    },
+    "Capelle aan den IJssel": {
+      "code": "GM0502",
+      "bevolking": 67925,
+      "sw": {
+        "verdeling": 317,
+        "regulier": 295,
+        "nood": 0,
+        "totaal": 295,
+        "verschil": -22,
+        "status": "tekort"
+      }
+    },
+    "Castricum": {
+      "code": "GM0383",
+      "bevolking": 36366,
+      "sw": {
+        "verdeling": 217,
+        "regulier": 0,
+        "nood": 86,
+        "totaal": 86,
+        "verschil": -131,
+        "status": "tekort"
+      }
+    },
+    "Coevorden": {
+      "code": "GM0109",
+      "bevolking": 35725,
+      "sw": {
+        "verdeling": 170,
+        "regulier": 455,
+        "nood": 0,
+        "totaal": 455,
+        "verschil": 285,
+        "status": "overschot"
+      }
+    },
+    "Cranendonck": {
+      "code": "GM1706",
+      "bevolking": 20841,
+      "sw": {
+        "verdeling": 117,
+        "regulier": 1592,
+        "nood": 69,
+        "totaal": 1661,
+        "verschil": 1544,
+        "status": "overschot"
+      }
+    },
+    "Culemborg": {
+      "code": "GM0216",
+      "bevolking": 29944,
+      "sw": {
+        "verdeling": 164,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -164,
+        "status": "tekort"
+      }
+    },
+    "Dalfsen": {
+      "code": "GM0148",
+      "bevolking": 29683,
+      "sw": {
+        "verdeling": 173,
+        "regulier": 190,
+        "nood": 0,
+        "totaal": 190,
+        "verschil": 17,
+        "status": "overschot"
+      }
+    },
+    "Dantumadiel": {
+      "code": "GM1891",
+      "bevolking": 19135,
+      "sw": {
+        "verdeling": 88,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -88,
+        "status": "tekort"
+      }
+    },
+    "De Bilt": {
+      "code": "GM0310",
+      "bevolking": 43718,
+      "sw": {
+        "verdeling": 249,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -249,
+        "status": "tekort"
+      }
+    },
+    "De Fryske Marren": {
+      "code": "GM1940",
+      "bevolking": 51929,
+      "sw": {
+        "verdeling": 273,
+        "regulier": 325,
+        "nood": 0,
+        "totaal": 325,
+        "verschil": 52,
+        "status": "overschot"
+      }
+    },
+    "De Ronde Venen": {
+      "code": "GM0736",
+      "bevolking": 45813,
+      "sw": {
+        "verdeling": 264,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -264,
+        "status": "tekort"
+      }
+    },
+    "De Wolden": {
+      "code": "GM1690",
+      "bevolking": 24580,
+      "sw": {
+        "verdeling": 139,
+        "regulier": 40,
+        "nood": 0,
+        "totaal": 40,
+        "verschil": -99,
+        "status": "tekort"
+      }
+    },
+    "Delft": {
+      "code": "GM0503",
+      "bevolking": 109577,
+      "sw": {
+        "verdeling": 406,
+        "regulier": 0,
+        "nood": 395,
+        "totaal": 395,
+        "verschil": -11,
+        "status": "tekort"
+      }
+    },
+    "Den Helder": {
+      "code": "GM0400",
+      "bevolking": 56432,
+      "sw": {
+        "verdeling": 234,
+        "regulier": 633,
+        "nood": 0,
+        "totaal": 633,
+        "verschil": 399,
+        "status": "overschot"
+      }
+    },
+    "Deurne": {
+      "code": "GM0762",
+      "bevolking": 33180,
+      "sw": {
+        "verdeling": 175,
+        "regulier": 41,
+        "nood": 0,
+        "totaal": 41,
+        "verschil": -134,
+        "status": "tekort"
+      }
+    },
+    "Deventer": {
+      "code": "GM0150",
+      "bevolking": 103405,
+      "sw": {
+        "verdeling": 488,
+        "regulier": 605,
+        "nood": 65,
+        "totaal": 670,
+        "verschil": 182,
+        "status": "overschot"
+      }
+    },
+    "Diemen": {
+      "code": "GM0384",
+      "bevolking": 32977,
+      "sw": {
+        "verdeling": 164,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -164,
+        "status": "tekort"
+      }
+    },
+    "Dijk en Waard": {
+      "code": "GM1980",
+      "bevolking": 90076,
+      "sw": {
+        "verdeling": 487,
+        "regulier": 641,
+        "nood": 0,
+        "totaal": 641,
+        "verschil": 154,
+        "status": "overschot"
+      }
+    },
+    "Dinkelland": {
+      "code": "GM1774",
+      "bevolking": 26739,
+      "sw": {
+        "verdeling": 156,
+        "regulier": 0,
+        "nood": 45,
+        "totaal": 45,
+        "verschil": -111,
+        "status": "tekort"
+      }
+    },
+    "Doesburg": {
+      "code": "GM0221",
+      "bevolking": 11079,
+      "sw": {
+        "verdeling": 47,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -47,
+        "status": "tekort"
+      }
+    },
+    "Doetinchem": {
+      "code": "GM0222",
+      "bevolking": 59623,
+      "sw": {
+        "verdeling": 282,
+        "regulier": 0,
+        "nood": 6,
+        "totaal": 6,
+        "verschil": -276,
+        "status": "tekort"
+      }
+    },
+    "Dongen": {
+      "code": "GM0766",
+      "bevolking": 27095,
+      "sw": {
+        "verdeling": 148,
+        "regulier": 168,
+        "nood": 0,
+        "totaal": 168,
+        "verschil": 20,
+        "status": "overschot"
+      }
+    },
+    "Dordrecht": {
+      "code": "GM0505",
+      "bevolking": 122070,
+      "sw": {
+        "verdeling": 561,
+        "regulier": 200,
+        "nood": 0,
+        "totaal": 200,
+        "verschil": -361,
+        "status": "tekort"
+      }
+    },
+    "Drechterland": {
+      "code": "GM0498",
+      "bevolking": 20496,
+      "sw": {
+        "verdeling": 112,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -112,
+        "status": "tekort"
+      }
+    },
+    "Drimmelen": {
+      "code": "GM1719",
+      "bevolking": 28192,
+      "sw": {
+        "verdeling": 157,
+        "regulier": 75,
+        "nood": 0,
+        "totaal": 75,
+        "verschil": -82,
+        "status": "tekort"
+      }
+    },
+    "Dronten": {
+      "code": "GM0303",
+      "bevolking": 44354,
+      "sw": {
+        "verdeling": 230,
+        "regulier": 1567,
+        "nood": 0,
+        "totaal": 1567,
+        "verschil": 1337,
+        "status": "overschot"
+      }
+    },
+    "Druten": {
+      "code": "GM0225",
+      "bevolking": 19590,
+      "sw": {
+        "verdeling": 104,
+        "regulier": 0,
+        "nood": 112,
+        "totaal": 112,
+        "verschil": 8,
+        "status": "overschot"
+      }
+    },
+    "Duiven": {
+      "code": "GM0226",
+      "bevolking": 24872,
+      "sw": {
+        "verdeling": 131,
+        "regulier": 0,
+        "nood": 80,
+        "totaal": 80,
+        "verschil": -51,
+        "status": "tekort"
+      }
+    },
+    "Echt-Susteren": {
+      "code": "GM1711",
+      "bevolking": 32041,
+      "sw": {
+        "verdeling": 160,
+        "regulier": 540,
+        "nood": 0,
+        "totaal": 540,
+        "verschil": 380,
+        "status": "overschot"
+      }
+    },
+    "Edam-Volendam": {
+      "code": "GM0385",
+      "bevolking": 36917,
+      "sw": {
+        "verdeling": 216,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -216,
+        "status": "tekort"
+      }
+    },
+    "Ede": {
+      "code": "GM0228",
+      "bevolking": 123532,
+      "sw": {
+        "verdeling": 667,
+        "regulier": 405,
+        "nood": 0,
+        "totaal": 405,
+        "verschil": -262,
+        "status": "tekort"
+      }
+    },
+    "Eemnes": {
+      "code": "GM0317",
+      "bevolking": 9755,
+      "sw": {
+        "verdeling": 59,
+        "regulier": 0,
+        "nood": 64,
+        "totaal": 64,
+        "verschil": 5,
+        "status": "overschot"
+      }
+    },
+    "Eemsdelta": {
+      "code": "GM1979",
+      "bevolking": 45106,
+      "sw": {
+        "verdeling": 183,
+        "regulier": 745,
+        "nood": 164,
+        "totaal": 909,
+        "verschil": 726,
+        "status": "overschot"
+      }
+    },
+    "Eersel": {
+      "code": "GM0770",
+      "bevolking": 20199,
+      "sw": {
+        "verdeling": 121,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -121,
+        "status": "tekort"
+      }
+    },
+    "Eijsden-Margraten": {
+      "code": "GM1903",
+      "bevolking": 26034,
+      "sw": {
+        "verdeling": 152,
+        "regulier": 134,
+        "nood": 0,
+        "totaal": 134,
+        "verschil": -18,
+        "status": "tekort"
+      }
+    },
+    "Eindhoven": {
+      "code": "GM0772",
+      "bevolking": 246417,
+      "sw": {
+        "verdeling": 1106,
+        "regulier": 995,
+        "nood": 205,
+        "totaal": 1200,
+        "verschil": 94,
+        "status": "overschot"
+      }
+    },
+    "Elburg": {
+      "code": "GM0230",
+      "bevolking": 23906,
+      "sw": {
+        "verdeling": 125,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -125,
+        "status": "tekort"
+      }
+    },
+    "Emmen": {
+      "code": "GM0114",
+      "bevolking": 109346,
+      "sw": {
+        "verdeling": 452,
+        "regulier": 730,
+        "nood": 0,
+        "totaal": 730,
+        "verschil": 278,
+        "status": "overschot"
+      }
+    },
+    "Enkhuizen": {
+      "code": "GM0388",
+      "bevolking": 18895,
+      "sw": {
+        "verdeling": 88,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -88,
+        "status": "tekort"
+      }
+    },
+    "Enschede": {
+      "code": "GM0153",
+      "bevolking": 161738,
+      "sw": {
+        "verdeling": 583,
+        "regulier": 500,
+        "nood": 0,
+        "totaal": 500,
+        "verschil": -83,
+        "status": "tekort"
+      }
+    },
+    "Epe": {
+      "code": "GM0232",
+      "bevolking": 33168,
+      "sw": {
+        "verdeling": 173,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -173,
+        "status": "tekort"
+      }
+    },
+    "Ermelo": {
+      "code": "GM0233",
+      "bevolking": 27856,
+      "sw": {
+        "verdeling": 147,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -147,
+        "status": "tekort"
+      }
+    },
+    "Etten-Leur": {
+      "code": "GM0777",
+      "bevolking": 45237,
+      "sw": {
+        "verdeling": 236,
+        "regulier": 0,
+        "nood": 277,
+        "totaal": 277,
+        "verschil": 41,
+        "status": "overschot"
+      }
+    },
+    "Geertruidenberg": {
+      "code": "GM0779",
+      "bevolking": 22060,
+      "sw": {
+        "verdeling": 112,
+        "regulier": 50,
+        "nood": 0,
+        "totaal": 50,
+        "verschil": -62,
+        "status": "tekort"
+      }
+    },
+    "Geldrop-Mierlo": {
+      "code": "GM1771",
+      "bevolking": 40733,
+      "sw": {
+        "verdeling": 210,
+        "regulier": 54,
+        "nood": 0,
+        "totaal": 54,
+        "verschil": -156,
+        "status": "tekort"
+      }
+    },
+    "Gemert-Bakel": {
+      "code": "GM1652",
+      "bevolking": 31435,
+      "sw": {
+        "verdeling": 165,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -165,
+        "status": "tekort"
+      }
+    },
+    "Gennep": {
+      "code": "GM0907",
+      "bevolking": 17789,
+      "sw": {
+        "verdeling": 90,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -90,
+        "status": "tekort"
+      }
+    },
+    "Gilze en Rijen": {
+      "code": "GM0784",
+      "bevolking": 27343,
+      "sw": {
+        "verdeling": 148,
+        "regulier": 1295,
+        "nood": 0,
+        "totaal": 1295,
+        "verschil": 1147,
+        "status": "overschot"
+      }
+    },
+    "Goeree-Overflakkee": {
+      "code": "GM1924",
+      "bevolking": 51867,
+      "sw": {
+        "verdeling": 272,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -272,
+        "status": "tekort"
+      }
+    },
+    "Goes": {
+      "code": "GM0664",
+      "bevolking": 39682,
+      "sw": {
+        "verdeling": 192,
+        "regulier": 0,
+        "nood": 499,
+        "totaal": 499,
+        "verschil": 307,
+        "status": "overschot"
+      }
+    },
+    "Goirle": {
+      "code": "GM0785",
+      "bevolking": 24327,
+      "sw": {
+        "verdeling": 137,
+        "regulier": 100,
+        "nood": 0,
+        "totaal": 100,
+        "verschil": -37,
+        "status": "tekort"
+      }
+    },
+    "Gooise Meren": {
+      "code": "GM1942",
+      "bevolking": 60370,
+      "sw": {
+        "verdeling": 357,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -357,
+        "status": "tekort"
+      }
+    },
+    "Gorinchem": {
+      "code": "GM0512",
+      "bevolking": 38671,
+      "sw": {
+        "verdeling": 182,
+        "regulier": 155,
+        "nood": 0,
+        "totaal": 155,
+        "verschil": -27,
+        "status": "tekort"
+      }
+    },
+    "Gouda": {
+      "code": "GM0513",
+      "bevolking": 75758,
+      "sw": {
+        "verdeling": 373,
+        "regulier": 340,
+        "nood": 67,
+        "totaal": 407,
+        "verschil": 34,
+        "status": "overschot"
+      }
+    },
+    "Groningen": {
+      "code": "GM0014",
+      "bevolking": 243768,
+      "sw": {
+        "verdeling": 898,
+        "regulier": 407,
+        "nood": 53,
+        "totaal": 460,
+        "verschil": -438,
+        "status": "tekort"
+      }
+    },
+    "Gulpen-Wittem": {
+      "code": "GM1729",
+      "bevolking": 14054,
+      "sw": {
+        "verdeling": 72,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -72,
+        "status": "tekort"
+      }
+    },
+    "Haaksbergen": {
+      "code": "GM0158",
+      "bevolking": 24359,
+      "sw": {
+        "verdeling": 129,
+        "regulier": 54,
+        "nood": 0,
+        "totaal": 54,
+        "verschil": -75,
+        "status": "tekort"
+      }
+    },
+    "Haarlem": {
+      "code": "GM0392",
+      "bevolking": 167636,
+      "sw": {
+        "verdeling": 891,
+        "regulier": 100,
+        "nood": 1005,
+        "totaal": 1105,
+        "verschil": 214,
+        "status": "overschot"
+      }
+    },
+    "Haarlemmermeer": {
+      "code": "GM0394",
+      "bevolking": 163128,
+      "sw": {
+        "verdeling": 937,
+        "regulier": 0,
+        "nood": 1280,
+        "totaal": 1280,
+        "verschil": 343,
+        "status": "overschot"
+      }
+    },
+    "Halderberge": {
+      "code": "GM1655",
+      "bevolking": 31183,
+      "sw": {
+        "verdeling": 157,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -157,
+        "status": "tekort"
+      }
+    },
+    "Hardenberg": {
+      "code": "GM0160",
+      "bevolking": 62932,
+      "sw": {
+        "verdeling": 327,
+        "regulier": 700,
+        "nood": 0,
+        "totaal": 700,
+        "verschil": 373,
+        "status": "overschot"
+      }
+    },
+    "Harderwijk": {
+      "code": "GM0243",
+      "bevolking": 49387,
+      "sw": {
+        "verdeling": 253,
+        "regulier": 789,
+        "nood": 0,
+        "totaal": 789,
+        "verschil": 536,
+        "status": "overschot"
+      }
+    },
+    "Hardinxveld-Giessendam": {
+      "code": "GM0523",
+      "bevolking": 18762,
+      "sw": {
+        "verdeling": 101,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -101,
+        "status": "tekort"
+      }
+    },
+    "Harlingen": {
+      "code": "GM0072",
+      "bevolking": 16229,
+      "sw": {
+        "verdeling": 68,
+        "regulier": 0,
+        "nood": 176,
+        "totaal": 176,
+        "verschil": 108,
+        "status": "overschot"
+      }
+    },
+    "Hattem": {
+      "code": "GM0244",
+      "bevolking": 12624,
+      "sw": {
+        "verdeling": 71,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -71,
+        "status": "tekort"
+      }
+    },
+    "Heemskerk": {
+      "code": "GM0396",
+      "bevolking": 39452,
+      "sw": {
+        "verdeling": 202,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -202,
+        "status": "tekort"
+      }
+    },
+    "Heemstede": {
+      "code": "GM0397",
+      "bevolking": 27593,
+      "sw": {
+        "verdeling": 172,
+        "regulier": 20,
+        "nood": 0,
+        "totaal": 20,
+        "verschil": -152,
+        "status": "tekort"
+      }
+    },
+    "Heerde": {
+      "code": "GM0246",
+      "bevolking": 19226,
+      "sw": {
+        "verdeling": 105,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -105,
+        "status": "tekort"
+      }
+    },
+    "Heerenveen": {
+      "code": "GM0074",
+      "bevolking": 51787,
+      "sw": {
+        "verdeling": 251,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -251,
+        "status": "tekort"
+      }
+    },
+    "Heerlen": {
+      "code": "GM0917",
+      "bevolking": 87461,
+      "sw": {
+        "verdeling": 290,
+        "regulier": 464,
+        "nood": 0,
+        "totaal": 464,
+        "verschil": 174,
+        "status": "overschot"
+      }
+    },
+    "Heeze-Leende": {
+      "code": "GM1658",
+      "bevolking": 16807,
+      "sw": {
+        "verdeling": 103,
+        "regulier": 80,
+        "nood": 0,
+        "totaal": 80,
+        "verschil": -23,
+        "status": "tekort"
+      }
+    },
+    "Heiloo": {
+      "code": "GM0399",
+      "bevolking": 24312,
+      "sw": {
+        "verdeling": 141,
+        "regulier": 0,
+        "nood": 78,
+        "totaal": 78,
+        "verschil": -63,
+        "status": "tekort"
+      }
+    },
+    "Hellendoorn": {
+      "code": "GM0163",
+      "bevolking": 36264,
+      "sw": {
+        "verdeling": 196,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -196,
+        "status": "tekort"
+      }
+    },
+    "Helmond": {
+      "code": "GM0794",
+      "bevolking": 95874,
+      "sw": {
+        "verdeling": 430,
+        "regulier": 50,
+        "nood": 46,
+        "totaal": 96,
+        "verschil": -334,
+        "status": "tekort"
+      }
+    },
+    "Hendrik-Ido-Ambacht": {
+      "code": "GM0531",
+      "bevolking": 32689,
+      "sw": {
+        "verdeling": 189,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -189,
+        "status": "tekort"
+      }
+    },
+    "Hengelo (O.)": {
+      "code": "GM0164",
+      "bevolking": 83058,
+      "sw": {
+        "verdeling": 382,
+        "regulier": 427,
+        "nood": 120,
+        "totaal": 547,
+        "verschil": 165,
+        "status": "overschot"
+      }
+    },
+    "Het Hogeland": {
+      "code": "GM1966",
+      "bevolking": 48224,
+      "sw": {
+        "verdeling": 226,
+        "regulier": 0,
+        "nood": 255,
+        "totaal": 255,
+        "verschil": 29,
+        "status": "overschot"
+      }
+    },
+    "Heumen": {
+      "code": "GM0252",
+      "bevolking": 16836,
+      "sw": {
+        "verdeling": 95,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -95,
+        "status": "tekort"
+      }
+    },
+    "Heusden": {
+      "code": "GM0797",
+      "bevolking": 46026,
+      "sw": {
+        "verdeling": 249,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -249,
+        "status": "tekort"
+      }
+    },
+    "Hillegom": {
+      "code": "GM0534",
+      "bevolking": 22822,
+      "sw": {
+        "verdeling": 124,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -124,
+        "status": "tekort"
+      }
+    },
+    "Hilvarenbeek": {
+      "code": "GM0798",
+      "bevolking": 15961,
+      "sw": {
+        "verdeling": 97,
+        "regulier": 60,
+        "nood": 0,
+        "totaal": 60,
+        "verschil": -37,
+        "status": "tekort"
+      }
+    },
+    "Hilversum": {
+      "code": "GM0402",
+      "bevolking": 94435,
+      "sw": {
+        "verdeling": 493,
+        "regulier": 0,
+        "nood": 173,
+        "totaal": 173,
+        "verschil": -320,
+        "status": "tekort"
+      }
+    },
+    "Hoeksche Waard": {
+      "code": "GM1963",
+      "bevolking": 90256,
+      "sw": {
+        "verdeling": 499,
+        "regulier": 500,
+        "nood": 0,
+        "totaal": 500,
+        "verschil": 1,
+        "status": "overschot"
+      }
+    },
+    "Hof van Twente": {
+      "code": "GM1735",
+      "bevolking": 35446,
+      "sw": {
+        "verdeling": 191,
+        "regulier": 0,
+        "nood": 131,
+        "totaal": 131,
+        "verschil": -60,
+        "status": "tekort"
+      }
+    },
+    "Hollands Kroon": {
+      "code": "GM1911",
+      "bevolking": 49522,
+      "sw": {
+        "verdeling": 257,
+        "regulier": 0,
+        "nood": 3,
+        "totaal": 3,
+        "verschil": -254,
+        "status": "tekort"
+      }
+    },
+    "Hoogeveen": {
+      "code": "GM0118",
+      "bevolking": 56591,
+      "sw": {
+        "verdeling": 256,
+        "regulier": 1004,
+        "nood": 0,
+        "totaal": 1004,
+        "verschil": 748,
+        "status": "overschot"
+      }
+    },
+    "Hoorn": {
+      "code": "GM0405",
+      "bevolking": 75645,
+      "sw": {
+        "verdeling": 367,
+        "regulier": 0,
+        "nood": 75,
+        "totaal": 75,
+        "verschil": -292,
+        "status": "tekort"
+      }
+    },
+    "Horst aan de Maas": {
+      "code": "GM1507",
+      "bevolking": 43917,
+      "sw": {
+        "verdeling": 243,
+        "regulier": 200,
+        "nood": 0,
+        "totaal": 200,
+        "verschil": -43,
+        "status": "tekort"
+      }
+    },
+    "Houten": {
+      "code": "GM0321",
+      "bevolking": 50847,
+      "sw": {
+        "verdeling": 312,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -312,
+        "status": "tekort"
+      }
+    },
+    "Huizen": {
+      "code": "GM0406",
+      "bevolking": 41193,
+      "sw": {
+        "verdeling": 216,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -216,
+        "status": "tekort"
+      }
+    },
+    "Hulst": {
+      "code": "GM0677",
+      "bevolking": 27330,
+      "sw": {
+        "verdeling": 138,
+        "regulier": 50,
+        "nood": 0,
+        "totaal": 50,
+        "verschil": -88,
+        "status": "tekort"
+      }
+    },
+    "IJsselstein": {
+      "code": "GM0353",
+      "bevolking": 33421,
+      "sw": {
+        "verdeling": 185,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -185,
+        "status": "tekort"
+      }
+    },
+    "Kaag en Braassem": {
+      "code": "GM1884",
+      "bevolking": 29168,
+      "sw": {
+        "verdeling": 166,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -166,
+        "status": "tekort"
+      }
+    },
+    "Kampen": {
+      "code": "GM0166",
+      "bevolking": 56177,
+      "sw": {
+        "verdeling": 284,
+        "regulier": 22,
+        "nood": 0,
+        "totaal": 22,
+        "verschil": -262,
+        "status": "tekort"
+      }
+    },
+    "Kapelle": {
+      "code": "GM0678",
+      "bevolking": 13009,
+      "sw": {
+        "verdeling": 73,
+        "regulier": 0,
+        "nood": 95,
+        "totaal": 95,
+        "verschil": 22,
+        "status": "overschot"
+      }
+    },
+    "Katwijk": {
+      "code": "GM0537",
+      "bevolking": 66966,
+      "sw": {
+        "verdeling": 362,
+        "regulier": 564,
+        "nood": 40,
+        "totaal": 604,
+        "verschil": 242,
+        "status": "overschot"
+      }
+    },
+    "Kerkrade": {
+      "code": "GM0928",
+      "bevolking": 45311,
+      "sw": {
+        "verdeling": 159,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -159,
+        "status": "tekort"
+      }
+    },
+    "Koggenland": {
+      "code": "GM1598",
+      "bevolking": 23587,
+      "sw": {
+        "verdeling": 136,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -136,
+        "status": "tekort"
+      }
+    },
+    "Krimpen aan den IJssel": {
+      "code": "GM0542",
+      "bevolking": 29626,
+      "sw": {
+        "verdeling": 148,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -148,
+        "status": "tekort"
+      }
+    },
+    "Krimpenerwaard": {
+      "code": "GM1931",
+      "bevolking": 57785,
+      "sw": {
+        "verdeling": 308,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -308,
+        "status": "tekort"
+      }
+    },
+    "Laarbeek": {
+      "code": "GM1659",
+      "bevolking": 23220,
+      "sw": {
+        "verdeling": 126,
+        "regulier": 102,
+        "nood": 0,
+        "totaal": 102,
+        "verschil": -24,
+        "status": "tekort"
+      }
+    },
+    "Land van Cuijk": {
+      "code": "GM1982",
+      "bevolking": 91722,
+      "sw": {
+        "verdeling": 493,
+        "regulier": 635,
+        "nood": 0,
+        "totaal": 635,
+        "verschil": 142,
+        "status": "overschot"
+      }
+    },
+    "Landgraaf": {
+      "code": "GM0882",
+      "bevolking": 37112,
+      "sw": {
+        "verdeling": 154,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -154,
+        "status": "tekort"
+      }
+    },
+    "Landsmeer": {
+      "code": "GM0415",
+      "bevolking": 11661,
+      "sw": {
+        "verdeling": 69,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -69,
+        "status": "tekort"
+      }
+    },
+    "Lansingerland": {
+      "code": "GM1621",
+      "bevolking": 65594,
+      "sw": {
+        "verdeling": 411,
+        "regulier": 300,
+        "nood": 0,
+        "totaal": 300,
+        "verschil": -111,
+        "status": "tekort"
+      }
+    },
+    "Laren (NH.)": {
+      "code": "GM0417",
+      "bevolking": 11439,
+      "sw": {
+        "verdeling": 70,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -70,
+        "status": "tekort"
+      }
+    },
+    "Leeuwarden": {
+      "code": "GM0080",
+      "bevolking": 128810,
+      "sw": {
+        "verdeling": 521,
+        "regulier": 0,
+        "nood": 421,
+        "totaal": 421,
+        "verschil": -100,
+        "status": "tekort"
+      }
+    },
+    "Leiden": {
+      "code": "GM0546",
+      "bevolking": 130108,
+      "sw": {
+        "verdeling": 573,
+        "regulier": 673,
+        "nood": 164,
+        "totaal": 837,
+        "verschil": 264,
+        "status": "overschot"
+      }
+    },
+    "Leiderdorp": {
+      "code": "GM0547",
+      "bevolking": 27736,
+      "sw": {
+        "verdeling": 156,
+        "regulier": 0,
+        "nood": 200,
+        "totaal": 200,
+        "verschil": 44,
+        "status": "overschot"
+      }
+    },
+    "Leidschendam-Voorburg": {
+      "code": "GM1916",
+      "bevolking": 78229,
+      "sw": {
+        "verdeling": 408,
+        "regulier": 0,
+        "nood": 288,
+        "totaal": 288,
+        "verschil": -120,
+        "status": "tekort"
+      }
+    },
+    "Lelystad": {
+      "code": "GM0995",
+      "bevolking": 84080,
+      "sw": {
+        "verdeling": 377,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -377,
+        "status": "tekort"
+      }
+    },
+    "Leudal": {
+      "code": "GM1640",
+      "bevolking": 36006,
+      "sw": {
+        "verdeling": 195,
+        "regulier": 605,
+        "nood": 0,
+        "totaal": 605,
+        "verschil": 410,
+        "status": "overschot"
+      }
+    },
+    "Leusden": {
+      "code": "GM0327",
+      "bevolking": 31681,
+      "sw": {
+        "verdeling": 190,
+        "regulier": 66,
+        "nood": 179,
+        "totaal": 245,
+        "verschil": 55,
+        "status": "overschot"
+      }
+    },
+    "Lingewaard": {
+      "code": "GM1705",
+      "bevolking": 47314,
+      "sw": {
+        "verdeling": 261,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -261,
+        "status": "tekort"
+      }
+    },
+    "Lisse": {
+      "code": "GM0553",
+      "bevolking": 23447,
+      "sw": {
+        "verdeling": 128,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -128,
+        "status": "tekort"
+      }
+    },
+    "Lochem": {
+      "code": "GM0262",
+      "bevolking": 34289,
+      "sw": {
+        "verdeling": 192,
+        "regulier": 65,
+        "nood": 177,
+        "totaal": 242,
+        "verschil": 50,
+        "status": "overschot"
+      }
+    },
+    "Loon op Zand": {
+      "code": "GM0809",
+      "bevolking": 23850,
+      "sw": {
+        "verdeling": 128,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -128,
+        "status": "tekort"
+      }
+    },
+    "Lopik": {
+      "code": "GM0331",
+      "bevolking": 14724,
+      "sw": {
+        "verdeling": 85,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -85,
+        "status": "tekort"
+      }
+    },
+    "Losser": {
+      "code": "GM0168",
+      "bevolking": 23376,
+      "sw": {
+        "verdeling": 119,
+        "regulier": 0,
+        "nood": 94,
+        "totaal": 94,
+        "verschil": -25,
+        "status": "tekort"
+      }
+    },
+    "Maasdriel": {
+      "code": "GM0263",
+      "bevolking": 26197,
+      "sw": {
+        "verdeling": 141,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -141,
+        "status": "tekort"
+      }
+    },
+    "Maasgouw": {
+      "code": "GM1641",
+      "bevolking": 24406,
+      "sw": {
+        "verdeling": 128,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -128,
+        "status": "tekort"
+      }
+    },
+    "Maashorst": {
+      "code": "GM1991",
+      "bevolking": 59222,
+      "sw": {
+        "verdeling": 312,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -312,
+        "status": "tekort"
+      }
+    },
+    "Maassluis": {
+      "code": "GM0556",
+      "bevolking": 35832,
+      "sw": {
+        "verdeling": 169,
+        "regulier": 0,
+        "nood": 142,
+        "totaal": 142,
+        "verschil": -27,
+        "status": "tekort"
+      }
+    },
+    "Maastricht": {
+      "code": "GM0935",
+      "bevolking": 125285,
+      "sw": {
+        "verdeling": 446,
+        "regulier": 720,
+        "nood": 165,
+        "totaal": 885,
+        "verschil": 439,
+        "status": "overschot"
+      }
+    },
+    "Medemblik": {
+      "code": "GM0420",
+      "bevolking": 46002,
+      "sw": {
+        "verdeling": 237,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -237,
+        "status": "tekort"
+      }
+    },
+    "Meerssen": {
+      "code": "GM0938",
+      "bevolking": 18576,
+      "sw": {
+        "verdeling": 99,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -99,
+        "status": "tekort"
+      }
+    },
+    "Meierijstad": {
+      "code": "GM1948",
+      "bevolking": 84304,
+      "sw": {
+        "verdeling": 463,
+        "regulier": 229,
+        "nood": 74,
+        "totaal": 303,
+        "verschil": -160,
+        "status": "tekort"
+      }
+    },
+    "Meppel": {
+      "code": "GM0119",
+      "bevolking": 35810,
+      "sw": {
+        "verdeling": 178,
+        "regulier": 0,
+        "nood": 144,
+        "totaal": 144,
+        "verschil": -34,
+        "status": "tekort"
+      }
+    },
+    "Middelburg (Z.)": {
+      "code": "GM0687",
+      "bevolking": 50004,
+      "sw": {
+        "verdeling": 237,
+        "regulier": 356,
+        "nood": 196,
+        "totaal": 552,
+        "verschil": 315,
+        "status": "overschot"
+      }
+    },
+    "Midden-Delfland": {
+      "code": "GM1842",
+      "bevolking": 19377,
+      "sw": {
+        "verdeling": 119,
+        "regulier": 225,
+        "nood": 0,
+        "totaal": 225,
+        "verschil": 106,
+        "status": "overschot"
+      }
+    },
+    "Midden-Drenthe": {
+      "code": "GM1731",
+      "bevolking": 34092,
+      "sw": {
+        "verdeling": 179,
+        "regulier": 0,
+        "nood": 84,
+        "totaal": 84,
+        "verschil": -95,
+        "status": "tekort"
+      }
+    },
+    "Midden-Groningen": {
+      "code": "GM1952",
+      "bevolking": 61433,
+      "sw": {
+        "verdeling": 261,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -261,
+        "status": "tekort"
+      }
+    },
+    "Moerdijk": {
+      "code": "GM1709",
+      "bevolking": 38091,
+      "sw": {
+        "verdeling": 195,
+        "regulier": 215,
+        "nood": 0,
+        "totaal": 215,
+        "verschil": 20,
+        "status": "overschot"
+      }
+    },
+    "Molenlanden": {
+      "code": "GM1978",
+      "bevolking": 45271,
+      "sw": {
+        "verdeling": 254,
+        "regulier": 76,
+        "nood": 0,
+        "totaal": 76,
+        "verschil": -178,
+        "status": "tekort"
+      }
+    },
+    "Montferland": {
+      "code": "GM1955",
+      "bevolking": 36873,
+      "sw": {
+        "verdeling": 181,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -181,
+        "status": "tekort"
+      }
+    },
+    "Montfoort": {
+      "code": "GM0335",
+      "bevolking": 13868,
+      "sw": {
+        "verdeling": 82,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -82,
+        "status": "tekort"
+      }
+    },
+    "Mook en Middelaar": {
+      "code": "GM0944",
+      "bevolking": 8153,
+      "sw": {
+        "verdeling": 47,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -47,
+        "status": "tekort"
+      }
+    },
+    "Neder-Betuwe": {
+      "code": "GM1740",
+      "bevolking": 25708,
+      "sw": {
+        "verdeling": 132,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -132,
+        "status": "tekort"
+      }
+    },
+    "Nederweert": {
+      "code": "GM0946",
+      "bevolking": 17492,
+      "sw": {
+        "verdeling": 94,
+        "regulier": 0,
+        "nood": 40,
+        "totaal": 40,
+        "verschil": -54,
+        "status": "tekort"
+      }
+    },
+    "Nieuwegein": {
+      "code": "GM0356",
+      "bevolking": 65971,
+      "sw": {
+        "verdeling": 335,
+        "regulier": 97,
+        "nood": 220,
+        "totaal": 317,
+        "verschil": -18,
+        "status": "tekort"
+      }
+    },
+    "Nieuwkoop": {
+      "code": "GM0569",
+      "bevolking": 29501,
+      "sw": {
+        "verdeling": 170,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -170,
+        "status": "tekort"
+      }
+    },
+    "Nijkerk": {
+      "code": "GM0267",
+      "bevolking": 45361,
+      "sw": {
+        "verdeling": 255,
+        "regulier": 153,
+        "nood": 0,
+        "totaal": 153,
+        "verschil": -102,
+        "status": "tekort"
+      }
+    },
+    "Nijmegen": {
+      "code": "GM0268",
+      "bevolking": 187049,
+      "sw": {
+        "verdeling": 769,
+        "regulier": 540,
+        "nood": 65,
+        "totaal": 605,
+        "verschil": -164,
+        "status": "tekort"
+      }
+    },
+    "Nissewaard": {
+      "code": "GM1930",
+      "bevolking": 87639,
+      "sw": {
+        "verdeling": 409,
+        "regulier": 0,
+        "nood": 80,
+        "totaal": 80,
+        "verschil": -329,
+        "status": "tekort"
+      }
+    },
+    "Noardeast-Fryslân": {
+      "code": "GM1970",
+      "bevolking": 45866,
+      "sw": {
+        "verdeling": 214,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -214,
+        "status": "tekort"
+      }
+    },
+    "Noord-Beveland": {
+      "code": "GM1695",
+      "bevolking": 7943,
+      "sw": {
+        "verdeling": 41,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -41,
+        "status": "tekort"
+      }
+    },
+    "Noordenveld": {
+      "code": "GM1699",
+      "bevolking": 31686,
+      "sw": {
+        "verdeling": 170,
+        "regulier": 43,
+        "nood": 10,
+        "totaal": 53,
+        "verschil": -117,
+        "status": "tekort"
+      }
+    },
+    "Noordoostpolder": {
+      "code": "GM0171",
+      "bevolking": 50035,
+      "sw": {
+        "verdeling": 255,
+        "regulier": 1065,
+        "nood": 0,
+        "totaal": 1065,
+        "verschil": 810,
+        "status": "overschot"
+      }
+    },
+    "Noordwijk": {
+      "code": "GM0575",
+      "bevolking": 45734,
+      "sw": {
+        "verdeling": 254,
+        "regulier": 0,
+        "nood": 60,
+        "totaal": 60,
+        "verschil": -194,
+        "status": "tekort"
+      }
+    },
+    "Nuenen, Gerwen en Nederwetten": {
+      "code": "GM0820",
+      "bevolking": 24231,
+      "sw": {
+        "verdeling": 146,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -146,
+        "status": "tekort"
+      }
+    },
+    "Nunspeet": {
+      "code": "GM0302",
+      "bevolking": 29072,
+      "sw": {
+        "verdeling": 155,
+        "regulier": 100,
+        "nood": 0,
+        "totaal": 100,
+        "verschil": -55,
+        "status": "tekort"
+      }
+    },
+    "Oegstgeest": {
+      "code": "GM0579",
+      "bevolking": 25948,
+      "sw": {
+        "verdeling": 165,
+        "regulier": 205,
+        "nood": 4,
+        "totaal": 209,
+        "verschil": 44,
+        "status": "overschot"
+      }
+    },
+    "Oirschot": {
+      "code": "GM0823",
+      "bevolking": 19280,
+      "sw": {
+        "verdeling": 116,
+        "regulier": 0,
+        "nood": 144,
+        "totaal": 144,
+        "verschil": 28,
+        "status": "overschot"
+      }
+    },
+    "Oisterwijk": {
+      "code": "GM0824",
+      "bevolking": 32952,
+      "sw": {
+        "verdeling": 188,
+        "regulier": 408,
+        "nood": 0,
+        "totaal": 408,
+        "verschil": 220,
+        "status": "overschot"
+      }
+    },
+    "Oldambt": {
+      "code": "GM1895",
+      "bevolking": 39405,
+      "sw": {
+        "verdeling": 157,
+        "regulier": 60,
+        "nood": 125,
+        "totaal": 185,
+        "verschil": 28,
+        "status": "overschot"
+      }
+    },
+    "Oldebroek": {
+      "code": "GM0269",
+      "bevolking": 24281,
+      "sw": {
+        "verdeling": 129,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -129,
+        "status": "tekort"
+      }
+    },
+    "Oldenzaal": {
+      "code": "GM0173",
+      "bevolking": 31794,
+      "sw": {
+        "verdeling": 159,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -159,
+        "status": "tekort"
+      }
+    },
+    "Olst-Wijhe": {
+      "code": "GM1773",
+      "bevolking": 18835,
+      "sw": {
+        "verdeling": 104,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -104,
+        "status": "tekort"
+      }
+    },
+    "Ommen": {
+      "code": "GM0175",
+      "bevolking": 19031,
+      "sw": {
+        "verdeling": 104,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -104,
+        "status": "tekort"
+      }
+    },
+    "Oost Gelre": {
+      "code": "GM1586",
+      "bevolking": 29969,
+      "sw": {
+        "verdeling": 164,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -164,
+        "status": "tekort"
+      }
+    },
+    "Oosterhout": {
+      "code": "GM0826",
+      "bevolking": 57924,
+      "sw": {
+        "verdeling": 293,
+        "regulier": 72,
+        "nood": 0,
+        "totaal": 72,
+        "verschil": -221,
+        "status": "tekort"
+      }
+    },
+    "Ooststellingwerf": {
+      "code": "GM0085",
+      "bevolking": 25824,
+      "sw": {
+        "verdeling": 124,
+        "regulier": 0,
+        "nood": 205,
+        "totaal": 205,
+        "verschil": 81,
+        "status": "overschot"
+      }
+    },
+    "Oostzaan": {
+      "code": "GM0431",
+      "bevolking": 9694,
+      "sw": {
+        "verdeling": 56,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -56,
+        "status": "tekort"
+      }
+    },
+    "Opmeer": {
+      "code": "GM0432",
+      "bevolking": 12199,
+      "sw": {
+        "verdeling": 68,
+        "regulier": 0,
+        "nood": 130,
+        "totaal": 130,
+        "verschil": 62,
+        "status": "overschot"
+      }
+    },
+    "Opsterland": {
+      "code": "GM0086",
+      "bevolking": 30059,
+      "sw": {
+        "verdeling": 157,
+        "regulier": 20,
+        "nood": 0,
+        "totaal": 20,
+        "verschil": -137,
+        "status": "tekort"
+      }
+    },
+    "Oss": {
+      "code": "GM0828",
+      "bevolking": 94634,
+      "sw": {
+        "verdeling": 464,
+        "regulier": 36,
+        "nood": 250,
+        "totaal": 286,
+        "verschil": -178,
+        "status": "tekort"
+      }
+    },
+    "Oude IJsselstreek": {
+      "code": "GM1509",
+      "bevolking": 39402,
+      "sw": {
+        "verdeling": 192,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -192,
+        "status": "tekort"
+      }
+    },
+    "Ouder-Amstel": {
+      "code": "GM0437",
+      "bevolking": 14447,
+      "sw": {
+        "verdeling": 83,
+        "regulier": 0,
+        "nood": 30,
+        "totaal": 30,
+        "verschil": -53,
+        "status": "tekort"
+      }
+    },
+    "Oudewater": {
+      "code": "GM0589",
+      "bevolking": 10223,
+      "sw": {
+        "verdeling": 59,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -59,
+        "status": "tekort"
+      }
+    },
+    "Overbetuwe": {
+      "code": "GM1734",
+      "bevolking": 48919,
+      "sw": {
+        "verdeling": 270,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -270,
+        "status": "tekort"
+      }
+    },
+    "Papendrecht": {
+      "code": "GM0590",
+      "bevolking": 32178,
+      "sw": {
+        "verdeling": 165,
+        "regulier": 0,
+        "nood": 94,
+        "totaal": 94,
+        "verschil": -71,
+        "status": "tekort"
+      }
+    },
+    "Peel en Maas": {
+      "code": "GM1894",
+      "bevolking": 45534,
+      "sw": {
+        "verdeling": 246,
+        "regulier": 0,
+        "nood": 321,
+        "totaal": 321,
+        "verschil": 75,
+        "status": "overschot"
+      }
+    },
+    "Pekela": {
+      "code": "GM0765",
+      "bevolking": 12517,
+      "sw": {
+        "verdeling": 47,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -47,
+        "status": "tekort"
+      }
+    },
+    "Pijnacker-Nootdorp": {
+      "code": "GM1926",
+      "bevolking": 57932,
+      "sw": {
+        "verdeling": 363,
+        "regulier": 0,
+        "nood": 122,
+        "totaal": 122,
+        "verschil": -241,
+        "status": "tekort"
+      }
+    },
+    "Purmerend": {
+      "code": "GM0439",
+      "bevolking": 95168,
+      "sw": {
+        "verdeling": 479,
+        "regulier": 0,
+        "nood": 80,
+        "totaal": 80,
+        "verschil": -399,
+        "status": "tekort"
+      }
+    },
+    "Putten": {
+      "code": "GM0273",
+      "bevolking": 24978,
+      "sw": {
+        "verdeling": 138,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -138,
+        "status": "tekort"
+      }
+    },
+    "Raalte": {
+      "code": "GM0177",
+      "bevolking": 38364,
+      "sw": {
+        "verdeling": 211,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -211,
+        "status": "tekort"
+      }
+    },
+    "Reimerswaal": {
+      "code": "GM0703",
+      "bevolking": 23325,
+      "sw": {
+        "verdeling": 116,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -116,
+        "status": "tekort"
+      }
+    },
+    "Renkum": {
+      "code": "GM0274",
+      "bevolking": 31419,
+      "sw": {
+        "verdeling": 167,
+        "regulier": 0,
+        "nood": 150,
+        "totaal": 150,
+        "verschil": -17,
+        "status": "tekort"
+      }
+    },
+    "Renswoude": {
+      "code": "GM0339",
+      "bevolking": 5753,
+      "sw": {
+        "verdeling": 35,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -35,
+        "status": "tekort"
+      }
+    },
+    "Reusel-De Mierden": {
+      "code": "GM1667",
+      "bevolking": 13577,
+      "sw": {
+        "verdeling": 80,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -80,
+        "status": "tekort"
+      }
+    },
+    "Rheden": {
+      "code": "GM0275",
+      "bevolking": 43661,
+      "sw": {
+        "verdeling": 196,
+        "regulier": 408,
+        "nood": 0,
+        "totaal": 408,
+        "verschil": 212,
+        "status": "overschot"
+      }
+    },
+    "Rhenen": {
+      "code": "GM0340",
+      "bevolking": 20235,
+      "sw": {
+        "verdeling": 110,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -110,
+        "status": "tekort"
+      }
+    },
+    "Ridderkerk": {
+      "code": "GM0597",
+      "bevolking": 47721,
+      "sw": {
+        "verdeling": 228,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -228,
+        "status": "tekort"
+      }
+    },
+    "Rijssen-Holten": {
+      "code": "GM1742",
+      "bevolking": 38675,
+      "sw": {
+        "verdeling": 211,
+        "regulier": 215,
+        "nood": 0,
+        "totaal": 215,
+        "verschil": 4,
+        "status": "overschot"
+      }
+    },
+    "Rijswijk (ZH.)": {
+      "code": "GM0603",
+      "bevolking": 59642,
+      "sw": {
+        "verdeling": 291,
+        "regulier": 0,
+        "nood": 390,
+        "totaal": 390,
+        "verschil": 99,
+        "status": "overschot"
+      }
+    },
+    "Roerdalen": {
+      "code": "GM1669",
+      "bevolking": 20806,
+      "sw": {
+        "verdeling": 105,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -105,
+        "status": "tekort"
+      }
+    },
+    "Roermond": {
+      "code": "GM0957",
+      "bevolking": 60743,
+      "sw": {
+        "verdeling": 266,
+        "regulier": 0,
+        "nood": 100,
+        "totaal": 100,
+        "verschil": -166,
+        "status": "tekort"
+      }
+    },
+    "Roosendaal": {
+      "code": "GM1674",
+      "bevolking": 77559,
+      "sw": {
+        "verdeling": 364,
+        "regulier": 100,
+        "nood": 0,
+        "totaal": 100,
+        "verschil": -264,
+        "status": "tekort"
+      }
+    },
+    "Rotterdam": {
+      "code": "GM0599",
+      "bevolking": 670610,
+      "sw": {
+        "verdeling": 2465,
+        "regulier": 0,
+        "nood": 2587,
+        "totaal": 2587,
+        "verschil": 122,
+        "status": "overschot"
+      }
+    },
+    "Rozendaal": {
+      "code": "GM0277",
+      "bevolking": 1831,
+      "sw": {
+        "verdeling": 13,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -13,
+        "status": "tekort"
+      }
+    },
+    "Rucphen": {
+      "code": "GM0840",
+      "bevolking": 23920,
+      "sw": {
+        "verdeling": 116,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -116,
+        "status": "tekort"
+      }
+    },
+    "Schagen": {
+      "code": "GM0441",
+      "bevolking": 47744,
+      "sw": {
+        "verdeling": 254,
+        "regulier": 0,
+        "nood": 255,
+        "totaal": 255,
+        "verschil": 1,
+        "status": "overschot"
+      }
+    },
+    "Scherpenzeel": {
+      "code": "GM0279",
+      "bevolking": 10343,
+      "sw": {
+        "verdeling": 59,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -59,
+        "status": "tekort"
+      }
+    },
+    "Schiedam": {
+      "code": "GM0606",
+      "bevolking": 81838,
+      "sw": {
+        "verdeling": 354,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -354,
+        "status": "tekort"
+      }
+    },
+    "Schiermonnikoog": {
+      "code": "GM0088",
+      "bevolking": 972,
+      "sw": {
+        "verdeling": 5,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -5,
+        "status": "tekort"
+      }
+    },
+    "Schouwen-Duiveland": {
+      "code": "GM1676",
+      "bevolking": 34631,
+      "sw": {
+        "verdeling": 176,
+        "regulier": 285,
+        "nood": 0,
+        "totaal": 285,
+        "verschil": 109,
+        "status": "overschot"
+      }
+    },
+    "Simpelveld": {
+      "code": "GM0965",
+      "bevolking": 10255,
+      "sw": {
+        "verdeling": 49,
+        "regulier": 300,
+        "nood": 0,
+        "totaal": 300,
+        "verschil": 251,
+        "status": "overschot"
+      }
+    },
+    "Sint-Michielsgestel": {
+      "code": "GM0845",
+      "bevolking": 30094,
+      "sw": {
+        "verdeling": 177,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -177,
+        "status": "tekort"
+      }
+    },
+    "Sittard-Geleen": {
+      "code": "GM1883",
+      "bevolking": 92650,
+      "sw": {
+        "verdeling": 392,
+        "regulier": 0,
+        "nood": 32,
+        "totaal": 32,
+        "verschil": -360,
+        "status": "tekort"
+      }
+    },
+    "Sliedrecht": {
+      "code": "GM0610",
+      "bevolking": 26261,
+      "sw": {
+        "verdeling": 127,
+        "regulier": 0,
+        "nood": 50,
+        "totaal": 50,
+        "verschil": -77,
+        "status": "tekort"
+      }
+    },
+    "Sluis": {
+      "code": "GM1714",
+      "bevolking": 23150,
+      "sw": {
+        "verdeling": 114,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -114,
+        "status": "tekort"
+      }
+    },
+    "Smallingerland": {
+      "code": "GM0090",
+      "bevolking": 56661,
+      "sw": {
+        "verdeling": 257,
+        "regulier": 667,
+        "nood": 0,
+        "totaal": 667,
+        "verschil": 410,
+        "status": "overschot"
+      }
+    },
+    "Soest": {
+      "code": "GM0342",
+      "bevolking": 47682,
+      "sw": {
+        "verdeling": 263,
+        "regulier": 0,
+        "nood": 3,
+        "totaal": 3,
+        "verschil": -260,
+        "status": "tekort"
+      }
+    },
+    "Someren": {
+      "code": "GM0847",
+      "bevolking": 20188,
+      "sw": {
+        "verdeling": 110,
+        "regulier": 180,
+        "nood": 0,
+        "totaal": 180,
+        "verschil": 70,
+        "status": "overschot"
+      }
+    },
+    "Son en Breugel": {
+      "code": "GM0848",
+      "bevolking": 17959,
+      "sw": {
+        "verdeling": 109,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -109,
+        "status": "tekort"
+      }
+    },
+    "Stadskanaal": {
+      "code": "GM0037",
+      "bevolking": 32013,
+      "sw": {
+        "verdeling": 127,
+        "regulier": 472,
+        "nood": 0,
+        "totaal": 472,
+        "verschil": 345,
+        "status": "overschot"
+      }
+    },
+    "Staphorst": {
+      "code": "GM0180",
+      "bevolking": 17739,
+      "sw": {
+        "verdeling": 104,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -104,
+        "status": "tekort"
+      }
+    },
+    "Stede Broec": {
+      "code": "GM0532",
+      "bevolking": 22217,
+      "sw": {
+        "verdeling": 111,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -111,
+        "status": "tekort"
+      }
+    },
+    "Steenbergen": {
+      "code": "GM0851",
+      "bevolking": 24476,
+      "sw": {
+        "verdeling": 122,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -122,
+        "status": "tekort"
+      }
+    },
+    "Steenwijkerland": {
+      "code": "GM1708",
+      "bevolking": 45472,
+      "sw": {
+        "verdeling": 225,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -225,
+        "status": "tekort"
+      }
+    },
+    "Stein (L.)": {
+      "code": "GM0971",
+      "bevolking": 24744,
+      "sw": {
+        "verdeling": 121,
+        "regulier": 72,
+        "nood": 0,
+        "totaal": 72,
+        "verschil": -49,
+        "status": "tekort"
+      }
+    },
+    "Stichtse Vecht": {
+      "code": "GM1904",
+      "bevolking": 65878,
+      "sw": {
+        "verdeling": 372,
+        "regulier": 120,
+        "nood": 0,
+        "totaal": 120,
+        "verschil": -252,
+        "status": "tekort"
+      }
+    },
+    "Súdwest-Fryslân": {
+      "code": "GM1900",
+      "bevolking": 90421,
+      "sw": {
+        "verdeling": 440,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -440,
+        "status": "tekort"
+      }
+    },
+    "Terneuzen": {
+      "code": "GM0715",
+      "bevolking": 55132,
+      "sw": {
+        "verdeling": 254,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -254,
+        "status": "tekort"
+      }
+    },
+    "Terschelling": {
+      "code": "GM0093",
+      "bevolking": 4898,
+      "sw": {
+        "verdeling": 24,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -24,
+        "status": "tekort"
+      }
+    },
+    "Texel": {
+      "code": "GM0448",
+      "bevolking": 13815,
+      "sw": {
+        "verdeling": 73,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -73,
+        "status": "tekort"
+      }
+    },
+    "Teylingen": {
+      "code": "GM1525",
+      "bevolking": 38470,
+      "sw": {
+        "verdeling": 227,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -227,
+        "status": "tekort"
+      }
+    },
+    "Tholen": {
+      "code": "GM0716",
+      "bevolking": 26851,
+      "sw": {
+        "verdeling": 133,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -133,
+        "status": "tekort"
+      }
+    },
+    "Tiel": {
+      "code": "GM0281",
+      "bevolking": 42370,
+      "sw": {
+        "verdeling": 191,
+        "regulier": 0,
+        "nood": 114,
+        "totaal": 114,
+        "verschil": -77,
+        "status": "tekort"
+      }
+    },
+    "Tilburg": {
+      "code": "GM0855",
+      "bevolking": 229836,
+      "sw": {
+        "verdeling": 981,
+        "regulier": 42,
+        "nood": 211,
+        "totaal": 253,
+        "verschil": -728,
+        "status": "tekort"
+      }
+    },
+    "Tubbergen": {
+      "code": "GM0183",
+      "bevolking": 21397,
+      "sw": {
+        "verdeling": 125,
+        "regulier": 150,
+        "nood": 0,
+        "totaal": 150,
+        "verschil": 25,
+        "status": "overschot"
+      }
+    },
+    "Twenterand": {
+      "code": "GM1700",
+      "bevolking": 34073,
+      "sw": {
+        "verdeling": 168,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -168,
+        "status": "tekort"
+      }
+    },
+    "Tynaarlo": {
+      "code": "GM1730",
+      "bevolking": 34736,
+      "sw": {
+        "verdeling": 206,
+        "regulier": 115,
+        "nood": 69,
+        "totaal": 184,
+        "verschil": -22,
+        "status": "tekort"
+      }
+    },
+    "Tytsjerksteradiel": {
+      "code": "GM0737",
+      "bevolking": 32595,
+      "sw": {
+        "verdeling": 168,
+        "regulier": 655,
+        "nood": 0,
+        "totaal": 655,
+        "verschil": 487,
+        "status": "overschot"
+      }
+    },
+    "Uitgeest": {
+      "code": "GM0450",
+      "bevolking": 13400,
+      "sw": {
+        "verdeling": 79,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -79,
+        "status": "tekort"
+      }
+    },
+    "Uithoorn": {
+      "code": "GM0451",
+      "bevolking": 31685,
+      "sw": {
+        "verdeling": 175,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -175,
+        "status": "tekort"
+      }
+    },
+    "Urk": {
+      "code": "GM0184",
+      "bevolking": 21958,
+      "sw": {
+        "verdeling": 126,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -126,
+        "status": "tekort"
+      }
+    },
+    "Utrecht": {
+      "code": "GM0344",
+      "bevolking": 374238,
+      "sw": {
+        "verdeling": 1843,
+        "regulier": 962,
+        "nood": 536,
+        "totaal": 1498,
+        "verschil": -345,
+        "status": "tekort"
+      }
+    },
+    "Utrechtse Heuvelrug": {
+      "code": "GM1581",
+      "bevolking": 50550,
+      "sw": {
+        "verdeling": 287,
+        "regulier": 661,
+        "nood": 0,
+        "totaal": 661,
+        "verschil": 374,
+        "status": "overschot"
+      }
+    },
+    "Vaals": {
+      "code": "GM0981",
+      "bevolking": 10121,
+      "sw": {
+        "verdeling": 38,
+        "regulier": 200,
+        "nood": 0,
+        "totaal": 200,
+        "verschil": 162,
+        "status": "overschot"
+      }
+    },
+    "Valkenburg aan de Geul": {
+      "code": "GM0994",
+      "bevolking": 16431,
+      "sw": {
+        "verdeling": 81,
+        "regulier": 0,
+        "nood": 101,
+        "totaal": 101,
+        "verschil": 20,
+        "status": "overschot"
+      }
+    },
+    "Valkenswaard": {
+      "code": "GM0858",
+      "bevolking": 31714,
+      "sw": {
+        "verdeling": 163,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -163,
+        "status": "tekort"
+      }
+    },
+    "Veendam": {
+      "code": "GM0047",
+      "bevolking": 27520,
+      "sw": {
+        "verdeling": 115,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -115,
+        "status": "tekort"
+      }
+    },
+    "Veenendaal": {
+      "code": "GM0345",
+      "bevolking": 69440,
+      "sw": {
+        "verdeling": 356,
+        "regulier": 230,
+        "nood": 0,
+        "totaal": 230,
+        "verschil": -126,
+        "status": "tekort"
+      }
+    },
+    "Veere": {
+      "code": "GM0717",
+      "bevolking": 22067,
+      "sw": {
+        "verdeling": 125,
+        "regulier": 32,
+        "nood": 0,
+        "totaal": 32,
+        "verschil": -93,
+        "status": "tekort"
+      }
+    },
+    "Veldhoven": {
+      "code": "GM0861",
+      "bevolking": 46827,
+      "sw": {
+        "verdeling": 267,
+        "regulier": 280,
+        "nood": 92,
+        "totaal": 372,
+        "verschil": 105,
+        "status": "overschot"
+      }
+    },
+    "Velsen": {
+      "code": "GM0453",
+      "bevolking": 69241,
+      "sw": {
+        "verdeling": 347,
+        "regulier": 100,
+        "nood": 380,
+        "totaal": 480,
+        "verschil": 133,
+        "status": "overschot"
+      }
+    },
+    "Venlo": {
+      "code": "GM0983",
+      "bevolking": 103789,
+      "sw": {
+        "verdeling": 447,
+        "regulier": 50,
+        "nood": 0,
+        "totaal": 50,
+        "verschil": -397,
+        "status": "tekort"
+      }
+    },
+    "Venray": {
+      "code": "GM0984",
+      "bevolking": 44662,
+      "sw": {
+        "verdeling": 222,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -222,
+        "status": "tekort"
+      }
+    },
+    "Vijfheerenlanden": {
+      "code": "GM1961",
+      "bevolking": 61669,
+      "sw": {
+        "verdeling": 327,
+        "regulier": 0,
+        "nood": 149,
+        "totaal": 149,
+        "verschil": -178,
+        "status": "tekort"
+      }
+    },
+    "Vlaardingen": {
+      "code": "GM0622",
+      "bevolking": 76409,
+      "sw": {
+        "verdeling": 326,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -326,
+        "status": "tekort"
+      }
+    },
+    "Vlieland": {
+      "code": "GM0096",
+      "bevolking": 1255,
+      "sw": {
+        "verdeling": 5,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -5,
+        "status": "tekort"
+      }
+    },
+    "Vlissingen": {
+      "code": "GM0718",
+      "bevolking": 45389,
+      "sw": {
+        "verdeling": 187,
+        "regulier": 0,
+        "nood": 599,
+        "totaal": 599,
+        "verschil": 412,
+        "status": "overschot"
+      }
+    },
+    "Voerendaal": {
+      "code": "GM0986",
+      "bevolking": 12375,
+      "sw": {
+        "verdeling": 67,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -67,
+        "status": "tekort"
+      }
+    },
+    "Voorne aan Zee": {
+      "code": "GM1992",
+      "bevolking": 74304,
+      "sw": {
+        "verdeling": 392,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -392,
+        "status": "tekort"
+      }
+    },
+    "Voorschoten": {
+      "code": "GM0626",
+      "bevolking": 25625,
+      "sw": {
+        "verdeling": 153,
+        "regulier": 0,
+        "nood": 190,
+        "totaal": 190,
+        "verschil": 37,
+        "status": "overschot"
+      }
+    },
+    "Voorst": {
+      "code": "GM0285",
+      "bevolking": 25377,
+      "sw": {
+        "verdeling": 142,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -142,
+        "status": "tekort"
+      }
+    },
+    "Vught": {
+      "code": "GM0865",
+      "bevolking": 32356,
+      "sw": {
+        "verdeling": 192,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -192,
+        "status": "tekort"
+      }
+    },
+    "Waadhoeke": {
+      "code": "GM1949",
+      "bevolking": 46911,
+      "sw": {
+        "verdeling": 223,
+        "regulier": 425,
+        "nood": 4,
+        "totaal": 429,
+        "verschil": 206,
+        "status": "overschot"
+      }
+    },
+    "Waalre": {
+      "code": "GM0866",
+      "bevolking": 17988,
+      "sw": {
+        "verdeling": 107,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -107,
+        "status": "tekort"
+      }
+    },
+    "Waalwijk": {
+      "code": "GM0867",
+      "bevolking": 50302,
+      "sw": {
+        "verdeling": 248,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -248,
+        "status": "tekort"
+      }
+    },
+    "Waddinxveen": {
+      "code": "GM0627",
+      "bevolking": 34000,
+      "sw": {
+        "verdeling": 190,
+        "regulier": 0,
+        "nood": 7,
+        "totaal": 7,
+        "verschil": -183,
+        "status": "tekort"
+      }
+    },
+    "Wageningen": {
+      "code": "GM0289",
+      "bevolking": 42579,
+      "sw": {
+        "verdeling": 158,
+        "regulier": 655,
+        "nood": 0,
+        "totaal": 655,
+        "verschil": 497,
+        "status": "overschot"
+      }
+    },
+    "Wassenaar": {
+      "code": "GM0629",
+      "bevolking": 27100,
+      "sw": {
+        "verdeling": 150,
+        "regulier": 0,
+        "nood": 915,
+        "totaal": 915,
+        "verschil": 765,
+        "status": "overschot"
+      }
+    },
+    "Waterland": {
+      "code": "GM0852",
+      "bevolking": 17525,
+      "sw": {
+        "verdeling": 101,
+        "regulier": 0,
+        "nood": 219,
+        "totaal": 219,
+        "verschil": 118,
+        "status": "overschot"
+      }
+    },
+    "Weert": {
+      "code": "GM0988",
+      "bevolking": 51079,
+      "sw": {
+        "verdeling": 251,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -251,
+        "status": "tekort"
+      }
+    },
+    "West Betuwe": {
+      "code": "GM1960",
+      "bevolking": 52948,
+      "sw": {
+        "verdeling": 302,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -302,
+        "status": "tekort"
+      }
+    },
+    "West Maas en Waal": {
+      "code": "GM0668",
+      "bevolking": 20330,
+      "sw": {
+        "verdeling": 112,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -112,
+        "status": "tekort"
+      }
+    },
+    "Westerkwartier": {
+      "code": "GM1969",
+      "bevolking": 64896,
+      "sw": {
+        "verdeling": 345,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -345,
+        "status": "tekort"
+      }
+    },
+    "Westerveld": {
+      "code": "GM1701",
+      "bevolking": 20003,
+      "sw": {
+        "verdeling": 108,
+        "regulier": 38,
+        "nood": 190,
+        "totaal": 228,
+        "verschil": 120,
+        "status": "overschot"
+      }
+    },
+    "Westervoort": {
+      "code": "GM0293",
+      "bevolking": 15151,
+      "sw": {
+        "verdeling": 72,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -72,
+        "status": "tekort"
+      }
+    },
+    "Westerwolde": {
+      "code": "GM1950",
+      "bevolking": 26465,
+      "sw": {
+        "verdeling": 124,
+        "regulier": 2279,
+        "nood": 0,
+        "totaal": 2279,
+        "verschil": 2155,
+        "status": "overschot"
+      }
+    },
+    "Westland": {
+      "code": "GM1783",
+      "bevolking": 115941,
+      "sw": {
+        "verdeling": 643,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -643,
+        "status": "tekort"
+      }
+    },
+    "Weststellingwerf": {
+      "code": "GM0098",
+      "bevolking": 26487,
+      "sw": {
+        "verdeling": 129,
+        "regulier": 0,
+        "nood": 32,
+        "totaal": 32,
+        "verschil": -97,
+        "status": "tekort"
+      }
+    },
+    "Wierden": {
+      "code": "GM0189",
+      "bevolking": 24931,
+      "sw": {
+        "verdeling": 145,
+        "regulier": 37,
+        "nood": 0,
+        "totaal": 37,
+        "verschil": -108,
+        "status": "tekort"
+      }
+    },
+    "Wijchen": {
+      "code": "GM0296",
+      "bevolking": 41545,
+      "sw": {
+        "verdeling": 222,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -222,
+        "status": "tekort"
+      }
+    },
+    "Wijdemeren": {
+      "code": "GM1696",
+      "bevolking": 24605,
+      "sw": {
+        "verdeling": 143,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -143,
+        "status": "tekort"
+      }
+    },
+    "Wijk bij Duurstede": {
+      "code": "GM0352",
+      "bevolking": 23945,
+      "sw": {
+        "verdeling": 136,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -136,
+        "status": "tekort"
+      }
+    },
+    "Winterswijk": {
+      "code": "GM0294",
+      "bevolking": 29231,
+      "sw": {
+        "verdeling": 142,
+        "regulier": 400,
+        "nood": 0,
+        "totaal": 400,
+        "verschil": 258,
+        "status": "overschot"
+      }
+    },
+    "Woensdrecht": {
+      "code": "GM0873",
+      "bevolking": 22208,
+      "sw": {
+        "verdeling": 112,
+        "regulier": 124,
+        "nood": 0,
+        "totaal": 124,
+        "verschil": 12,
+        "status": "overschot"
+      }
+    },
+    "Woerden": {
+      "code": "GM0632",
+      "bevolking": 53724,
+      "sw": {
+        "verdeling": 307,
+        "regulier": 200,
+        "nood": 0,
+        "totaal": 200,
+        "verschil": -107,
+        "status": "tekort"
+      }
+    },
+    "Wormerland": {
+      "code": "GM0880",
+      "bevolking": 16552,
+      "sw": {
+        "verdeling": 87,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -87,
+        "status": "tekort"
+      }
+    },
+    "Woudenberg": {
+      "code": "GM0351",
+      "bevolking": 14637,
+      "sw": {
+        "verdeling": 88,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -88,
+        "status": "tekort"
+      }
+    },
+    "Zaanstad": {
+      "code": "GM0479",
+      "bevolking": 161389,
+      "sw": {
+        "verdeling": 760,
+        "regulier": 1005,
+        "nood": 573,
+        "totaal": 1578,
+        "verschil": 818,
+        "status": "overschot"
+      }
+    },
+    "Zaltbommel": {
+      "code": "GM0297",
+      "bevolking": 30385,
+      "sw": {
+        "verdeling": 162,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -162,
+        "status": "tekort"
+      }
+    },
+    "Zandvoort": {
+      "code": "GM0473",
+      "bevolking": 17469,
+      "sw": {
+        "verdeling": 85,
+        "regulier": 0,
+        "nood": 50,
+        "totaal": 50,
+        "verschil": -35,
+        "status": "tekort"
+      }
+    },
+    "Zeewolde": {
+      "code": "GM0050",
+      "bevolking": 23899,
+      "sw": {
+        "verdeling": 133,
+        "regulier": 677,
+        "nood": 0,
+        "totaal": 677,
+        "verschil": 544,
+        "status": "overschot"
+      }
+    },
+    "Zeist": {
+      "code": "GM0355",
+      "bevolking": 66641,
+      "sw": {
+        "verdeling": 344,
+        "regulier": 431,
+        "nood": 0,
+        "totaal": 431,
+        "verschil": 87,
+        "status": "overschot"
+      }
+    },
+    "Zevenaar": {
+      "code": "GM0299",
+      "bevolking": 45041,
+      "sw": {
+        "verdeling": 217,
+        "regulier": 0,
+        "nood": 228,
+        "totaal": 228,
+        "verschil": 11,
+        "status": "overschot"
+      }
+    },
+    "Zoetermeer": {
+      "code": "GM0637",
+      "bevolking": 128434,
+      "sw": {
+        "verdeling": 649,
+        "regulier": 0,
+        "nood": 712,
+        "totaal": 712,
+        "verschil": 63,
+        "status": "overschot"
+      }
+    },
+    "Zoeterwoude": {
+      "code": "GM0638",
+      "bevolking": 9732,
+      "sw": {
+        "verdeling": 62,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -62,
+        "status": "tekort"
+      }
+    },
+    "Zuidplas": {
+      "code": "GM1892",
+      "bevolking": 47843,
+      "sw": {
+        "verdeling": 278,
+        "regulier": 0,
+        "nood": 136,
+        "totaal": 136,
+        "verschil": -142,
+        "status": "tekort"
+      }
+    },
+    "Zundert": {
+      "code": "GM0879",
+      "bevolking": 22553,
+      "sw": {
+        "verdeling": 126,
+        "regulier": 215,
+        "nood": 0,
+        "totaal": 215,
+        "verschil": 89,
+        "status": "overschot"
+      }
+    },
+    "Zutphen": {
+      "code": "GM0301",
+      "bevolking": 48752,
+      "sw": {
+        "verdeling": 226,
+        "regulier": 740,
+        "nood": 0,
+        "totaal": 740,
+        "verschil": 514,
+        "status": "overschot"
+      }
+    },
+    "Zwartewaterland": {
+      "code": "GM1896",
+      "bevolking": 23448,
+      "sw": {
+        "verdeling": 126,
+        "regulier": 0,
+        "nood": 0,
+        "totaal": 0,
+        "verschil": -126,
+        "status": "tekort"
+      }
+    },
+    "Zwijndrecht": {
+      "code": "GM0642",
+      "bevolking": 44874,
+      "sw": {
+        "verdeling": 204,
+        "regulier": 0,
+        "nood": 301,
+        "totaal": 301,
+        "verschil": 97,
+        "status": "overschot"
+      }
+    },
+    "Zwolle": {
+      "code": "GM0193",
+      "bevolking": 133141,
+      "sw": {
+        "verdeling": 656,
+        "regulier": 300,
+        "nood": 45,
+        "totaal": 345,
+        "verschil": -311,
+        "status": "tekort"
+      }
+    }
+  }
+}
