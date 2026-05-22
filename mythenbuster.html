@@ -564,11 +564,11 @@ async function _mbVote(idx, keuze, isGoed) {
   const feit  = data.find(d => d.keuze === 'feit')?.stemmen  || 0;
   const fabel = data.find(d => d.keuze === 'fabel')?.stemmen || 0;
   const tot   = feit + fabel;
-  if (tot < 2) return;
+  if (tot < 1) return;
   const pct = Math.round((keuze === 'feit' ? feit : fabel) / tot * 100);
   const el  = document.getElementById('_crowd' + idx);
   if (el) el.innerHTML =
-    `👥 <strong>${pct}%</strong> van de bezoekers koos ook <em>${keuze}</em> voor deze uitspraak.`;
+    `👥 <strong>${pct}%</strong> van de bezoekers koos ook <em>${keuze}</em> <span style="color:var(--muted);font-size:.9em;">(${tot.toLocaleString('nl-NL')} ${tot === 1 ? 'stem' : 'stemmen'})</span>`;
 }
 
 const VERDICTS = ['feit','feit','nuance','fabel','fabel','fabel','feit','nuance','nuance','fabel'];

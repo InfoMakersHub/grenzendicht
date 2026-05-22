@@ -423,8 +423,8 @@ async function _quizOpslaan() {
   if (cntErr) { console.error('Quiz count fout:', cntErr.message); return; }
 
   const el = document.getElementById('_quizStat');
-  if (el && count > 1)
-    el.innerHTML = `👥 Je bent een van de <strong>${count.toLocaleString('nl-NL')}</strong> mensen die deze quiz deed.`;
+  if (el && count >= 1)
+    el.innerHTML = `👥 <strong>${count.toLocaleString('nl-NL')}</strong> ${count === 1 ? 'persoon deed' : 'mensen deden'} deze quiz.`;
 }
 
 const VRAGEN = [
