@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 22:00';
+const LAST_UPDATE = '22 mei 2026, 22:45';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -113,38 +113,33 @@ const HERKOMST = {
   ],
 };
 
-// ── Inwilligingen (vergunningen) eerste aanleg per land 2015–2025 ─────────
-// Bron: CBS Open Data 85400NED — Beslissingen asielverzoeken.
-// Zelfde 7 landen als HERKOMST_TIJDREEKS, in dezelfde volgorde + kleur.
-// 'data' = inwilligingen (toegewezen), 'besl' = totaal beslissingen (denominator voor %).
-const HERKOMST_INWILLIGING = {
-  jaren: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+// ── Vergunningen 2024 per herkomst + type, gekoppeld aan nareizigers 2025 ──
+// Bron: CBS Open Data 85400NED (vergunningen + type) + 80059NED (nareizigers).
+// Cause-and-effect: vergunningen leiden ~1 jaar later tot nareizigers (gezins-
+// hereniging). Niet 1-op-1: een vergunninghouder kan meerdere nareizigers
+// brengen, en sommige nareizigers komen pas in jaar 2 of 3. Gemiddeld 1,2-1,5
+// nareiziger per vergunninghouder bij oorlogsgebieden (Syrië, Jemen).
+const HERKOMST_VERGUNNINGEN = {
+  jaar: 2024,
+  nareizigers_jaar: 2025,
   series: [
+    // Gesorteerd op totaal vergunningen 2024 desc
     { land: 'Syrië',       kleur: '#b91c1c',
-      data: [7850, 12895, 2505, 1260, 1685, 4170, 3605, 6150, 7585, 10205,  110],
-      besl: [8010, 13295, 2940, 1655, 2160, 4635, 3930, 6360, 7890, 10735,  390] },
-    { land: 'Eritrea',     kleur: '#d97706',
-      data: [4875,  3120, 1390,  380,  390,  290,  395,  410,  760,  1055, 1815],
-      besl: [4980,  3240, 1570,  630,  615,  440,  485,  490,  870,  1165, 2030] },
+      vluchteling: 2875, subsidiair: 7210, humanitair: 115, nareizigers: 12110 },
     { land: 'Turkije',     kleur: '#0d2d6b',
-      data: [   5,     5,  355,  345,  915, 1470, 1235, 1990, 1050,  1060,  875],
-      besl: [  40,    40,  445,  480, 1015, 1575, 1315, 2040, 1120,  1460, 1560] },
-    { land: 'Irak',        kleur: '#7c2d12',
-      data: [ 255,   980,  630,  130,  130,  215,  200,  500,  220,   200,  100],
-      besl: [ 395,  2035, 1605,  615,  775,  495,  415,  610,  370,   355,  780] },
-    { land: 'Afghanistan', kleur: '#15803d',
-      data: [ 360,   575,  670,  235,  160,  250, 2715, 2435,  595,   295,  415],
-      besl: [ 685,  1670, 1895,  695,  650,  530, 2855, 2460,  670,   435,  610] },
+      vluchteling:  795, subsidiair:   15, humanitair: 245, nareizigers:   465 },
+    { land: 'Eritrea',     kleur: '#d97706',
+      vluchteling:    5, subsidiair: 1040, humanitair:  15, nareizigers:   310 },
     { land: 'Jemen',       kleur: '#4a90d9',
-      data: [  20,     5,  180,  130,  425,  600,  405, 1240, 1730,   625,  160],
-      besl: [  25,    10,  190,  145,  460,  645,  430, 1250, 1745,   825,  540] },
+      vluchteling:   55, subsidiair:  555, humanitair:  20, nareizigers:  1475 },
     { land: 'Somalië',     kleur: '#a16207',
-      data: [ 120,   100,  100,   30,   25,   45,  175,  500,  575,   435,  715],
-      besl: [ 265,   245,  265,  130,  150,  125,  280,  640,  810,   780, 1445] },
+      vluchteling:   55, subsidiair:  350, humanitair:  30, nareizigers:   395 },
+    { land: 'Afghanistan', kleur: '#15803d',
+      vluchteling:  195, subsidiair:   55, humanitair:  45, nareizigers:   190 },
+    { land: 'Irak',        kleur: '#7c2d12',
+      vluchteling:   30, subsidiair:  140, humanitair:  25, nareizigers:   250 },
   ],
-  totaal_NL:       [16450, 20810, 7810, 3620, 4845, 8620, 12065, 15180, 14485, 15960, 7425],
-  totaal_NL_besl:  [20465, 28875, 15945, 10285, 12975, 13615, 16530, 17410, 17925, 21185, 15550],
-  totaal_NL_pct:   [80, 72, 49, 35, 37, 63, 73, 87, 81, 75, 48],
+  totaal_NL: { vluchteling: 5275, subsidiair: 9910, humanitair: 780, vergunningen: 15960, nareizigers: 16470 },
 };
 
 // ── Herkomst over tijd (eerste asielaanvragen 2015–2025) ──────────────────
