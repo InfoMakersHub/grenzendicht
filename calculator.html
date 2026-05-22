@@ -130,6 +130,79 @@
       border-top: 1px dashed var(--border);
       font-size: .72rem; color: var(--muted); font-style: italic;
     }
+
+    /* ─── DUAL-RESULT BLOKKEN (Fase 2) ─────────────────────────────── */
+    .obl-context {
+      background: #0d2d6b; color: #fff;
+      padding: .85rem 1.1rem; border-radius: 10px 10px 0 0;
+      font-size: .82rem;
+    }
+    .obl-context strong { color: #fbbf24; }
+    .result-stack {
+      display: flex; flex-direction: column; gap: 1rem;
+      background: #fff; padding: 1rem;
+      border: 1px solid var(--border); border-top: none;
+      border-radius: 0 0 10px 10px;
+    }
+    .obl-block { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .obl-block.blue   { border-color: #c7d8eb; }
+    .obl-block.amber  { border-color: #f5d27a; }
+    .obl-head {
+      padding: .8rem 1.1rem;
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .72rem; font-weight: 800;
+      letter-spacing: .07em; text-transform: uppercase;
+    }
+    .obl-head.blue  { background: #eff6ff; color: #0d2d6b; }
+    .obl-head.amber { background: #fff7e6; color: #92400e; }
+    .obl-head .meta {
+      margin-left: auto; font-size: .6rem; font-weight: 700;
+      padding: .15rem .55rem; border-radius: 4px;
+      letter-spacing: .04em;
+    }
+    .obl-head.blue  .meta { background: #1d6fd4; color: #fff; }
+    .obl-head.amber .meta { background: #d97706; color: #fff; }
+    .obl-body { padding: 1.1rem; background: #fff; }
+    .obl-cards {
+      display: grid; gap: .65rem;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    }
+    .obl-card {
+      background: var(--bg3); border-radius: 8px;
+      padding: .8rem .65rem; text-align: center;
+    }
+    .obl-card .lbl {
+      font-size: .58rem; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--muted);
+      margin-bottom: .25rem;
+    }
+    .obl-card .val { font-size: 1.4rem; font-weight: 900; line-height: 1; }
+    .obl-card.blue  .val { color: #1d6fd4; }
+    .obl-card.amber .val { color: #d97706; }
+    .obl-card .unit { font-size: .62rem; color: var(--muted); margin-top: .2rem; }
+    .obl-note {
+      margin-top: .9rem; padding: .7rem .85rem;
+      font-size: .76rem; line-height: 1.55; border-radius: 6px;
+    }
+    .obl-note.blue  { background: #eff6ff; color: #1e3a8a; }
+    .obl-note.amber { background: #fff7e6; color: #92400e; }
+    .obl-disclaimer {
+      margin-top: .65rem; padding: .65rem .85rem;
+      background: #fef3c7; color: #78350f;
+      border-left: 3px solid #d97706;
+      border-radius: 4px;
+      font-size: .72rem; line-height: 1.5;
+    }
+    .obl-disclaimer strong { color: inherit; }
+
+    /* Map-paneel — kleine spreidingswet-indicator */
+    .cmp-spreid-bar {
+      background: #fff7e6; border-radius: 8px;
+      padding: .5rem .65rem; margin-bottom: .65rem;
+      font-size: .72rem; color: #92400e;
+      display: flex; justify-content: space-between; align-items: center;
+      border: 1px solid #f5d27a;
+    }
   </style>
 </head>
 <body>
@@ -236,31 +309,82 @@
       </div>
       <p style="margin:.75rem 0 0;font-size:.75rem;color:rgba(255,255,255,.55);">Niet gevonden? Gebruik het handmatige veld hieronder.</p>
 
-      <div id="calcResult" style="display:none;margin-top:1rem;background:#fff;border-radius:12px;padding:1.25rem;">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.85rem;margin-bottom:1.25rem;">
-          <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
-            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Taakstelling 2025</div>
-            <div id="res2025" style="font-size:1.6rem;font-weight:900;color:var(--brand);"></div>
-            <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">vergunninghouders/jaar</div>
+      <div id="calcResult" style="display:none;margin-top:1rem;">
+
+        <!-- Context-bar bovenaan -->
+        <div class="obl-context" id="resContext"></div>
+
+        <div class="result-stack">
+
+          <!-- ═══ HUISVESTINGSTAAKSTELLING (officieel) ═══ -->
+          <div class="obl-block blue">
+            <div class="obl-head blue">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+              Huisvestingstaakstelling
+              <span class="meta">OFFICIEEL · HUISVESTINGSWET ART. 26</span>
+            </div>
+            <div class="obl-body">
+              <div class="obl-cards">
+                <div class="obl-card blue">
+                  <div class="lbl">2025 (jaar)</div>
+                  <div class="val" id="res2025"></div>
+                  <div class="unit">vergunninghouders</div>
+                </div>
+                <div class="obl-card blue">
+                  <div class="lbl">2026-I (jan–jun)</div>
+                  <div class="val" id="res2026"></div>
+                  <div class="unit">vergunninghouders</div>
+                </div>
+                <div class="obl-card blue">
+                  <div class="lbl">Per maand</div>
+                  <div class="val" id="resMaand"></div>
+                  <div class="unit">gemiddeld 2025</div>
+                </div>
+                <div class="obl-card blue">
+                  <div class="lbl">Waarvan nareizigers</div>
+                  <div class="val" id="resNarei"></div>
+                  <div class="unit">~41% van totaal</div>
+                </div>
+              </div>
+              <div class="obl-note blue" id="resNoteHuisv"></div>
+            </div>
           </div>
-          <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
-            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Taakstelling 2026-I</div>
-            <div id="res2026" style="font-size:1.6rem;font-weight:900;color:var(--blue);"></div>
-            <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">vergunninghouders (jan–jun)</div>
+
+          <!-- ═══ SPREIDINGSWET (schatting) ═══ -->
+          <div class="obl-block amber">
+            <div class="obl-head amber">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/></svg>
+              Spreidingswet-opgave
+              <span class="meta">SCHATTING · EERLIJKE AANDEEL</span>
+            </div>
+            <div class="obl-body">
+              <div class="obl-cards">
+                <div class="obl-card amber">
+                  <div class="lbl">Eerlijke aandeel</div>
+                  <div class="val" id="resSpreid"></div>
+                  <div class="unit">opvangplekken</div>
+                </div>
+                <div class="obl-card amber">
+                  <div class="lbl">% van nationaal tekort</div>
+                  <div class="val" id="resSpreidPct"></div>
+                  <div class="unit">van 40.000 plekken</div>
+                </div>
+                <div class="obl-card amber">
+                  <div class="lbl">Komt boven op</div>
+                  <div class="val" id="resBovenOp"></div>
+                  <div class="unit">vergunninghouders/jr</div>
+                </div>
+              </div>
+              <div class="obl-note amber" id="resNoteSpreid"></div>
+              <div class="obl-disclaimer">
+                <strong>⚠ Dit is een schatting, geen officieel cijfer.</strong> De feitelijke spreidingswet-opgave per gemeente wordt vastgesteld door de Provinciale Regietafels en houdt rekening met <em>bestaande</em> opvangcapaciteit. Gemeenten met grote bestaande locaties (zoals Westerwolde: 2.279 plekken) krijgen lagere eisen, terwijl gemeenten zonder opvang juist hogere eisen krijgen. De werkelijke aantallen kunnen <strong>30–50% afwijken</strong> van deze schatting.
+              </div>
+            </div>
           </div>
-          <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
-            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Per maand</div>
-            <div id="resMaand" style="font-size:1.6rem;font-weight:900;color:var(--text);"></div>
-            <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">gemiddeld (2025)</div>
-          </div>
-          <div style="background:var(--bg3);border-radius:10px;padding:1rem;text-align:center;">
-            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:.3rem;">Waarvan nareizigers</div>
-            <div id="resNarei" style="font-size:1.6rem;font-weight:900;color:var(--red);"></div>
-            <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">~41% van totaal (2025)</div>
-          </div>
+
         </div>
-        <div id="resContext" style="background:var(--bg2);border:1px solid var(--border-2);border-radius:8px;padding:1rem;font-size:.83rem;color:var(--text-2);line-height:1.6;"></div>
-        <p style="font-size:.7rem;color:var(--muted);margin-top:.75rem;">Berekening: (gemeentebevolking ÷ 17.900.000) × nationale taakstelling. Bron: CBS bevolkingscijfers 2024 · Huisvestingswet 2014 art. 26.</p>
+
+        <p style="font-size:.7rem;color:var(--muted);margin-top:.75rem;">Berekening huisvestingstaakstelling: (bevolking ÷ 17.900.000) × 28.000. Berekening spreidingswet-schatting: (bevolking ÷ 17.900.000) × 40.000. Bron: CBS bevolkingscijfers 2024 · Huisvestingswet 2014 art. 26 · Spreidingswet 2024 (nationaal tekort 40.000 plekken).</p>
 
         <!-- SHARE -->
         <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);">
@@ -397,6 +521,10 @@
             <div class="cmp-unit">jan–jun</div>
           </div>
         </div>
+        <div class="cmp-spreid-bar">
+          <span><strong>+ Spreidingswet</strong> <span style="opacity:.7;">(schatting)</span></span>
+          <span><strong id="cmp-spreid">—</strong> plekken</span>
+        </div>
         <button class="cmp-cta" onclick="laadInCalculator()">Bereken volledig voor deze gemeente ↑</button>
       </div>
     </div>
@@ -499,6 +627,7 @@
   const NL_BEVOLKING = 17900000;
   const TAAKSTELLING_2025 = 28000;
   const TAAKSTELLING_2026_H1 = 15000;
+  const SPREIDINGSWET_TEKORT = 40000;   // nationaal tekort opvangplekken (NOS nov 2025)
 
   let geselecteerdeGemeente = null;
 
@@ -560,29 +689,37 @@
   let huidigNaam = null;
 
   function toonResultaat(naam, inwoners) {
-    const t2025  = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2025);
-    const t2026h = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2026_H1);
-    const maand  = Math.round(t2025 / 12);
-    const narei  = Math.round(t2025 * 0.41);
+    const aandeel   = inwoners / NL_BEVOLKING;
+    const t2025     = Math.round(aandeel * TAAKSTELLING_2025);
+    const t2026h    = Math.round(aandeel * TAAKSTELLING_2026_H1);
+    const maand     = Math.round(t2025 / 12);
+    const narei     = Math.round(t2025 * 0.41);
+    const spreid    = Math.round(aandeel * SPREIDINGSWET_TEKORT);
+    const aandeelPct = (aandeel * 100).toFixed(2);
 
-    document.getElementById('res2025').textContent = t2025.toLocaleString('nl-NL');
-    document.getElementById('res2026').textContent = t2026h.toLocaleString('nl-NL');
+    // Huisvestingsblok
+    document.getElementById('res2025').textContent  = t2025.toLocaleString('nl-NL');
+    document.getElementById('res2026').textContent  = t2026h.toLocaleString('nl-NL');
     document.getElementById('resMaand').textContent = maand.toLocaleString('nl-NL');
     document.getElementById('resNarei').textContent = narei.toLocaleString('nl-NL');
+    document.getElementById('resNoteHuisv').innerHTML =
+      `<strong>${naam}</strong> moet in 2025 in totaal <strong>${t2025.toLocaleString('nl-NL')} vergunninghouders</strong> in een sociale huurwoning plaatsen — gemiddeld <strong>${maand} per maand</strong>. Allen krijgen voorrang op de sociale huurwachtlijst.`;
 
-    let context = `<strong style="color:var(--text);">${naam}</strong> heeft ${inwoners.toLocaleString('nl-NL')} inwoners `;
-    context += `(${((inwoners / NL_BEVOLKING) * 100).toFixed(2)}% van Nederland). `;
-    context += `De gemeente is verplicht in 2025 in totaal <strong style="color:var(--brand);">${t2025.toLocaleString('nl-NL')} vergunninghouders</strong> te huisvesten — `;
-    context += `gemiddeld <strong style="color:var(--brand);">${maand} per maand</strong>. `;
-    context += `Hiervan zijn naar schatting <strong style="color:var(--red);">${narei} nareizigers</strong> (op basis van het 2025-aandeel van 41%). `;
-    context += `Al deze personen krijgen voorrang boven reguliere woningzoekenden op de sociale huurwachtlijst.`;
+    // Spreidingswetblok
+    document.getElementById('resSpreid').textContent    = '~' + spreid.toLocaleString('nl-NL');
+    document.getElementById('resSpreidPct').textContent = aandeelPct + '%';
+    document.getElementById('resBovenOp').textContent   = t2025.toLocaleString('nl-NL');
+    document.getElementById('resNoteSpreid').innerHTML =
+      `Bij een zuiver eerlijke verdeling van het nationale tekort van 40.000 spreidingswet-plekken naar bevolkingsaandeel, zou <strong>${naam}</strong> ongeveer <strong>${spreid.toLocaleString('nl-NL')} opvangplekken</strong> moeten leveren — gespreid over reguliere opvanglocaties.`;
 
-    document.getElementById('resContext').innerHTML = context;
+    // Context-bar bovenaan
+    document.getElementById('resContext').innerHTML =
+      `<strong>${naam}</strong> — ${inwoners.toLocaleString('nl-NL')} inwoners (${aandeelPct}% van Nederland)`;
     document.getElementById('calcResult').style.display = 'block';
 
     // sla op voor sharing
     huidigNaam = naam;
-    window._shareData = { naam, t2025, narei, maand };
+    window._shareData = { naam, t2025, narei, maand, spreid };
 
     // update URL zodat de link deelbaar is (alleen voor bekende gemeenten)
     if (GEMEENTEN[naam]) {
@@ -599,7 +736,7 @@
   function shareText() {
     const d = window._shareData;
     if (!d) return '';
-    return `${d.naam} moet in 2025 verplicht ${d.t2025.toLocaleString('nl-NL')} vergunninghouders huisvesten (waarvan ~${d.narei.toLocaleString('nl-NL')} nareizigers). Bereken voor jouw gemeente:`;
+    return `${d.naam} heeft twee asielverplichtingen: ${d.t2025.toLocaleString('nl-NL')} vergunninghouders/jaar huisvesten (Huisvestingswet) + naar schatting ~${d.spreid.toLocaleString('nl-NL')} opvangplekken (Spreidingswet, eerlijke aandeel). Bereken voor jouw gemeente:`;
   }
 
   function shareUrl() {
@@ -678,20 +815,23 @@
     document.getElementById('cmp-naam').textContent = naam || statnaam;
 
     if (inwoners) {
-      const t2025  = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2025);
-      const t2026h = Math.round((inwoners / NL_BEVOLKING) * TAAKSTELLING_2026_H1);
-      const maand  = Math.round(t2025 / 12);
-      const narei  = Math.round(t2025 * 0.41);
+      const aandeel = inwoners / NL_BEVOLKING;
+      const t2025   = Math.round(aandeel * TAAKSTELLING_2025);
+      const t2026h  = Math.round(aandeel * TAAKSTELLING_2026_H1);
+      const maand   = Math.round(t2025 / 12);
+      const narei   = Math.round(t2025 * 0.41);
+      const spreid  = Math.round(aandeel * SPREIDINGSWET_TEKORT);
       document.getElementById('cmp-inwoners').textContent =
         inwoners.toLocaleString('nl-NL') + ' inwoners · ' +
-        ((inwoners / NL_BEVOLKING) * 100).toFixed(2) + '% van NL';
+        (aandeel * 100).toFixed(2) + '% van NL';
       document.getElementById('cmp-t2025').textContent = t2025.toLocaleString('nl-NL');
       document.getElementById('cmp-narei').textContent = narei.toLocaleString('nl-NL');
       document.getElementById('cmp-maand').textContent = maand.toLocaleString('nl-NL');
       document.getElementById('cmp-t2026').textContent = t2026h.toLocaleString('nl-NL');
+      document.getElementById('cmp-spreid').textContent = '~' + spreid.toLocaleString('nl-NL');
     } else {
       document.getElementById('cmp-inwoners').textContent = 'Geen data beschikbaar';
-      ['cmp-t2025','cmp-narei','cmp-maand','cmp-t2026'].forEach(id => {
+      ['cmp-t2025','cmp-narei','cmp-maand','cmp-t2026','cmp-spreid'].forEach(id => {
         document.getElementById(id).textContent = '—';
       });
     }
