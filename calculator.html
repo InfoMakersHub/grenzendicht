@@ -770,18 +770,12 @@
   function shareText() {
     const d = window._shareData;
     if (!d) return '';
-    let s = `${d.naam}: ${d.t2025.toLocaleString('nl-NL')} vergunninghouders/jaar huisvesten (Huisvestingswet)`;
+    let s = `De gemeente ${d.naam} heeft gemiddeld per maand ${d.maand.toLocaleString('nl-NL')} vergunninghouders verplicht gehuisvest op basis van de Huisvestingswet.`;
     if (d.sw) {
-      const v = Math.abs(d.sw.verschil).toLocaleString('nl-NL');
-      if (d.sw.status === 'tekort') {
-        s += ` + ${d.sw.eis.toLocaleString('nl-NL')} opvangplekken eis (Spreidingswet) — tekort van ${v} plekken.`;
-      } else if (d.sw.status === 'overschot') {
-        s += ` + ${d.sw.eis.toLocaleString('nl-NL')} opvangplekken eis (Spreidingswet) — overschot van ${v} plekken.`;
-      } else {
-        s += ` + ${d.sw.eis.toLocaleString('nl-NL')} opvangplekken eis (Spreidingswet).`;
-      }
+      s += ` Op basis van de Spreidingswet zou de gemeente dit jaar ${d.sw.eis.toLocaleString('nl-NL')} opvangplekken moeten stellen voor asielzoekers maar heeft daarvoor ${d.sw.huidig.toLocaleString('nl-NL')} beschikbaar.`;
     }
-    return s + ' Bereken voor jouw gemeente:';
+    s += `\nBereken het ook voor jouw gemeente:`;
+    return s;
   }
 
   function shareUrl() {
