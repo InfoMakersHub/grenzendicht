@@ -86,6 +86,50 @@
     .cml-item  { display: flex; align-items: center; gap: .3rem; font-size: .68rem; color: var(--muted); }
     .cml-sw    { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
     .calc-map-note { font-size: .7rem; color: var(--muted); margin-top: .6rem; line-height: 1.5; }
+
+    /* ─── TWEE VERPLICHTINGEN-STRIP (Fase 1) ───────────────────────── */
+    .verpl-strip { max-width: 1100px; margin: 1.25rem auto 0; padding: 0 1.5rem; }
+    .verpl-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(13,45,107,.06);
+    }
+    .verpl-header {
+      background: linear-gradient(135deg, #0d2d6b 0%, #1d6fd4 100%);
+      color: #fff; padding: .85rem 1.5rem;
+      display: flex; align-items: center; gap: .65rem;
+      font-size: .78rem; font-weight: 800;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .verpl-header svg { flex-shrink: 0; }
+    .verpl-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 720px) { .verpl-grid { grid-template-columns: 1fr; } }
+    .verpl-col { padding: 1.25rem 1.5rem; border-right: 1px solid var(--border); }
+    .verpl-col:last-child { border-right: none; }
+    @media (max-width: 720px) {
+      .verpl-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+    .verpl-col.active  { background: #eff6ff; }
+    .verpl-col.passive { background: #fafbfc; }
+    .verpl-tag {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .65rem; font-weight: 800; letter-spacing: .08em;
+      text-transform: uppercase; padding: .25rem .55rem;
+      border-radius: 999px; margin-bottom: .6rem;
+    }
+    .verpl-tag.active  { background: var(--blue); color: #fff; }
+    .verpl-tag.passive { background: #e2e8f0; color: #475569; }
+    .verpl-title { font-size: 1rem; font-weight: 800; color: var(--text); margin: 0 0 .25rem; line-height: 1.3; }
+    .verpl-law   { font-size: .72rem; color: var(--muted); margin-bottom: .85rem; }
+    .verpl-rows  { display: flex; flex-direction: column; gap: .5rem; font-size: .82rem; color: var(--text-2); }
+    .verpl-row   { display: flex; justify-content: space-between; gap: 1rem; }
+    .verpl-row span:first-child { color: var(--muted); }
+    .verpl-row span:last-child  { font-weight: 700; color: var(--text); text-align: right; }
+    .verpl-footnote {
+      margin-top: .85rem; padding-top: .75rem;
+      border-top: 1px dashed var(--border);
+      font-size: .72rem; color: var(--muted); font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -115,11 +159,64 @@
 
 <main>
 
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- Twee verplichtingen-strip — Fase 1                                -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="verpl-strip">
+  <div class="verpl-card">
+    <div class="verpl-header">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+      </svg>
+      Jouw gemeente heeft twee aparte asielverplichtingen — beide tegelijk
+    </div>
+    <div class="verpl-grid">
+
+      <!-- Linker kolom: HUISVESTINGSWET (deze calculator) -->
+      <div class="verpl-col active">
+        <span class="verpl-tag active">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+          Dit berekent de calculator hieronder
+        </span>
+        <h3 class="verpl-title">Vergunninghouders huisvesten</h3>
+        <div class="verpl-law">Huisvestingswet 2014, art. 26</div>
+        <div class="verpl-rows">
+          <div class="verpl-row"><span>Wie</span><span>Heeft asielvergunning</span></div>
+          <div class="verpl-row"><span>Krijgt</span><span>Sociale huurwoning</span></div>
+          <div class="verpl-row"><span>Telling</span><span>Aantal per jaar</span></div>
+          <div class="verpl-row"><span>Nationaal 2025</span><span>28.000 personen</span></div>
+          <div class="verpl-row"><span>Verdeling</span><span>Bevolkingsaandeel</span></div>
+        </div>
+        <div class="verpl-footnote">Een vergunninghouder is een asielzoeker wiens procedure positief is afgerond. Verlaat het AZC en krijgt voorrang op een sociale huurwoning. Nareizigers tellen mee.</div>
+      </div>
+
+      <!-- Rechter kolom: SPREIDINGSWET (binnenkort) -->
+      <div class="verpl-col passive">
+        <span class="verpl-tag passive">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Niet in deze calculator — binnenkort op de site
+        </span>
+        <h3 class="verpl-title">Asielzoekers opvangen</h3>
+        <div class="verpl-law">Spreidingswet 2024</div>
+        <div class="verpl-rows">
+          <div class="verpl-row"><span>Wie</span><span>Wacht op beslissing</span></div>
+          <div class="verpl-row"><span>Krijgt</span><span>Plek in opvanglocatie / AZC</span></div>
+          <div class="verpl-row"><span>Telling</span><span>Aantal bedden totaal</span></div>
+          <div class="verpl-row"><span>Nationaal</span><span>~40.000 plekken</span></div>
+          <div class="verpl-row"><span>Verdeling</span><span>Provinciale Regietafels</span></div>
+        </div>
+        <div class="verpl-footnote">Een asielzoeker wacht in een opvanglocatie op de uitslag van zijn procedure. De NOS-cijfers van november 2025 gaan over deze verplichting.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-label">Tool — Gemeentecalculator</div>
-    <h1>Hoeveel vergunninghouders moet jouw gemeente huisvesten?</h1>
-    <p>Elke zes maanden stelt het Rijk een taakstelling vast: het aantal vergunninghouders (inclusief nareizigers) dat naar rato elke gemeente verplicht moet huisvesten. Bereken de verplichting voor jouw gemeente op basis van de officiële taakstellingsformule (bevolkingsaandeel × nationale taakstelling).</p>
+    <div class="hero-label">Tool — Gemeentecalculator (huisvestingstaakstelling)</div>
+    <h1>Hoeveel <em style="font-style:italic;color:#fbbf24;">vergunninghouders</em> moet jouw gemeente huisvesten?</h1>
+    <p>Elke zes maanden stelt het Rijk de <strong>huisvestingstaakstelling</strong> vast: het aantal vergunninghouders (inclusief nareizigers) dat naar rato elke gemeente verplicht in een sociale huurwoning moet plaatsen. <strong style="color:#fbbf24;">Dit is niet hetzelfde als de spreidingswet-opgave voor opvangplekken</strong> — zie het blok hierboven voor het verschil.</p>
 
     <!-- ── CALC FORM IN HERO ── -->
     <div style="margin:1.5rem 0 1.75rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:1.25rem 1.5rem;">
