@@ -778,11 +778,10 @@
       const isOverschot = sw.status === 'overschot';
       const pctGevuld  = sw.verdeling > 0 ? Math.round((sw.totaal / sw.verdeling) * 100) : 0;
 
-      // Headline-samenvatting: doorlopend in opvang + jaarlijkse doorstroom
+      // Headline-samenvatting: doorlopend in opvang (geen jaarstroom-derivaat)
       document.getElementById('rsSpreid').textContent = sw.verdeling.toLocaleString('nl-NL');
-      const jaarDoorstroom = Math.round(sw.verdeling * 1.4);   // gem verblijfsduur ~9mnd → factor 1.4
       document.getElementById('rsSpreidFlow').innerHTML =
-        `≈ ${jaarDoorstroom.toLocaleString('nl-NL')} personen per jaar door — gem. verblijfsduur ~8-9 mnd`;
+        `Doorlopende capaciteit (stock-cijfer, niet om te zetten naar jaarstroom). Sinds 2022 verblijven asielzoekers vaak 12-24 maanden in opvang door achterstand bij IND en wachten op een sociale huurwoning.`;
 
       document.getElementById('resSwEis').textContent     = sw.verdeling.toLocaleString('nl-NL');
       document.getElementById('resSwHuidig').textContent  = sw.totaal.toLocaleString('nl-NL');

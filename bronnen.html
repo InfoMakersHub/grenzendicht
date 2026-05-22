@@ -276,6 +276,73 @@
     </div>
   </div>
 
+  <!-- ── SECTIE 5 — Huisvesting & Spreidingswet ── -->
+  <div class="section">
+    <div class="section-title">5. Huisvesting &amp; spreidingswet (gemeentecalculator)</div>
+    <div class="source-group">
+
+      <div class="source-item">
+        <span class="title">
+          Huisvestingstaakstelling 2025 — Staatscourant
+          <span class="source-date">Staatscourant 2025, nr. 11181 (2025-I) en nr. 33523 (2025-II)</span>
+        </span>
+        Ministerie van Binnenlandse Zaken / Rijksoverheid<br>
+        <em style="color:var(--muted);font-size:.75rem;">Gebruik: nationale taakstelling 2025 = 15.000 (jan–jun) + 13.000 (jul–dec) = 28.000 vergunninghouders. Basis huisvestingsformule calculator: (bevolking ÷ NL-bevolking) × 28.000. Wettelijke basis: Huisvestingswet 2014 art. 26.</em>
+      </div>
+
+      <div class="source-item">
+        <span class="title">
+          Asielminister Van den Brink wil uitleg over opvangplekken: het tekort in jouw gemeente
+          <span class="source-date">november 2025</span>
+        </span>
+        NOS Nieuwsuur<br>
+        <a href="https://nos.nl/artikel/2615326-asielminister-van-den-brink-wil-uitleg-over-opvangplekken-dit-is-het-tekort-in-jouw-gemeente" target="_blank" rel="noopener">nos.nl/artikel/2615326</a><br>
+        <em style="color:var(--muted);font-size:.75rem;">Gebruik: 250 van 342 gemeenten halen spreidingswet-doelstelling niet, totaal tekort ~40.000 opvangplekken, deadline 2027.</em>
+      </div>
+
+      <div class="source-item">
+        <span class="title">
+          Spreidingswet — indicatieve verdeling per gemeente
+          <span class="source-date">stand november 2025</span>
+        </span>
+        NOS Nieuwsuur / Datawrapper-dataset (h2QlL)<br>
+        <a href="https://datawrapper.dwcdn.net/h2QlL/5/" target="_blank" rel="noopener">datawrapper.dwcdn.net/h2QlL/5/</a> · <a href="https://datawrapper.dwcdn.net/h2QlL/5/dataset.csv" target="_blank" rel="noopener">CSV download</a><br>
+        <em style="color:var(--muted);font-size:.75rem;">Gebruik: per-gemeente officiële indicatieve verdeling, huidige reguliere opvang, noodopvang en tekort/overschot voor alle 342 Nederlandse gemeenten. Totaal nationaal: 88.000 plekken eis, 74.236 huidig, tekort 39.489, overschot 25.725. Achterliggende data: Rijksoverheid + Provinciale Regietafels.</em>
+      </div>
+
+      <div class="source-item">
+        <span class="title">
+          Bevolking per gemeente — CBS Open Data 70072NED
+          <span class="source-date">peildatum 2024</span>
+        </span>
+        Centraal Bureau voor de Statistiek (OData API)<br>
+        <a href="https://opendata.cbs.nl/ODataApi/odata/70072NED" target="_blank" rel="noopener">opendata.cbs.nl/ODataApi/odata/70072NED</a><br>
+        <em style="color:var(--muted);font-size:.75rem;">Gebruik: actuele bevolkingscijfers per gemeente voor de huisvestingsformule. Gekoppeld aan gemeentegrenzen via CartoMap geojson 2024 (statcode-match).</em>
+      </div>
+
+      <div class="source-item">
+        <span class="title">
+          Gemeentegrenzen 2024 — CartoMap
+          <span class="source-date">2024</span>
+        </span>
+        CartoMap NL · GitHub Pages<br>
+        <a href="https://cartomap.github.io/nl/wgs84/gemeente_2024.geojson" target="_blank" rel="noopener">cartomap.github.io/nl/wgs84/gemeente_2024.geojson</a><br>
+        <em style="color:var(--muted);font-size:.75rem;">Gebruik: gemeentegrenzen (geojson) voor de interactieve kaart. Bevat 342 gemeenten met statcode (GM-code) voor koppeling met CBS- en NOS-data.</em>
+      </div>
+
+      <div class="source-item">
+        <span class="title">
+          IND-doorlooptijden &amp; verblijfsduur opvang
+          <span class="source-date">jaarverslagen 2023–2024</span>
+        </span>
+        COA Jaarverslag · IND Jaarcijfers<br>
+        <a href="https://www.coa.nl/nl/cijfers" target="_blank" rel="noopener">coa.nl/nl/cijfers</a> · <a href="https://ind.nl/" target="_blank" rel="noopener">ind.nl</a><br>
+        <em style="color:var(--muted);font-size:.75rem;">Gebruik: context bij interpretatie spreidingswet-capaciteit. Verblijfsduur in opvang loopt sinds 2022 op tot 12-24 maanden (IND-procedure + wachten op huurwoning na erkenning) — verklaart waarom opvangcapaciteit een stock-cijfer is en niet 1-op-1 omgezet kan worden naar een jaarlijkse stroom.</em>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ── METHODOLOGIE ── -->
   <div class="section">
     <div class="section-title">Schattingen &amp; berekeningsmethodologie</div>
@@ -314,6 +381,21 @@
             <td>Politieke haalbaarheid (&lt;5%)</td>
             <td>Kwalitatieve inschatting op basis van institutionele analyse en historische precedenten</td>
             <td style="color:var(--muted);">Kwalitatief oordeel — niet statistisch</td>
+          </tr>
+          <tr>
+            <td>Huisvestingstaakstelling per gemeente</td>
+            <td>(gemeente-inwoners CBS 2024 ÷ NL-bevolking 17,9 mln) × nationale taakstelling 28.000 (2025)</td>
+            <td style="color:var(--green);">Laag — pure bevolkingssleutel, formule wettelijk vastgelegd</td>
+          </tr>
+          <tr>
+            <td>Spreidingswet-eis &amp; tekort per gemeente</td>
+            <td>Officiële indicatieve verdeling NOS/Datawrapper (nov 2025) — geen schatting, harde cijfers per gemeente</td>
+            <td style="color:var(--green);">Laag — bron-data, geen modelaanname</td>
+          </tr>
+          <tr>
+            <td>"Jaarlijkse stroom" door opvang</td>
+            <td><em>Niet berekend</em> — spreidingswet-capaciteit is een stock-cijfer (doorlopende capaciteit). Verblijfsduur 12-24 maanden door IND-achterstand maakt lineaire omrekening naar jaarflow onbetrouwbaar.</td>
+            <td style="color:var(--red);">Te onzeker — bewust niet geschat</td>
           </tr>
         </tbody>
       </table>
