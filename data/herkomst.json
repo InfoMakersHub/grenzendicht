@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "bron": "CBS Open Data 80059NED — Asielverzoeken per nationaliteit",
+    "peildatum": "2025 jaarcijfers (per 2026-Q1)",
+    "totaal_2025": {
+      "eerste": 24140,
+      "nareizigers": 16470
+    },
+    "totaal_2024": {
+      "eerste": 32175,
+      "nareizigers": 11880
+    },
+    "top15_dekking_eerste_pct": 75
+  },
+  "top15": [
+    {
+      "land": "Syrië",
+      "cbs_nationaliteit": "Syrisch",
+      "eerste_2025": 3285,
+      "nareizigers_2025": 12110,
+      "eerste_2024": 11525,
+      "nareizigers_2024": 8710
+    },
+    {
+      "land": "Eritrea",
+      "cbs_nationaliteit": "Eritrees",
+      "eerste_2025": 3135,
+      "nareizigers_2025": 310,
+      "eerste_2024": 1465,
+      "nareizigers_2024": 200
+    },
+    {
+      "land": "Onbekend",
+      "cbs_nationaliteit": "Onbekend",
+      "eerste_2025": 1635,
+      "nareizigers_2025": 430,
+      "eerste_2024": 1455,
+      "nareizigers_2024": 300
+    },
+    {
+      "land": "Turkije",
+      "cbs_nationaliteit": "Turks",
+      "eerste_2025": 1480,
+      "nareizigers_2025": 465,
+      "eerste_2024": 1870,
+      "nareizigers_2024": 470
+    },
+    {
+      "land": "Somalië",
+      "cbs_nationaliteit": "Somalisch",
+      "eerste_2025": 1290,
+      "nareizigers_2025": 395,
+      "eerste_2024": 1075,
+      "nareizigers_2024": 215
+    },
+    {
+      "land": "Algerije",
+      "cbs_nationaliteit": "Algerijns",
+      "eerste_2025": 1210,
+      "nareizigers_2025": 5,
+      "eerste_2024": 950,
+      "nareizigers_2024": 5
+    },
+    {
+      "land": "Nigeria",
+      "cbs_nationaliteit": "Nigeriaans",
+      "eerste_2025": 815,
+      "nareizigers_2025": 30,
+      "eerste_2024": 770,
+      "nareizigers_2024": 20
+    },
+    {
+      "land": "Soedan",
+      "cbs_nationaliteit": "Soedanees",
+      "eerste_2025": 795,
+      "nareizigers_2025": 15,
+      "eerste_2024": 520,
+      "nareizigers_2024": 25
+    },
+    {
+      "land": "Afghanistan",
+      "cbs_nationaliteit": "Afghaans",
+      "eerste_2025": 765,
+      "nareizigers_2025": 190,
+      "eerste_2024": 490,
+      "nareizigers_2024": 160
+    },
+    {
+      "land": "Pakistan",
+      "cbs_nationaliteit": "Pakistaans",
+      "eerste_2025": 695,
+      "nareizigers_2025": 360,
+      "eerste_2024": 490,
+      "nareizigers_2024": 140
+    },
+    {
+      "land": "Ethiopië",
+      "cbs_nationaliteit": "Ethiopisch",
+      "eerste_2025": 670,
+      "nareizigers_2025": 35,
+      "eerste_2024": 415,
+      "nareizigers_2024": 45
+    },
+    {
+      "land": "Marokko",
+      "cbs_nationaliteit": "Marokkaans",
+      "eerste_2025": 670,
+      "nareizigers_2025": 10,
+      "eerste_2024": 605,
+      "nareizigers_2024": 5
+    },
+    {
+      "land": "Irak",
+      "cbs_nationaliteit": "Iraaks",
+      "eerste_2025": 575,
+      "nareizigers_2025": 250,
+      "eerste_2024": 2220,
+      "nareizigers_2024": 395
+    },
+    {
+      "land": "Sierra Leone",
+      "cbs_nationaliteit": "Sierra Leoons",
+      "eerste_2025": 525,
+      "nareizigers_2025": 5,
+      "eerste_2024": 245,
+      "nareizigers_2024": 10
+    },
+    {
+      "land": "Jemen",
+      "cbs_nationaliteit": "Jemenitisch",
+      "eerste_2025": 510,
+      "nareizigers_2025": 1475,
+      "eerste_2024": 1080,
+      "nareizigers_2024": 830
+    }
+  ],
+  "overig": {
+    "eerste_2025": 5295,
+    "nareizigers_2025": 360
+  }
+}

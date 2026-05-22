@@ -79,6 +79,43 @@
   </div>
 
   <div class="section">
+    <div class="section-title">Waar komen de asielzoekers vandaan?</div>
+
+    <div class="two-col" style="align-items:start;">
+      <div class="chart-box">
+        <h3>Top 10 herkomstlanden — aanvragen 2025</h3>
+        <div class="chart-wrap-lg">
+          <div id="herkomstChart" style="width:100%;height:100%;"></div>
+        </div>
+        <p class="chart-note">Eerste aanvragen (blauw) + nareizigers (rood) per land. Top 10 dekt 63% van alle eerste aanvragen in 2025. Bron: CBS Open Data 80059NED.</p>
+      </div>
+
+      <div>
+        <div class="callout callout-amber">
+          <strong>De Syrië-shift van 2025</strong>
+          Eerste aanvragen uit Syrië <strong>daalden 71%</strong> (van 11.525 → 3.285) na de val van het Assad-regime eind 2024. Maar Syrische <strong>nareizigers</strong> blijven dominant: 12.110 personen = 74% van alle nareizigers in 2025 — gezinshereniging van eerder erkende vluchtelingen.
+        </div>
+
+        <div class="callout callout-blue" style="margin-top:1rem;">
+          <strong>Verschuivingen 2024 → 2025</strong>
+          <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.65;font-size:.83rem;">
+            <li><strong>Eritrea +114%</strong> (1.465 → 3.135)</li>
+            <li><strong>Sierra Leone +114%</strong> (245 → 525)</li>
+            <li><strong>Soedan +53%</strong> · <strong>Afghanistan +56%</strong></li>
+            <li><strong>Irak −74%</strong> (2.220 → 575)</li>
+            <li><strong>Jemen −53%</strong> (1.080 → 510)</li>
+          </ul>
+        </div>
+
+        <div class="callout callout-blue" style="margin-top:1rem;">
+          <strong>Totalen 2025</strong>
+          24.140 eerste aanvragen + 16.470 nareizigers = <strong>40.610 totaal</strong>. Dat is een daling van 32.175 eerste aanvragen in 2024 (−25%), maar nareizigers stegen met +39% (van 11.880 → 16.470).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
     <div class="section-title">Kwartaalverdeling 2025–2026</div>
     <div style="overflow-x:auto;">
       <table class="data-table">
@@ -233,7 +270,56 @@
     </tr>`;
   });
 
-  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); });
+  // ── HERKOMST CHART (Fase: toestroom verfijning) ───────────────────────
+  const herkomstChart = echarts.init(document.getElementById('herkomstChart'));
+  const _hSort = [...HERKOMST.top10].sort((a, b) => (a.e25 + a.n25) - (b.e25 + b.n25));
+  herkomstChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: params => {
+        const land = params[0].axisValue;
+        const land_data = HERKOMST.top10.find(d => d.land === land);
+        const totaal = (params[0].value || 0) + (params[1]?.value || 0);
+        let s = `<strong>${land}</strong><br>`;
+        params.forEach(p => { s += `${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong><br>`; });
+        s += `<span style="color:#94a3b8">Totaal 2025: <strong>${totaal.toLocaleString('nl-NL')}</strong></span>`;
+        if (land_data) {
+          const delta = land_data.e25 - land_data.e24;
+          const pct = land_data.e24 ? Math.round(delta / land_data.e24 * 100) : 0;
+          const sign = delta >= 0 ? '+' : '';
+          s += `<br><span style="color:#94a3b8;font-size:.85em">2024 → 2025 eerste aanvragen: ${sign}${delta.toLocaleString('nl-NL')} (${sign}${pct}%)</span>`;
+        }
+        return s;
+      }
+    },
+    legend: { bottom: 0, textStyle: { color: '#7a90a8', fontSize: 12 }, icon: 'circle', itemWidth: 8, itemHeight: 8 },
+    grid: { top: 16, right: 32, bottom: 48, left: 16, containLabel: true },
+    xAxis: {
+      type: 'value', name: 'Personen', nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'category', data: _hSort.map(d => d.land),
+      axisLabel: { color: '#3d526b', fontSize: 12, fontWeight: 600 },
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
+    },
+    series: [
+      { name: 'Eerste aanvragen 2025', type: 'bar', stack: 'tot',
+        data: _hSort.map(d => d.e25),
+        itemStyle: { color: 'rgba(29,111,212,.85)', borderRadius: [0,0,0,0] },
+        barMaxWidth: 22 },
+      { name: 'Nareizigers 2025', type: 'bar', stack: 'tot',
+        data: _hSort.map(d => d.n25),
+        itemStyle: { color: 'rgba(185,28,28,.85)', borderRadius: [0,4,4,0] },
+        barMaxWidth: 22 }
+    ]
+  });
+  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); });
 </script>
 
 </body>

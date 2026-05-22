@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 18:30';
+const LAST_UPDATE = '22 mei 2026, 19:15';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -90,6 +90,27 @@ const NAREIZIGERS = {
   jaren:           ['2018','2019','2020','2021','2022','2023','2024','2025'],
   eersteAanvragen: [20515, 22540, 13720, 24745, 35535, 38375, 32100, 24100],
   nareizigers:     [ 6460,  4180,  3865, 10120, 11130, 10125, 11900, 16500],
+};
+
+// ── Herkomst asielzoekers (bron: CBS Open Data 80059NED, jaarcijfers 2024 + 2025) ──
+// ⬇ Top 10 herkomstlanden — dekt 63% van eerste aanvragen 2025.
+// Update bij nieuwe CBS-publicatie via data/herkomst.json + /tmp/build_herkomst.py
+const HERKOMST = {
+  totaal_2025: { eerste: 24140, nareizigers: 16470 },
+  totaal_2024: { eerste: 32175, nareizigers: 11880 },
+  top10: [
+    // gesorteerd op eerste aanvragen 2025 desc
+    { land: 'Syrië',       e25: 3285, n25: 12110, e24: 11525 },
+    { land: 'Eritrea',     e25: 3135, n25:   310, e24:  1465 },
+    { land: 'Onbekend',    e25: 1635, n25:   430, e24:  1455 },
+    { land: 'Turkije',     e25: 1480, n25:   465, e24:  1870 },
+    { land: 'Somalië',     e25: 1290, n25:   395, e24:  1075 },
+    { land: 'Algerije',    e25: 1210, n25:    5,  e24:   950 },
+    { land: 'Nigeria',     e25:  815, n25:   30,  e24:   770 },
+    { land: 'Soedan',      e25:  795, n25:   15,  e24:   520 },
+    { land: 'Afghanistan', e25:  765, n25:  190,  e24:   490 },
+    { land: 'Pakistan',    e25:  695, n25:  360,  e24:   490 },
+  ],
 };
 
 // ── Europa (bron: Eurostat / UNHCR 2024) ────────────────────────────────────
