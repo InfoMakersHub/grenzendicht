@@ -485,7 +485,7 @@
 
   <div class="ig-chart-box">
     <h3>FTE per categorie — asielindustrie (middenwaarden)</h3>
-    <div id="jobPieChart" style="width:100%;height:360px;"></div>
+    <div id="jobPieChart" style="width:100%;height:400px;"></div>
     <p class="ig-chart-note">Bron: IND Jaarcijfers 2024 (IND = hard cijfer), COA Jaarverslag 2024, overige categorieën = schattingen. <a href="werkgelegenheid.html">Volledig overzicht →</a></p>
   </div>
 
@@ -629,23 +629,19 @@
         return `<strong>${p.name}</strong><br>${p.value.toLocaleString('nl-NL')} FTE &nbsp;<span style="color:#94a3b8">(${pct}%)</span>`;
       }
     },
-    legend: {
-      bottom: 0, type: 'scroll',
-      textStyle: { color: '#7a90a8', fontSize: 11 },
-      icon: 'circle', itemWidth: 8, itemHeight: 8
-    },
+    legend: { show: false },
     series: [{
       name: 'FTE', type: 'pie',
-      radius: ['36%', '66%'], center: ['50%', '44%'],
+      radius: ['0%', '62%'], center: ['50%', '50%'],
       avoidLabelOverlap: true,
-      itemStyle: { borderRadius: 5, borderColor: '#fff', borderWidth: 3 },
-      label: { show: false },
-      labelLine: { show: false },
-      emphasis: {
-        label: { show: true, fontSize: 13, fontWeight: '700',
-          formatter: p => `${p.name}\n${p.value.toLocaleString('nl-NL')} FTE` },
-        scaleSize: 6
+      itemStyle: { borderColor: '#fff', borderWidth: 2 },
+      label: {
+        show: true, position: 'outside',
+        formatter: '{b}',
+        fontSize: 11, color: '#3d526b', lineHeight: 15
       },
+      labelLine: { show: true, length: 8, length2: 14, smooth: true },
+      emphasis: { scaleSize: 5, label: { show: false } },
       data: WERKGELEGENHEID.fte.map(d => ({ value: d.waarde, name: d.label }))
     }]
   });
