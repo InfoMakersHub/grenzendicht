@@ -154,11 +154,11 @@
   <div class="section">
     <div class="section-title">Hoe veranderde het over tijd? (2015–2025)</div>
     <div class="chart-box">
-      <h3>Eerste asielaanvragen per herkomstland — 11 jaar tijdreeks</h3>
+      <h3>Eerste asielaanvragen per herkomstland — maandelijks 2015–2025</h3>
       <div class="chart-wrap-lg">
         <div id="herkomstTijdChart" style="width:100%;height:100%;"></div>
       </div>
-      <p class="chart-note">Top 7 herkomstlanden over 11 jaar. Klik op een land in de legenda om aan/uit te zetten. Alleen eerste asielaanvragen — nareizigers volgen later met vertraging en worden hier niet meegerekend. Bron: CBS Open Data 80059NED (jaarcijfers).</p>
+      <p class="chart-note">Top 7 herkomstlanden, maandelijkse cijfers. Klik op een land in de legenda om aan/uit te zetten. Alleen eerste asielaanvragen — nareizigers worden hier niet meegerekend. Bron: CBS Open Data 83102NED (maandcijfers).</p>
     </div>
 
 
@@ -465,6 +465,12 @@
   });
   // ── HERKOMST TIJDREEKS CHART ──────────────────────────────────────────
   const herkomstTijdChart = echarts.init(document.getElementById('herkomstTijdChart'));
+  const _htMaandNamen = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+  const _htFmtPeriod = per => {
+    const y = per.slice(0, 4);
+    const m = parseInt(per.slice(6), 10) - 1;
+    return `${_htMaandNamen[m]} ${y}`;
+  };
   herkomstTijdChart.setOption({
     tooltip: {
       trigger: 'axis',
@@ -472,9 +478,8 @@
       textStyle: { color: '#1e293b', fontSize: 12 },
       extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
       formatter: params => {
-        // Sort by value desc voor leesbaarheid
         const sorted = [...params].sort((a, b) => b.value - a.value);
-        let s = `<div style="font-weight:700;margin-bottom:4px">${sorted[0].axisValue}</div>`;
+        let s = `<div style="font-weight:700;margin-bottom:4px">${_htFmtPeriod(sorted[0].axisValue)}</div>`;
         sorted.forEach(p => {
           if (p.value === 0 || p.value == null) return;
           s += `<div>${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong></div>`;
@@ -489,12 +494,17 @@
     },
     grid: { top: 24, right: 24, bottom: 56, left: 16, containLabel: true },
     xAxis: {
-      type: 'category', data: HERKOMST_TIJDREEKS.jaren,
+      type: 'category', data: HERKOMST_TIJDREEKS.maanden,
       axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
-      axisLabel: { color: '#3d526b', fontSize: 11, fontWeight: 600 }
+      axisLabel: {
+        color: '#3d526b', fontSize: 11, fontWeight: 600,
+        // Toon alleen de jaargrens (januari van elk jaar)
+        interval: (idx, val) => val.endsWith('MM01'),
+        formatter: val => val.slice(0, 4)
+      }
     },
     yAxis: {
-      type: 'value', name: 'Eerste aanvragen',
+      type: 'value', name: 'Eerste aanvragen/maand',
       nameTextStyle: { color: '#7a90a8', fontSize: 10 },
       axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
       splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
@@ -502,10 +512,10 @@
     },
     series: HERKOMST_TIJDREEKS.series.map(s => ({
       name: s.land, type: 'line', data: s.data,
-      lineStyle: { color: s.kleur, width: 2.4 },
+      lineStyle: { color: s.kleur, width: 2 },
       itemStyle: { color: s.kleur },
-      symbol: 'circle', symbolSize: 5,
-      smooth: 0.2
+      symbol: 'none',   // geen punten bij 132 datapunten — te druk
+      smooth: 0.3
     }))
   });
 
