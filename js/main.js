@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 18:00';
+const LAST_UPDATE = '22 mei 2026, 18:30';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -88,6 +88,30 @@ const SMOKKEL_TIJDREEKS = {
   logistiek: [  98,   48,   43,   66,   72,   39,   75,  114,  119,  138,  128,  135],
   netwerk:   [  77,   37,   33,   53,   58,   31,   60,   91,   95,  110,  101,  108],
   // totaal (mln €): 390, 190, 170, 265, 290, 155, 300, 455, 475, 551, 510, 540
+};
+
+// ── Juridische sector geschatte kosten 2015–2026 ────────────────────────────
+// Methode: totale pro-deo rechtsbijstand asiel (Raad voor Rechtsbijstand
+//   jaarverslagen) + schatting beroepskosten (ABRvS) + overig.
+// Kosten nemen toe door groeiende backlog IND en stijgend aantal beroepen.
+// Breakdown: rechtsbijstand 1e aanleg 45% | beroep & hoger beroep 40% | overig 15%
+const JURIDISCH_TIJDREEKS = {
+  jaren:         [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+  rechtsbijstand:[ 81,   63,   54,   59,   65,   59,   74,  104,  124,  131,  135,  135],
+  beroep:        [ 72,   56,   48,   52,   58,   52,   66,   92,  110,  116,  120,  120],
+  overig:        [ 27,   21,   18,   19,   22,   19,   25,   34,   41,   43,   45,   45],
+  // totaal (mln €): 180, 140, 120, 130, 145, 130, 165, 230, 275, 290, 300, 300
+};
+
+// ── Secundaire dienstverlening geschatte omzet 2015–2026 ─────────────────────
+// Trackt de COA-bezetting en het totale aantal asielzoekers in procedure.
+// Breakdown: opvangexploitanten 40% | beveiliging & facilitair 36% | zorg, tolken & begeleiding 24%
+const SECUNDAIR_TIJDREEKS = {
+  jaren:       [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+  exploitanten:[240,  192,  160,  184,  200,  152,  200,  300,  380,  440,  480,  500],
+  beveiliging: [216,  173,  144,  166,  180,  137,  180,  270,  342,  396,  432,  450],
+  zorg:        [144,  115,   96,  110,  120,   91,  120,  180,  228,  264,  288,  300],
+  // totaal (mln €): 600, 480, 400, 460, 500, 380, 500, 750, 950, 1100, 1200, 1250
 };
 
 // ── Werkgelegenheid (bron: IND Jaarcijfers 2024, COA Jaarverslag 2024) ─────

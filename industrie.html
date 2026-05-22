@@ -161,6 +161,13 @@
 
   <div class="section">
     <div class="section-title">C. Juridische Sector</div>
+    <div class="chart-box">
+      <h3>Geschatte kosten juridische sector asiel — 2015–2026</h3>
+      <div class="chart-wrap-lg">
+        <div id="juridischTijdChart" style="width:100%;height:100%;"></div>
+      </div>
+      <p class="chart-note">Gebaseerd op Raad voor Rechtsbijstand jaarverslagen (pro-deo toevoegingen asiel), ABRvS beroepsvolume en IND-backlogcijfers. Breakdown indicatief. <strong>Alle cijfers zijn schattingen.</strong> De stijging na 2021 weerspiegelt de exploderende IND-achterstand en het daarmee samenhangende beroepsvolume.</p>
+    </div>
     <div class="two-col">
       <div class="chart-box">
         <h3>Structuur rechtsbijstand</h3>
@@ -187,6 +194,13 @@
 
   <div class="section">
     <div class="section-title">D. Secundaire Dienstverlening</div>
+    <div class="chart-box">
+      <h3>Geschatte omzet secundaire dienstverlening asiel — 2015–2026</h3>
+      <div class="chart-wrap-lg">
+        <div id="secundairTijdChart" style="width:100%;height:100%;"></div>
+      </div>
+      <p class="chart-note">Trackt de COA-bezetting en het totale aantal asielzoekers in procedure. Opvangexploitanten: COA-contracten voor locatiebeheer; beveiliging &amp; facilitair: beveiligingsbedrijven, catering, schoonmaak; zorg, tolken &amp; begeleiding: medische zorg, tolkendiensten, maatschappelijke begeleiding. <strong>Alle cijfers zijn schattingen; bandbreedte ±25%.</strong></p>
+    </div>
     <div style="overflow-x:auto;">
       <table class="data-table">
         <thead>
@@ -348,7 +362,118 @@
     ]
   });
 
-  window.addEventListener('resize', () => { budgetTijdChart.resize(); smokkelTijdChart.resize(); });
+  // ── Juridische sector tijdreeks ───────────────────────────────────────────
+  const juridischTijdChart = echarts.init(document.getElementById('juridischTijdChart'));
+  juridischTijdChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: function(params) {
+        const totaal = params.reduce((s, p) => s + (p.value || 0), 0);
+        let html = `<strong>${params[0].axisValue}</strong> <em style="color:#94a3b8;font-size:11px;">(schatting)</em><br>`;
+        params.forEach(p => {
+          html += `${p.marker} ${p.seriesName}: <strong>€${Number(p.value).toLocaleString('nl-NL')} mln</strong><br>`;
+        });
+        html += `<span style="border-top:1px solid #e2e8f0;display:block;margin-top:4px;padding-top:4px;">Totaal: <strong>€${Number(totaal).toLocaleString('nl-NL')} mln</strong></span>`;
+        return html;
+      }
+    },
+    legend: {
+      bottom: '1%', textStyle: { color: '#7a90a8', fontSize: 11 },
+      icon: 'circle', itemWidth: 8, itemHeight: 8
+    },
+    grid: { top: 28, right: 20, bottom: 52, left: 12, containLabel: true },
+    xAxis: {
+      type: 'category', data: JURIDISCH_TIJDREEKS.jaren.map(String),
+      axisLabel: { color: '#3d526b', fontSize: 11 },
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value', name: 'Miljoenen €',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => '€' + v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [
+      {
+        name: 'Rechtsbijstand 1e aanleg', type: 'bar', stack: 'juridisch', barMaxWidth: 44,
+        itemStyle: { color: '#0369a1' },
+        data: JURIDISCH_TIJDREEKS.rechtsbijstand
+      },
+      {
+        name: 'Beroep & hoger beroep', type: 'bar', stack: 'juridisch',
+        itemStyle: { color: '#0c4a6e' },
+        data: JURIDISCH_TIJDREEKS.beroep
+      },
+      {
+        name: 'Overig juridisch', type: 'bar', stack: 'juridisch',
+        itemStyle: { color: '#64748b', borderRadius: [3, 3, 0, 0] },
+        data: JURIDISCH_TIJDREEKS.overig
+      }
+    ]
+  });
+
+  // ── Secundaire dienstverlening tijdreeks ──────────────────────────────────
+  const secundairTijdChart = echarts.init(document.getElementById('secundairTijdChart'));
+  secundairTijdChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: function(params) {
+        const totaal = params.reduce((s, p) => s + (p.value || 0), 0);
+        let html = `<strong>${params[0].axisValue}</strong> <em style="color:#94a3b8;font-size:11px;">(schatting)</em><br>`;
+        params.forEach(p => {
+          html += `${p.marker} ${p.seriesName}: <strong>€${Number(p.value).toLocaleString('nl-NL')} mln</strong><br>`;
+        });
+        html += `<span style="border-top:1px solid #e2e8f0;display:block;margin-top:4px;padding-top:4px;">Totaal: <strong>€${Number(totaal).toLocaleString('nl-NL')} mln</strong></span>`;
+        return html;
+      }
+    },
+    legend: {
+      bottom: '1%', textStyle: { color: '#7a90a8', fontSize: 11 },
+      icon: 'circle', itemWidth: 8, itemHeight: 8
+    },
+    grid: { top: 28, right: 20, bottom: 52, left: 12, containLabel: true },
+    xAxis: {
+      type: 'category', data: SECUNDAIR_TIJDREEKS.jaren.map(String),
+      axisLabel: { color: '#3d526b', fontSize: 11 },
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value', name: 'Miljoenen €',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => '€' + v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [
+      {
+        name: 'Opvangexploitanten', type: 'bar', stack: 'secundair', barMaxWidth: 44,
+        itemStyle: { color: '#0f766e' },
+        data: SECUNDAIR_TIJDREEKS.exploitanten
+      },
+      {
+        name: 'Beveiliging & facilitair', type: 'bar', stack: 'secundair',
+        itemStyle: { color: '#155e75' },
+        data: SECUNDAIR_TIJDREEKS.beveiliging
+      },
+      {
+        name: 'Zorg, tolken & begeleiding', type: 'bar', stack: 'secundair',
+        itemStyle: { color: '#4338ca', borderRadius: [3, 3, 0, 0] },
+        data: SECUNDAIR_TIJDREEKS.zorg
+      }
+    ]
+  });
+
+  window.addEventListener('resize', () => {
+    budgetTijdChart.resize(); smokkelTijdChart.resize();
+    juridischTijdChart.resize(); secundairTijdChart.resize();
+  });
 </script>
 
 </body>
