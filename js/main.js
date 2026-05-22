@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 19:15';
+const LAST_UPDATE = '22 mei 2026, 19:30';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -74,10 +74,12 @@ const BUDGET_TIJDREEKS = {
   jaren:    [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   coa:      [1268, 1124,  965,  702,  638,  660,  726, 1600, 2700, 3800, 4009, 4190],
   ind:      [ 390,  371,  366,  360,  405,  430,  480,  580,  579,  720,  966, 1020],
-  nidos:    [  80,   90,   95,  100,  105,  110,  120,  150,  185,  220,  432,  470],
-  dtv:      [  15,   25,   30,   40,   45,   35,   55,   75,  100,  160,  300,  380],
-  gemeenten:[  10,   77,   70,  134,   84,   65,  110,  175,  650, 1100, 2793, 2800],
-  // totaal overig (nidos+dtv+gemeenten): 105, 192, 195, 274, 234, 210, 285, 400, 935, 1480, 3525, 3650
+  nidos:      [  80,   90,   95,  100,  105,  110,  120,  150,  185,  220,  432,  470],
+  dtv:        [  15,   25,   30,   40,   45,   35,   55,   75,  100,  160,  300,  380],
+  gem_opvang: [   0,   10,   10,   25,   15,   10,   35,   80,  430,  750, 2000, 2050],
+  integratie: [   5,   50,   45,   85,   55,   45,   55,   65,  150,  250,  550,  550],
+  overig_bel: [   5,   17,   15,   24,   14,   10,   20,   30,   70,  100,  243,  200],
+  // totaal overig (som alle 5): 105, 192, 195, 274, 234, 210, 285, 400, 935, 1480, 3525, 3650
   schatting: [2020, 2024],
 };
 

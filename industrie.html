@@ -309,9 +309,19 @@
         data: BUDGET_TIJDREEKS.dtv
       },
       {
-        name: 'Gemeenten & overig', type: 'bar', stack: 'budget',
-        itemStyle: { color: '#0d2d6b', borderRadius: [3, 3, 0, 0] },
-        data: BUDGET_TIJDREEKS.gemeenten
+        name: 'Gemeentelijke opvang', type: 'bar', stack: 'budget',
+        itemStyle: { color: '#0d2d6b' },
+        data: BUDGET_TIJDREEKS.gem_opvang
+      },
+      {
+        name: 'Integratie & inburgering', type: 'bar', stack: 'budget',
+        itemStyle: { color: '#4338ca' },
+        data: BUDGET_TIJDREEKS.integratie
+      },
+      {
+        name: 'Overig beleid', type: 'bar', stack: 'budget',
+        itemStyle: { color: '#64748b', borderRadius: [3, 3, 0, 0] },
+        data: BUDGET_TIJDREEKS.overig_bel
       }
     ]
   });
