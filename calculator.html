@@ -138,6 +138,52 @@
       font-size: .82rem;
     }
     .obl-context strong { color: #fbbf24; }
+
+    /* ─── HEADLINE-SAMENVATTING (boven detail-blokken) ────────────── */
+    .result-summary {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; background: #fff;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    @media (max-width: 580px) { .result-summary { grid-template-columns: 1fr; } }
+    .rs-card {
+      padding: 1.15rem 1.25rem; position: relative;
+    }
+    .rs-card.huisv  { background: #eff6ff; border-right: 1px solid var(--border); }
+    .rs-card.spreid { background: #eef2ff; }
+    @media (max-width: 580px) {
+      .rs-card.huisv { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+    .rs-lbl {
+      font-size: .62rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: .35rem;
+    }
+    .rs-card.huisv  .rs-lbl { color: #0d2d6b; }
+    .rs-card.spreid .rs-lbl { color: #312e81; }
+    .rs-val {
+      font-size: 2.2rem; font-weight: 900; line-height: 1;
+      letter-spacing: -1px; margin-bottom: .25rem;
+    }
+    .rs-card.huisv  .rs-val { color: #1d6fd4; }
+    .rs-card.spreid .rs-val { color: #4f46e5; }
+    .rs-unit {
+      display: inline-block;
+      font-size: .72rem; font-weight: 700;
+      color: var(--muted); margin-bottom: .55rem;
+    }
+    .rs-sub {
+      font-size: .75rem; line-height: 1.5;
+      color: var(--text-2);
+    }
+    .rs-flow {
+      margin-top: .5rem; padding-top: .5rem;
+      border-top: 1px dashed rgba(0,0,0,.1);
+      font-size: .72rem; color: var(--muted);
+      font-style: italic;
+    }
+
     .result-stack {
       display: flex; flex-direction: column; gap: 1rem;
       background: #fff; padding: 1rem;
@@ -342,6 +388,23 @@
 
         <!-- Context-bar bovenaan -->
         <div class="obl-context" id="resContext"></div>
+
+        <!-- Headline-samenvatting: bijkomend per jaar + in opvang -->
+        <div class="result-summary">
+          <div class="rs-card huisv">
+            <div class="rs-lbl">Bijkomende inwoners</div>
+            <div class="rs-val" id="rsHuisv">—</div>
+            <div class="rs-unit">per jaar</div>
+            <div class="rs-sub">Vergunninghouders die zich permanent vestigen — inclusief nareizigers (~41%).</div>
+          </div>
+          <div class="rs-card spreid">
+            <div class="rs-lbl">Asielzoekers in opvang</div>
+            <div class="rs-val" id="rsSpreid">—</div>
+            <div class="rs-unit">doorlopend</div>
+            <div class="rs-sub">Opvangplekken die de gemeente continu beschikbaar moet hebben.</div>
+            <div class="rs-flow" id="rsSpreidFlow"></div>
+          </div>
+        </div>
 
         <div class="result-stack">
 
@@ -695,6 +758,9 @@
     const narei      = Math.round(t2025 * 0.41);
     const aandeelPct = (aandeel * 100).toFixed(2);
 
+    // Headline-samenvatting: bijkomend per jaar
+    document.getElementById('rsHuisv').textContent = t2025.toLocaleString('nl-NL');
+
     // Huisvestingsblok
     document.getElementById('res2025').textContent  = t2025.toLocaleString('nl-NL');
     document.getElementById('res2026').textContent  = t2026h.toLocaleString('nl-NL');
@@ -711,6 +777,12 @@
       const isTekort   = sw.status === 'tekort';
       const isOverschot = sw.status === 'overschot';
       const pctGevuld  = sw.verdeling > 0 ? Math.round((sw.totaal / sw.verdeling) * 100) : 0;
+
+      // Headline-samenvatting: doorlopend in opvang + jaarlijkse doorstroom
+      document.getElementById('rsSpreid').textContent = sw.verdeling.toLocaleString('nl-NL');
+      const jaarDoorstroom = Math.round(sw.verdeling * 1.4);   // gem verblijfsduur ~9mnd → factor 1.4
+      document.getElementById('rsSpreidFlow').innerHTML =
+        `≈ ${jaarDoorstroom.toLocaleString('nl-NL')} personen per jaar door — gem. verblijfsduur ~8-9 mnd`;
 
       document.getElementById('resSwEis').textContent     = sw.verdeling.toLocaleString('nl-NL');
       document.getElementById('resSwHuidig').textContent  = sw.totaal.toLocaleString('nl-NL');
@@ -758,6 +830,8 @@
       swShared = { eis: sw.verdeling, huidig: sw.totaal, verschil, status: sw.status };
     } else {
       // Geen data (handmatige berekening)
+      document.getElementById('rsSpreid').textContent     = '—';
+      document.getElementById('rsSpreidFlow').innerHTML   = 'Geen spreidingswet-data beschikbaar voor handmatige berekening.';
       document.getElementById('resSwEis').textContent     = '—';
       document.getElementById('resSwHuidig').textContent  = '—';
       document.getElementById('resSwVerschil').textContent = '—';
