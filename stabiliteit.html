@@ -220,13 +220,34 @@
       <p class="chart-note">Per herkomstland één gestapelde balk met drie wettelijke types vergunning. Bron: CBS Open Data 85400NED.</p>
     </div>
 
-    <div class="callout callout-red" style="margin-top:1.25rem;">
-      <strong>Welk type domineert per herkomst?</strong>
-      <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.65;font-size:.85rem;">
-        <li><strong>Oorlogsgebieden</strong> (Syrië, Eritrea, Jemen, Somalië) → <strong>subsidiaire bescherming</strong> overheerst — groepsgevaar zonder individuele vervolging.</li>
-        <li><strong>Turkije</strong> → vooral <strong>vluchtelingenstatus</strong> (75%): individuele politieke vervolging Erdogan-tegenstanders.</li>
-        <li><strong>Humanitaire bescherming</strong> blijft overal klein (NL totaal 2024: 780 van 15.960 vergunningen, ≈ 5%).</li>
-      </ul>
+    <div class="chart-box" style="margin-top:1.5rem;">
+      <h3>Verleende vergunningen Nederland nationaal — per type 2015–2025</h3>
+      <div class="chart-wrap-lg">
+        <div id="vergunningTijdChart" style="width:100%;height:100%;"></div>
+      </div>
+      <p class="chart-note">Alle in Nederland verleende vergunningen per jaar, gestapeld in de drie wettelijke types. Bron: CBS Open Data 85400NED. Toont nationale beleidsverschuivingen — niet uitgesplitst per herkomstland (zie chart hierboven voor 2024-snapshot).</p>
+    </div>
+
+    <div class="two-col" style="align-items:start;margin-top:1.25rem;">
+      <div class="callout callout-red">
+        <strong>Welk type domineert per herkomst?</strong>
+        <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.65;font-size:.85rem;">
+          <li><strong>Oorlogsgebieden</strong> (Syrië, Eritrea, Jemen, Somalië) → <strong>subsidiaire bescherming</strong> overheerst — groepsgevaar zonder individuele vervolging.</li>
+          <li><strong>Turkije</strong> → vooral <strong>vluchtelingenstatus</strong> (75%): individuele politieke vervolging Erdogan-tegenstanders.</li>
+          <li><strong>Humanitaire bescherming</strong> blijft overal klein (NL totaal 2024: 780 van 15.960 vergunningen, ≈ 5%).</li>
+        </ul>
+      </div>
+
+      <div class="callout callout-blue">
+        <strong>Wat de tijdreeks laat zien</strong>
+        <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.65;font-size:.85rem;">
+          <li><strong>2015–2016</strong>: piek 16.450 + 20.810 (Syrische crisis).</li>
+          <li><strong>2017–2019</strong>: ineenstorting na strenger beleid (laagste: 3.620 in 2018).</li>
+          <li><strong>2020–2024</strong>: gestaag herstel naar 15.960.</li>
+          <li><strong>2023</strong>: subsidiair piekt (10.460) — meer oorlogsvluchtelingen.</li>
+          <li><strong>2025</strong>: <strong>−53% t.o.v. 2024</strong> (15.960 → 7.425) — gevolg val Assad-regime: minder Syrische toewijzingen.</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -548,6 +569,53 @@
     ]
   });
 
+  // ── VERGUNNINGEN NL NATIONAAL PER TYPE 2015-2025 (TIJDREEKS) ────────
+  const vergunningTijdChart = echarts.init(document.getElementById('vergunningTijdChart'));
+  vergunningTijdChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 12 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: params => {
+        const jaar = params[0].axisValue;
+        let s = `<div style="font-weight:700;margin-bottom:4px">${jaar}</div>`;
+        let tot = 0;
+        params.forEach(p => {
+          tot += p.value;
+          s += `<div>${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong></div>`;
+        });
+        s += `<div style="margin-top:4px;color:#94a3b8;font-size:.85em">Totaal: ${tot.toLocaleString('nl-NL')}</div>`;
+        return s;
+      }
+    },
+    legend: { show: false },   // verticale legenda met uitleg staat al boven deze chart
+    grid: { top: 16, right: 24, bottom: 36, left: 16, containLabel: true },
+    xAxis: {
+      type: 'category', data: HERKOMST_VERGUNNINGEN_TIJD.jaren,
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: { color: '#3d526b', fontSize: 11, fontWeight: 600 }
+    },
+    yAxis: {
+      type: 'value', name: 'Vergunningen',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [
+      { name: 'Vluchtelingenstatus', type: 'bar', stack: 'verg', barMaxWidth: 32,
+        data: HERKOMST_VERGUNNINGEN_TIJD.vluchteling,
+        itemStyle: { color: '#0d2d6b' } },
+      { name: 'Subsidiaire bescherming', type: 'bar', stack: 'verg',
+        data: HERKOMST_VERGUNNINGEN_TIJD.subsidiair,
+        itemStyle: { color: '#1d6fd4' } },
+      { name: 'Humanitaire bescherming', type: 'bar', stack: 'verg',
+        data: HERKOMST_VERGUNNINGEN_TIJD.humanitair,
+        itemStyle: { color: '#93c4e8', borderRadius: [3,3,0,0] } },
+    ]
+  });
+
   // ── NAREIZIGERS 2025 PER HERKOMST ───────────────────────────────────
   const nareizigerChart = echarts.init(document.getElementById('nareizigerChart'));
   const _narSorted = [...HERKOMST_VERGUNNINGEN.series].sort((a, b) => a.nareizigers - b.nareizigers);
@@ -580,7 +648,7 @@
     }]
   });
 
-  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); vergunningChart.resize(); nareizigerChart.resize(); });
+  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); vergunningChart.resize(); vergunningTijdChart.resize(); nareizigerChart.resize(); });
 </script>
 
 </body>

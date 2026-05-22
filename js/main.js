@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 23:45';
+const LAST_UPDATE = '23 mei 2026, 00:15';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -140,6 +140,17 @@ const HERKOMST_VERGUNNINGEN = {
       vluchteling:   30, subsidiair:  140, humanitair:  25, nareizigers:   250 },
   ],
   totaal_NL: { vluchteling: 5275, subsidiair: 9910, humanitair: 780, vergunningen: 15960, nareizigers: 16470 },
+};
+
+// ── Vergunningen NL nationaal per type 2015–2025 (tijdreeks) ──────────
+// Bron: CBS Open Data 85400NED — Beslissingen asielverzoeken, jaarcijfers.
+const HERKOMST_VERGUNNINGEN_TIJD = {
+  jaren:       [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  vluchteling: [6660, 9740, 3030, 1760, 2455, 4975, 7825, 9245, 3290, 5275, 3445],
+  subsidiair:  [9400, 10705, 4135, 1485, 1830, 2820, 2865, 5045, 10460, 9910, 2925],
+  humanitair:  [ 390,  365,  645,  375,  560,  820, 1375,  890,  735,  780, 1055],
+  // Optellingen check: totaal = vluchteling + subsidiair + humanitair
+  // 2015: 6660+9400+390 = 16450 ✓ (matches CBS Totaal column)
 };
 
 // ── Herkomst over tijd (eerste asielaanvragen 2015–2025) ──────────────────
