@@ -299,9 +299,19 @@
         data: BUDGET_TIJDREEKS.ind
       },
       {
-        name: 'Overig', type: 'bar', stack: 'budget',
+        name: 'Nidos', type: 'bar', stack: 'budget',
+        itemStyle: { color: '#15803d' },
+        data: BUDGET_TIJDREEKS.nidos
+      },
+      {
+        name: 'DT&V', type: 'bar', stack: 'budget',
+        itemStyle: { color: '#b45309' },
+        data: BUDGET_TIJDREEKS.dtv
+      },
+      {
+        name: 'Gemeenten & overig', type: 'bar', stack: 'budget',
         itemStyle: { color: '#0d2d6b', borderRadius: [3, 3, 0, 0] },
-        data: BUDGET_TIJDREEKS.overig
+        data: BUDGET_TIJDREEKS.gemeenten
       }
     ]
   });
