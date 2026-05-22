@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 20:45';
+const LAST_UPDATE = '22 mei 2026, 21:30';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -111,6 +111,23 @@ const HERKOMST = {
     { land: 'Afghanistan', e25:  765, n25:  190,  e24:   490 },
     { land: 'Pakistan',    e25:  695, n25:  360,  e24:   490 },
   ],
+};
+
+// ── Inwilligingen (vergunningen) eerste aanleg per land 2015–2025 ─────────
+// Bron: CBS Open Data 85400NED — Beslissingen asielverzoeken.
+// Zelfde 7 landen als HERKOMST_TIJDREEKS, in dezelfde volgorde + kleur.
+const HERKOMST_INWILLIGING = {
+  jaren: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  series: [
+    { land: 'Syrië',       kleur: '#b91c1c', data: [7850, 12895, 2505, 1260, 1685, 4170, 3605, 6150, 7585, 10205,  110] },
+    { land: 'Eritrea',     kleur: '#d97706', data: [4875,  3120, 1390,  380,  390,  290,  395,  410,  760,  1055, 1815] },
+    { land: 'Turkije',     kleur: '#0d2d6b', data: [   5,     5,  355,  345,  915, 1470, 1235, 1990, 1050,  1060,  875] },
+    { land: 'Irak',        kleur: '#7c2d12', data: [ 255,   980,  630,  130,  130,  215,  200,  500,  220,   200,  100] },
+    { land: 'Afghanistan', kleur: '#15803d', data: [ 360,   575,  670,  235,  160,  250, 2715, 2435,  595,   295,  415] },
+    { land: 'Jemen',       kleur: '#4a90d9', data: [  20,     5,  180,  130,  425,  600,  405, 1240, 1730,   625,  160] },
+    { land: 'Somalië',     kleur: '#a16207', data: [ 120,   100,  100,   30,   25,   45,  175,  500,  575,   435,  715] },
+  ],
+  totaal_NL: [16450, 20810, 7810, 3620, 4845, 8620, 12065, 15180, 14485, 15960, 7425],
 };
 
 // ── Herkomst over tijd (eerste asielaanvragen 2015–2025) ──────────────────

@@ -129,6 +129,14 @@
       <p class="chart-note">Top 7 herkomstlanden over 11 jaar. Klik op een land in de legenda om aan/uit te zetten. Alleen eerste asielaanvragen — nareizigers volgen later met vertraging en worden hier niet meegerekend. Bron: CBS Open Data 80059NED (jaarcijfers).</p>
     </div>
 
+    <div class="chart-box" style="margin-top:1.5rem;">
+      <h3>Verleende vergunningen (inwilligingen eerste aanleg) — zelfde landen</h3>
+      <div class="chart-wrap-lg">
+        <div id="herkomstInwilligingChart" style="width:100%;height:100%;"></div>
+      </div>
+      <p class="chart-note">Aantal personen dat per jaar een asielvergunning kreeg in eerste aanleg, per herkomstland. Hover voor inwilligingspercentage (toegewezen ÷ totaal beslissingen). Bron: CBS Open Data 85400NED.</p>
+    </div>
+
     <div class="two-col" style="margin-top:1.5rem;align-items:start;">
       <div class="callout callout-red">
         <strong>Drie golven, één decennium</strong>
@@ -143,6 +151,11 @@
         <strong>De Assad-val van december 2024</strong>
         Syrië was sinds 2015 stelselmatig nummer 1 herkomstland. In december 2024 viel het Assad-regime; in 2025 daalden Syrische eerste aanvragen <strong>71%</strong> (11.525 → 3.285) — de grootste enkeljaarse verandering sinds 2016. Tegelijk verdubbelden Eritrese aanvragen (+114%): nieuwe brandhaard, nieuwe instroom.
       </div>
+    </div>
+
+    <div class="callout callout-red" style="margin-top:1rem;">
+      <strong>De Syrië-collapse in inwilligingen 2025</strong>
+      In 2024 kreeg <strong>95% van de Syrische aanvragers</strong> in eerste aanleg een vergunning (10.205 toewijzingen). In 2025 — na de val van Assad — kreeg <strong>nog maar 28%</strong> een toewijzing: slechts <strong>110 vergunningen</strong>. Nederland heeft het beleid herzien omdat Syrië niet langer per definitie als onveilig wordt beoordeeld. Vergelijkbare beleidsmomenten zichtbaar in de data: Turkije 2017 (12% → 80% inwilliging na coup-poging Erdogan), Afghanistan 2021 (47% → 95% na Taliban-overname).
     </div>
 
     <div class="callout callout-amber" style="margin-top:1rem;">
@@ -400,7 +413,60 @@
       smooth: 0.2
     }))
   });
-  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); });
+
+  // ── HERKOMST INWILLIGING CHART ────────────────────────────────────────
+  const herkomstInwChart = echarts.init(document.getElementById('herkomstInwilligingChart'));
+  // Bouw lookup voor aanvragen om inwilligingspct te berekenen in tooltip
+  const _aanvragenLookup = {};
+  HERKOMST_TIJDREEKS.series.forEach(s => { _aanvragenLookup[s.land] = s.data; });
+  herkomstInwChart.setOption({
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 12 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: params => {
+        const jaarIdx = HERKOMST_INWILLIGING.jaren.indexOf(parseInt(params[0].axisValue));
+        const sorted = [...params].sort((a, b) => b.value - a.value);
+        let s = `<div style="font-weight:700;margin-bottom:4px">${sorted[0].axisValue}</div>`;
+        sorted.forEach(p => {
+          if (p.value === 0 || p.value == null) return;
+          const aanvr = _aanvragenLookup[p.seriesName]?.[jaarIdx];
+          // % t.o.v. aanvragen voor context (niet exact = inwilliging/beslissingen, maar geeft idee)
+          s += `<div>${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong>`;
+          if (aanvr && aanvr > 0) {
+            const ratio = Math.round(p.value / aanvr * 100);
+            s += ` <span style="color:#94a3b8;font-size:.85em">(${ratio}% vs aanvragen)</span>`;
+          }
+          s += '</div>';
+        });
+        return s;
+      }
+    },
+    legend: { bottom: 0, type: 'scroll', textStyle: { color: '#7a90a8', fontSize: 11 },
+              icon: 'circle', itemWidth: 10, itemHeight: 10, itemGap: 14 },
+    grid: { top: 24, right: 24, bottom: 56, left: 16, containLabel: true },
+    xAxis: {
+      type: 'category', data: HERKOMST_INWILLIGING.jaren,
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: { color: '#3d526b', fontSize: 11, fontWeight: 600 }
+    },
+    yAxis: {
+      type: 'value', name: 'Vergunningen (inwilligingen)',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: HERKOMST_INWILLIGING.series.map(s => ({
+      name: s.land, type: 'line', data: s.data,
+      lineStyle: { color: s.kleur, width: 2.4 },
+      itemStyle: { color: s.kleur },
+      symbol: 'circle', symbolSize: 5,
+      smooth: 0.2
+    }))
+  });
+  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); herkomstInwChart.resize(); });
 </script>
 
 </body>
