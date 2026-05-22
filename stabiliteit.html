@@ -83,11 +83,11 @@
 
     <div class="two-col" style="align-items:start;">
       <div class="chart-box">
-        <h3>Top 10 herkomstlanden — aanvragen 2025</h3>
+        <h3>Top 10 herkomstlanden — 2025</h3>
         <div class="chart-wrap-lg">
           <div id="herkomstChart" style="width:100%;height:100%;"></div>
         </div>
-        <p class="chart-note">Eerste aanvragen (blauw) + nareizigers (rood) per land. Top 10 dekt 63% van alle eerste aanvragen in 2025. Bron: CBS Open Data 80059NED.</p>
+        <p class="chart-note">Eerste asielaanvragen (blauw) en nareizigers (rood) per land — <strong>naast elkaar getoond, niet opgeteld</strong>. Het zijn aparte categorieën: eerste aanvragen doorlopen IND/COA, nareizigers komen direct via gezinshereniging. Top 10 dekt 63% van eerste aanvragen 2025. Bron: CBS Open Data 80059NED.</p>
       </div>
 
       <div>
@@ -108,8 +108,12 @@
         </div>
 
         <div class="callout callout-blue" style="margin-top:1rem;">
-          <strong>Totalen 2025</strong>
-          24.140 eerste aanvragen + 16.470 nareizigers = <strong>40.610 totaal</strong>. Dat is een daling van 32.175 eerste aanvragen in 2024 (−25%), maar nareizigers stegen met +39% (van 11.880 → 16.470).
+          <strong>Twee aparte categorieën in 2025</strong>
+          <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.6;font-size:.83rem;">
+            <li><strong>24.140 eerste asielaanvragen</strong> — mensen in IND-procedure, in COA-opvang (-25% vs 2024).</li>
+            <li><strong>16.470 nareizigers</strong> — directe gezinshereniging, geen opvang (+39% vs 2024).</li>
+          </ul>
+          <p style="margin:.55rem 0 0;font-size:.78rem;">Beide gaan over personen die in Nederland aankomen, maar volgen verschillende juridische routes. Daarom worden ze hier apart getoond, niet opgeteld.</p>
         </div>
       </div>
     </div>
@@ -122,7 +126,7 @@
       <div class="chart-wrap-lg">
         <div id="herkomstTijdChart" style="width:100%;height:100%;"></div>
       </div>
-      <p class="chart-note">Top 7 herkomstlanden + nationaal totaal (grijs). Klik op een land in de legenda om aan/uit te zetten. Bron: CBS Open Data 80059NED (jaarcijfers).</p>
+      <p class="chart-note">Top 7 herkomstlanden over 11 jaar. Klik op een land in de legenda om aan/uit te zetten. Alleen eerste asielaanvragen — nareizigers volgen later met vertraging en worden hier niet meegerekend. Bron: CBS Open Data 80059NED (jaarcijfers).</p>
     </div>
 
     <div class="two-col" style="margin-top:1.5rem;align-items:start;">
@@ -302,9 +306,11 @@
     </tr>`;
   });
 
-  // ── HERKOMST CHART (Fase: toestroom verfijning) ───────────────────────
+  // ── HERKOMST CHART — grouped bars (eerste en nareizigers naast elkaar) ──
+  // Bewust niet gestapeld: eerste aanvragen (IND-procedure) en nareizigers
+  // (gezinshereniging) zijn verschillende eenheden die niet optelbaar zijn.
   const herkomstChart = echarts.init(document.getElementById('herkomstChart'));
-  const _hSort = [...HERKOMST.top10].sort((a, b) => (a.e25 + a.n25) - (b.e25 + b.n25));
+  const _hSort = [...HERKOMST.top10].sort((a, b) => a.e25 - b.e25);   // sorteer op eerste aanvragen
   herkomstChart.setOption({
     tooltip: {
       trigger: 'axis', axisPointer: { type: 'shadow' },
@@ -314,15 +320,13 @@
       formatter: params => {
         const land = params[0].axisValue;
         const land_data = HERKOMST.top10.find(d => d.land === land);
-        const totaal = (params[0].value || 0) + (params[1]?.value || 0);
         let s = `<strong>${land}</strong><br>`;
         params.forEach(p => { s += `${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong><br>`; });
-        s += `<span style="color:#94a3b8">Totaal 2025: <strong>${totaal.toLocaleString('nl-NL')}</strong></span>`;
         if (land_data) {
           const delta = land_data.e25 - land_data.e24;
           const pct = land_data.e24 ? Math.round(delta / land_data.e24 * 100) : 0;
           const sign = delta >= 0 ? '+' : '';
-          s += `<br><span style="color:#94a3b8;font-size:.85em">2024 → 2025 eerste aanvragen: ${sign}${delta.toLocaleString('nl-NL')} (${sign}${pct}%)</span>`;
+          s += `<span style="color:#94a3b8;font-size:.85em">Eerste aanvragen 2024 → 2025: ${sign}${delta.toLocaleString('nl-NL')} (${sign}${pct}%)</span>`;
         }
         return s;
       }
@@ -341,14 +345,14 @@
       axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
     },
     series: [
-      { name: 'Eerste aanvragen 2025', type: 'bar', stack: 'tot',
+      { name: 'Eerste aanvragen 2025', type: 'bar',
         data: _hSort.map(d => d.e25),
-        itemStyle: { color: 'rgba(29,111,212,.85)', borderRadius: [0,0,0,0] },
-        barMaxWidth: 22 },
-      { name: 'Nareizigers 2025', type: 'bar', stack: 'tot',
+        itemStyle: { color: 'rgba(29,111,212,.85)', borderRadius: [0,3,3,0] },
+        barMaxWidth: 11, barGap: '20%' },
+      { name: 'Nareizigers 2025', type: 'bar',
         data: _hSort.map(d => d.n25),
-        itemStyle: { color: 'rgba(185,28,28,.85)', borderRadius: [0,4,4,0] },
-        barMaxWidth: 22 }
+        itemStyle: { color: 'rgba(185,28,28,.85)', borderRadius: [0,3,3,0] },
+        barMaxWidth: 11 }
     ]
   });
   // ── HERKOMST TIJDREEKS CHART ──────────────────────────────────────────
@@ -388,21 +392,13 @@
       splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
       axisLine: { show: false }, axisTick: { show: false }
     },
-    series: [
-      // Totaal NL als achtergrond-lijn (lichtgrijs, dun)
-      { name: 'Totaal NL', type: 'line', data: HERKOMST_TIJDREEKS.totaal,
-        lineStyle: { color: '#94a3b8', width: 1.5, type: 'dashed' },
-        itemStyle: { color: '#94a3b8' }, symbol: 'circle', symbolSize: 4,
-        z: 1 },
-      // Per land
-      ...HERKOMST_TIJDREEKS.series.map(s => ({
-        name: s.land, type: 'line', data: s.data,
-        lineStyle: { color: s.kleur, width: 2.4 },
-        itemStyle: { color: s.kleur },
-        symbol: 'circle', symbolSize: 5,
-        smooth: 0.2, z: 2
-      }))
-    ]
+    series: HERKOMST_TIJDREEKS.series.map(s => ({
+      name: s.land, type: 'line', data: s.data,
+      lineStyle: { color: s.kleur, width: 2.4 },
+      itemStyle: { color: s.kleur },
+      symbol: 'circle', symbolSize: 5,
+      smooth: 0.2
+    }))
   });
   window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); });
 </script>
