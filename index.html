@@ -483,43 +483,7 @@
   <div class="ig-section-eyebrow">Werkgelegenheid</div>
   <div class="ig-section-title">20.000 banen hangen ervan af</div>
 
-  <div id="jobBars">
-    <div class="ig-job-row">
-      <div class="ig-job-label">IND (bewezen)</div>
-      <div class="ig-job-track"><div class="ig-job-fill" data-w="100" style="background:var(--ig-teal);">6.438 FTE</div></div>
-      <div class="ig-job-count">6.438</div>
-    </div>
-    <div class="ig-job-row">
-      <div class="ig-job-label">COA personeel</div>
-      <div class="ig-job-track"><div class="ig-job-fill" data-w="70" style="background:var(--ig-orange);">4.500 FTE</div></div>
-      <div class="ig-job-count">~4.500</div>
-    </div>
-    <div class="ig-job-row">
-      <div class="ig-job-label">Asieladvocaten</div>
-      <div class="ig-job-track"><div class="ig-job-fill" data-w="39" style="background:var(--ig-purple);">2.500 FTE</div></div>
-      <div class="ig-job-count">~2.500</div>
-    </div>
-    <div class="ig-job-row">
-      <div class="ig-job-label">Beveiliging</div>
-      <div class="ig-job-track"><div class="ig-job-fill" data-w="27" style="background:var(--ig-blue);">1.750</div></div>
-      <div class="ig-job-count">~1.750</div>
-    </div>
-    <div class="ig-job-row">
-      <div class="ig-job-label">Facilitair &amp; catering</div>
-      <div class="ig-job-track"><div class="ig-job-fill" data-w="20" style="background:var(--ig-gold);">1.250</div></div>
-      <div class="ig-job-count">~1.250</div>
-    </div>
-    <div class="ig-job-row">
-      <div class="ig-job-label">Tolken &amp; vertalers</div>
-      <div class="ig-job-track"><div class="ig-job-fill" data-w="16" style="background:var(--ig-green);">1.000</div></div>
-      <div class="ig-job-count">~1.000</div>
-    </div>
-    <div class="ig-job-row">
-      <div class="ig-job-label">Overig</div>
-      <div class="ig-job-track"><div class="ig-job-fill" data-w="30" style="background:#475569;">Nidos, medisch, begeleiding, indirect</div></div>
-      <div class="ig-job-count">~4.000</div>
-    </div>
-  </div>
+  <div id="jobBars"><!-- ingevuld door JS vanuit WERKGELEGENHEID.fte in main.js --></div>
 
   <div style="display:flex;gap:1rem;margin-top:1.75rem;flex-wrap:wrap;">
     <div style="background:var(--ig-bg2);border:1px solid var(--ig-border);border-radius:12px;padding:1.25rem 1.5rem;flex:1;min-width:200px;">
@@ -634,6 +598,50 @@
 
 <script src="js/main.js"></script>
 <script>
+  // ── BIG THREE: stat-nummers invullen vanuit main.js-constanten ───────────
+  const _totalGeldMrd = Math.round(
+    ECONOMIE.geldstromen.reduce((a, d) => a + d.waarde, 0) / 1000
+  );
+  document.getElementById('n-geld').textContent = `+/- €${_totalGeldMrd} mrd`;
+
+  const _wkAvg = Math.round(WEEKLY_DATA.reduce((a, b) => a + b, 0) / WEEKLY_DATA.length);
+  document.getElementById('n-week').textContent = `+/- ${_wkAvg} pers./wk`;
+
+  const _fteTotaal = WERKGELEGENHEID.fte.reduce((a, d) => a + d.waarde, 0);
+  const _fteRound  = Math.round(_fteTotaal / 500) * 500;
+  document.getElementById('n-banen').textContent = `+/- ${_fteRound.toLocaleString('nl-NL')} banen`;
+
+  // ── WERKGELEGENHEID-BARS: genereren vanuit WERKGELEGENHEID.fte ────────────
+  const _jobEl  = document.getElementById('jobBars');
+  const _maxFte = WERKGELEGENHEID.fte[0].waarde;          // IND = referentie (100%)
+  const _top6   = WERKGELEGENHEID.fte.slice(0, 6);
+  const _overig = WERKGELEGENHEID.fte.slice(6).reduce((a, d) => a + d.waarde, 0);
+  const _rows   = [..._top6, { label: 'Overig', waarde: _overig, kleur: '#64748b' }];
+
+  _jobEl.innerHTML = _rows.map((d, i) => {
+    const pct = Math.round(d.waarde / _maxFte * 100);
+    return `<div class="ig-job-row">
+      <div class="ig-job-label">${d.label}</div>
+      <div class="ig-job-track">
+        <div class="ig-job-fill" data-w="${pct}" style="background:${d.kleur};">
+          ${d.waarde.toLocaleString('nl-NL')} FTE
+        </div>
+      </div>
+      <div class="ig-job-count">${i === 0 ? '' : '~'}${d.waarde.toLocaleString('nl-NL')}</div>
+    </div>`;
+  }).join('');
+
+  // Animeer bars zodra sectie in beeld komt (IntersectionObserver)
+  new IntersectionObserver((entries, obs) => {
+    if (entries[0].isIntersecting) {
+      _jobEl.querySelectorAll('.ig-job-fill').forEach(el => {
+        el.style.width = el.dataset.w + '%';
+      });
+      obs.disconnect();
+    }
+  }, { threshold: 0.15 }).observe(_jobEl);
+
+  // ── HEROCHAR ─────────────────────────────────────────────────────────────
   const heroChart = echarts.init(document.getElementById('heroChart'));
   const weeklyAvgs = MONTHLY_DATA.values.map(v => Math.round(v / 4.3));
   heroChart.setOption({
