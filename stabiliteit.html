@@ -116,6 +116,38 @@
   </div>
 
   <div class="section">
+    <div class="section-title">Hoe veranderde het over tijd? (2015–2025)</div>
+    <div class="chart-box">
+      <h3>Eerste asielaanvragen per herkomstland — 11 jaar tijdreeks</h3>
+      <div class="chart-wrap-lg">
+        <div id="herkomstTijdChart" style="width:100%;height:100%;"></div>
+      </div>
+      <p class="chart-note">Top 7 herkomstlanden + nationaal totaal (grijs). Klik op een land in de legenda om aan/uit te zetten. Bron: CBS Open Data 80059NED (jaarcijfers).</p>
+    </div>
+
+    <div class="two-col" style="margin-top:1.5rem;align-items:start;">
+      <div class="callout callout-red">
+        <strong>Drie golven, één decennium</strong>
+        <ul style="margin:.55rem 0 0 1.1rem;padding:0;font-size:.85rem;line-height:1.65;">
+          <li><strong>2015 — Syrische crisis:</strong> 18.675 eerste aanvragen uit Syrië + 7.360 uit Eritrea = de "vluchtelingencrisis".</li>
+          <li><strong>2021 — Afghan-stroom:</strong> 3.005 aanvragen uit Afghanistan na Taliban-overname.</li>
+          <li><strong>2022–2023 — Tweede Syrische golf:</strong> 12.650 + 13.030 aanvragen — verzwakkende veiligheid en gezinshereniging.</li>
+        </ul>
+      </div>
+
+      <div class="callout callout-blue">
+        <strong>De Assad-val van december 2024</strong>
+        Syrië was sinds 2015 stelselmatig nummer 1 herkomstland. In december 2024 viel het Assad-regime; in 2025 daalden Syrische eerste aanvragen <strong>71%</strong> (11.525 → 3.285) — de grootste enkeljaarse verandering sinds 2016. Tegelijk verdubbelden Eritrese aanvragen (+114%): nieuwe brandhaard, nieuwe instroom.
+      </div>
+    </div>
+
+    <div class="callout callout-amber" style="margin-top:1rem;">
+      <strong>Wat dit zegt over "de toestroom"</strong>
+      Het nationale weekgemiddelde van ~850 is verbluffend stabiel, maar de <em>samenstelling</em> verschuift voortdurend met geopolitieke gebeurtenissen. Een asielsysteem dat zich constant laat verrassen ondanks 10+ jaar herhaling van hetzelfde patroon (één hoofdland wisselt af met een ander) is een ontwerpkeuze, geen onvermijdelijkheid.
+    </div>
+  </div>
+
+  <div class="section">
     <div class="section-title">Kwartaalverdeling 2025–2026</div>
     <div style="overflow-x:auto;">
       <table class="data-table">
@@ -319,7 +351,60 @@
         barMaxWidth: 22 }
     ]
   });
-  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); });
+  // ── HERKOMST TIJDREEKS CHART ──────────────────────────────────────────
+  const herkomstTijdChart = echarts.init(document.getElementById('herkomstTijdChart'));
+  herkomstTijdChart.setOption({
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 12 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: params => {
+        // Sort by value desc voor leesbaarheid
+        const sorted = [...params].sort((a, b) => b.value - a.value);
+        let s = `<div style="font-weight:700;margin-bottom:4px">${sorted[0].axisValue}</div>`;
+        sorted.forEach(p => {
+          if (p.value === 0 || p.value == null) return;
+          s += `<div>${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong></div>`;
+        });
+        return s;
+      }
+    },
+    legend: {
+      bottom: 0, type: 'scroll',
+      textStyle: { color: '#7a90a8', fontSize: 11 },
+      icon: 'circle', itemWidth: 10, itemHeight: 10, itemGap: 14
+    },
+    grid: { top: 24, right: 24, bottom: 56, left: 16, containLabel: true },
+    xAxis: {
+      type: 'category', data: HERKOMST_TIJDREEKS.jaren,
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: { color: '#3d526b', fontSize: 11, fontWeight: 600 }
+    },
+    yAxis: {
+      type: 'value', name: 'Eerste aanvragen',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [
+      // Totaal NL als achtergrond-lijn (lichtgrijs, dun)
+      { name: 'Totaal NL', type: 'line', data: HERKOMST_TIJDREEKS.totaal,
+        lineStyle: { color: '#94a3b8', width: 1.5, type: 'dashed' },
+        itemStyle: { color: '#94a3b8' }, symbol: 'circle', symbolSize: 4,
+        z: 1 },
+      // Per land
+      ...HERKOMST_TIJDREEKS.series.map(s => ({
+        name: s.land, type: 'line', data: s.data,
+        lineStyle: { color: s.kleur, width: 2.4 },
+        itemStyle: { color: s.kleur },
+        symbol: 'circle', symbolSize: 5,
+        smooth: 0.2, z: 2
+      }))
+    ]
+  });
+  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); });
 </script>
 
 </body>

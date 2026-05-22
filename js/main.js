@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 19:15';
+const LAST_UPDATE = '22 mei 2026, 20:00';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -111,6 +111,22 @@ const HERKOMST = {
     { land: 'Afghanistan', e25:  765, n25:  190,  e24:   490 },
     { land: 'Pakistan',    e25:  695, n25:  360,  e24:   490 },
   ],
+};
+
+// ── Herkomst over tijd (eerste asielaanvragen 2015–2025) ──────────────────
+// Bron: CBS Open Data 80059NED. Top 7 landen + nationaal totaal.
+const HERKOMST_TIJDREEKS = {
+  jaren: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+  series: [
+    { land: 'Syrië',       kleur: '#b91c1c', data: [18675, 2865, 2970, 2960, 3675, 4070, 8380, 12650, 13030, 11525, 3285] },
+    { land: 'Eritrea',     kleur: '#d97706', data: [ 7360, 1860, 1590, 1410,  500,  370,  770,  1365,  2345,  1465, 3135] },
+    { land: 'Turkije',     kleur: '#0d2d6b', data: [   55,  235,  480, 1300, 1250,  990, 2460,  2685,  2860,  1870, 1480] },
+    { land: 'Irak',        kleur: '#7c2d12', data: [ 3010,  960,  845,  745,  620,  335,  745,   670,  1495,  2220,  575] },
+    { land: 'Afghanistan', kleur: '#15803d', data: [ 2550, 1025,  320,  325,  435,  390, 3005,  2730,   670,   490,  765] },
+    { land: 'Jemen',       kleur: '#4a90d9', data: [   50,   45,  170,  530,  645,  410, 1190,  2430,  1980,  1080,  510] },
+    { land: 'Somalië',     kleur: '#a16207', data: [  265,  155,  125,  135,  220,  200,  905,  1455,  1805,  1075, 1290] },
+  ],
+  totaal: [43095, 19370, 16145, 20510, 22540, 13720, 24740, 35535, 38375, 32175, 24140],
 };
 
 // ── Europa (bron: Eurostat / UNHCR 2024) ────────────────────────────────────
