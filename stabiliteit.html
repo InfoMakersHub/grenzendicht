@@ -153,21 +153,16 @@
   </div>
 
   <div class="section">
-    <div class="section-title">Van vergunning naar nareiziger: wat volgt op een toewijzing?</div>
-    <p style="font-size:.92rem;color:var(--text-2);max-width:75ch;line-height:1.6;margin:0 0 1.25rem;">
-      Wanneer iemand een asielvergunning krijgt (in één van drie wettelijke types), heeft die persoon recht op <strong>gezinshereniging</strong>. Familieleden komen via de "nareis"-procedure naar Nederland — typisch met 1-2 jaar vertraging op de vergunning.
-      Hieronder: de <strong>vergunningen 2024</strong> per herkomst uitgesplitst naar type, naast de <strong>nareizigers 2025</strong> die daarop zijn gevolgd.
-    </p>
-
+    <div class="section-title">Verleende vergunningen 2024 — per herkomst en type</div>
     <div class="chart-box">
-      <h3>Vergunningen 2024 (per type) → nareizigers 2025 — per herkomst</h3>
-      <div class="chart-wrap-lg" style="height:500px;">
+      <h3>Asielvergunningen 2024 in eerste aanleg, uitgesplitst naar wettelijk type</h3>
+      <div class="chart-wrap-lg">
         <div id="vergunningTypeChart" style="width:100%;height:100%;"></div>
       </div>
-      <p class="chart-note">Per land twee balken: <strong>boven</strong> de in 2024 verleende vergunningen, uitgesplitst naar drie wettelijke types; <strong>onder</strong> de in 2025 daadwerkelijk gearriveerde nareizigers. Bron: CBS Open Data 85400NED (vergunningen + types) en 80059NED (nareizigers).</p>
+      <p class="chart-note">Per herkomstland één gestapelde balk met drie wettelijke types vergunning. Bron: CBS Open Data 85400NED.</p>
     </div>
 
-    <div class="two-col" style="align-items:start;margin-top:1.5rem;">
+    <div class="two-col" style="align-items:start;margin-top:1.25rem;">
       <div class="callout callout-blue">
         <strong>De drie soorten vergunningen — kort</strong>
         <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.6;font-size:.83rem;">
@@ -178,20 +173,29 @@
       </div>
 
       <div class="callout callout-red">
-        <strong>Wat de cijfers laten zien</strong>
+        <strong>Welk type domineert per herkomst?</strong>
         <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.65;font-size:.83rem;">
-          <li><strong>Syrië</strong>: 71% subsidiair (7.210), 28% vluchtelingstatus (2.875) — gevolgd door <strong>12.110 nareizigers</strong> in 2025.</li>
-          <li><strong>Turkije</strong>: 75% vluchtelingenstatus (politieke vervolging Erdogan-tegenstanders).</li>
-          <li><strong>Eritrea, Jemen, Somalië</strong>: bijna uitsluitend subsidiair (oorlogsgebieden, geen individuele vervolging).</li>
-          <li><strong>Syrische ratio</strong>: 12.110 nareizigers / 10.205 vergunningen = <strong>1,19×</strong> — gemiddeld ~1 nareiziger per vergunninghouder.</li>
-          <li><strong>Jemenitische ratio</strong>: 1.475 / 625 = <strong>2,36×</strong> — grotere gezinnen.</li>
+          <li><strong>Oorlogsgebieden</strong> (Syrië, Eritrea, Jemen, Somalië) → <strong>subsidiaire bescherming</strong> overheerst — groepsgevaar zonder individuele vervolging.</li>
+          <li><strong>Turkije</strong> → vooral <strong>vluchtelingenstatus</strong> (75%): individuele politieke vervolging Erdogan-tegenstanders.</li>
+          <li><strong>Humanitaire bescherming</strong> blijft overal klein (NL totaal 2024: 780 van 15.960 vergunningen, ≈ 5%).</li>
         </ul>
       </div>
     </div>
+  </div>
 
-    <div class="callout callout-amber" style="margin-top:1rem;">
-      <strong>Belangrijke nuance over de timing</strong>
-      De getoonde nareizigers 2025 zijn niet 1-op-1 het gevolg van precies de 2024-vergunningen. Een nareis-procedure duurt typisch 9-18 maanden, dus de meeste nareizigers van 2025 horen bij vergunningen uit 2023-2024. Sommige nareizigers van 2024-vergunningen arriveren pas in 2026. De relatie is daarom <em>directioneel</em>, niet exact. Wel zichtbaar: oorlogsvluchtelingen (Syrië, Jemen) trekken het meeste nareizigers; politieke vluchtelingen (Turkije) verhoudingsgewijs minder.
+  <div class="section">
+    <div class="section-title">Nareizigers 2025 — per herkomst</div>
+    <div class="chart-box">
+      <h3>Aantal nareizigers in 2025, per herkomstland</h3>
+      <div class="chart-wrap-lg">
+        <div id="nareizigerChart" style="width:100%;height:100%;"></div>
+      </div>
+      <p class="chart-note">Personen die in 2025 via de nareis-procedure (gezinshereniging met een eerder erkende vergunninghouder) naar Nederland kwamen. Bron: CBS Open Data 80059NED.</p>
+    </div>
+
+    <div class="callout callout-amber" style="margin-top:1.25rem;">
+      <strong>Over de nareis-procedure</strong>
+      Vergunninghouders mogen direct familieleden laten overkomen via een mvv-procedure in het herkomstland. De verwerking duurt typisch 9-18 maanden, dus de nareizigers van een bepaald jaar zijn gerelateerd aan vergunningen uit voorgaande jaren — niet aan dezelfde jaargang. Syrische nareizigers blijven dominant (12.110 in 2025 = 74% van alle nareizigers), gevolgd door Jemenitische (1.475).
     </div>
   </div>
 
@@ -445,18 +449,12 @@
     }))
   });
 
-  // ── VERGUNNINGEN 2024 → NAREIZIGERS 2025 CHART ───────────────────────
+  // ── VERGUNNINGEN 2024 PER HERKOMST + TYPE ────────────────────────────
   const vergunningChart = echarts.init(document.getElementById('vergunningTypeChart'));
-  const _vg = HERKOMST_VERGUNNINGEN.series;
-  // Y-as: per land twee labels (vergunningen-rij + nareizigers-rij), gesorteerd
-  //   op vergunningstotaal desc. Visueel komen vergunningen BOVEN nareizigers.
-  const _vgRows = [];
-  _vg.forEach(s => {
-    _vgRows.push({ label: s.land + ' — vergunningen 2024', land: s.land, type: 'verg', d: s });
-    _vgRows.push({ label: s.land + ' — nareizigers 2025',  land: s.land, type: 'nar',  d: s });
-  });
-  // Reverse zodat de eerste in array onderaan staat in horizontale bar chart
-  _vgRows.reverse();
+  // Sorteer landen op totaal vergunningen desc (oplopend in array → bovenaan in horizontale chart)
+  const _vgSorted = [...HERKOMST_VERGUNNINGEN.series].sort((a, b) =>
+    (a.vluchteling + a.subsidiair + a.humanitair) - (b.vluchteling + b.subsidiair + b.humanitair)
+  );
   vergunningChart.setOption({
     tooltip: {
       trigger: 'axis', axisPointer: { type: 'shadow' },
@@ -464,16 +462,15 @@
       textStyle: { color: '#1e293b', fontSize: 12 },
       extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
       formatter: params => {
-        // params is een array; alleen niet-nul values tonen
-        const yLabel = params[0].axisValue;
-        let s = `<div style="font-weight:700;margin-bottom:4px">${yLabel}</div>`;
-        let totaal = 0;
+        const land = params[0].axisValue;
+        let s = `<div style="font-weight:700;margin-bottom:4px">${land}</div>`;
+        let tot = 0;
         params.forEach(p => {
-          if (p.value === 0 || p.value == null) return;
-          totaal += p.value;
+          if (p.value === 0) return;
+          tot += p.value;
           s += `<div>${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong></div>`;
         });
-        s += `<div style="margin-top:4px;color:#94a3b8;font-size:.85em">Subtotaal: ${totaal.toLocaleString('nl-NL')}</div>`;
+        s += `<div style="margin-top:4px;color:#94a3b8;font-size:.85em">Totaal: ${tot.toLocaleString('nl-NL')}</div>`;
         return s;
       }
     },
@@ -488,40 +485,56 @@
       axisLine: { show: false }, axisTick: { show: false }
     },
     yAxis: {
-      type: 'category', data: _vgRows.map(r => r.label),
-      axisLabel: {
-        fontSize: 11,
-        formatter: v => {
-          // markeer 'vergunningen' anders dan 'nareizigers' voor leesbaarheid
-          if (v.includes('nareizigers')) return '{nar|↳ ' + v.split(' — ')[1] + '}';
-          return '{verg|' + v.split(' — ')[0] + '}\n{vs|' + v.split(' — ')[1] + '}';
-        },
-        rich: {
-          verg: { color: '#1e293b', fontWeight: 'bold', fontSize: 12, lineHeight: 14 },
-          vs:   { color: '#7a90a8', fontSize: 9, lineHeight: 12 },
-          nar:  { color: '#b91c1c', fontSize: 10, fontStyle: 'italic' },
-        }
-      },
+      type: 'category', data: _vgSorted.map(s => s.land),
+      axisLabel: { color: '#3d526b', fontSize: 12, fontWeight: 600 },
       axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
     },
     series: [
-      // Vergunningen-stack: 3 types
-      { name: 'Vluchtelingenstatus', type: 'bar', stack: 'verg', barMaxWidth: 16,
-        data: _vgRows.map(r => r.type === 'verg' ? r.d.vluchteling : 0),
+      { name: 'Vluchtelingenstatus', type: 'bar', stack: 'verg', barMaxWidth: 22,
+        data: _vgSorted.map(s => s.vluchteling),
         itemStyle: { color: '#0d2d6b' } },
       { name: 'Subsidiaire bescherming', type: 'bar', stack: 'verg',
-        data: _vgRows.map(r => r.type === 'verg' ? r.d.subsidiair : 0),
+        data: _vgSorted.map(s => s.subsidiair),
         itemStyle: { color: '#1d6fd4' } },
       { name: 'Humanitaire bescherming', type: 'bar', stack: 'verg',
-        data: _vgRows.map(r => r.type === 'verg' ? r.d.humanitair : 0),
+        data: _vgSorted.map(s => s.humanitair),
         itemStyle: { color: '#93c4e8', borderRadius: [0,3,3,0] } },
-      // Nareizigers — aparte stack
-      { name: 'Nareizigers (volgend jaar)', type: 'bar', stack: 'nar', barMaxWidth: 16,
-        data: _vgRows.map(r => r.type === 'nar' ? r.d.nareizigers : 0),
-        itemStyle: { color: '#b91c1c', borderRadius: [0,3,3,0] } },
     ]
   });
-  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); vergunningChart.resize(); });
+
+  // ── NAREIZIGERS 2025 PER HERKOMST ───────────────────────────────────
+  const nareizigerChart = echarts.init(document.getElementById('nareizigerChart'));
+  const _narSorted = [...HERKOMST_VERGUNNINGEN.series].sort((a, b) => a.nareizigers - b.nareizigers);
+  nareizigerChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 12 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: p => `<div style="font-weight:700;margin-bottom:4px">${p[0].axisValue}</div>${p[0].marker} Nareizigers: <strong>${Number(p[0].value).toLocaleString('nl-NL')}</strong>`
+    },
+    grid: { top: 12, right: 48, bottom: 24, left: 16, containLabel: true },
+    xAxis: {
+      type: 'value', name: 'Personen',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'category', data: _narSorted.map(s => s.land),
+      axisLabel: { color: '#3d526b', fontSize: 12, fontWeight: 600 },
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
+    },
+    series: [{
+      type: 'bar', barMaxWidth: 22, itemStyle: { color: '#b91c1c', borderRadius: [0,4,4,0] },
+      data: _narSorted.map(s => s.nareizigers),
+      label: { show: true, position: 'right', color: '#7a90a8', fontSize: 11,
+               formatter: p => p.value.toLocaleString('nl-NL') }
+    }]
+  });
+
+  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); herkomstChart.resize(); herkomstTijdChart.resize(); vergunningChart.resize(); nareizigerChart.resize(); });
 </script>
 
 </body>
