@@ -483,7 +483,11 @@
   <div class="ig-section-eyebrow">Werkgelegenheid</div>
   <div class="ig-section-title">20.000 banen hangen ervan af</div>
 
-  <div id="jobBars"><!-- ingevuld door JS vanuit WERKGELEGENHEID.fte in main.js --></div>
+  <div class="ig-chart-box">
+    <h3>FTE per categorie — asielindustrie (middenwaarden)</h3>
+    <div id="jobPieChart" style="width:100%;height:360px;"></div>
+    <p class="ig-chart-note">Bron: IND Jaarcijfers 2024 (IND = hard cijfer), COA Jaarverslag 2024, overige categorieën = schattingen. <a href="werkgelegenheid.html">Volledig overzicht →</a></p>
+  </div>
 
   <div style="display:flex;gap:1rem;margin-top:1.75rem;flex-wrap:wrap;">
     <div style="background:var(--ig-bg2);border:1px solid var(--ig-border);border-radius:12px;padding:1.25rem 1.5rem;flex:1;min-width:200px;">
@@ -611,35 +615,41 @@
   const _fteRound  = Math.round(_fteTotaal / 500) * 500;
   document.getElementById('n-banen').textContent = `+/- ${_fteRound.toLocaleString('nl-NL')} banen`;
 
-  // ── WERKGELEGENHEID-BARS: genereren vanuit WERKGELEGENHEID.fte ────────────
-  const _jobEl  = document.getElementById('jobBars');
-  const _maxFte = WERKGELEGENHEID.fte[0].waarde;          // IND = referentie (100%)
-  const _top6   = WERKGELEGENHEID.fte.slice(0, 6);
-  const _overig = WERKGELEGENHEID.fte.slice(6).reduce((a, d) => a + d.waarde, 0);
-  const _rows   = [..._top6, { label: 'Overig', waarde: _overig, kleur: '#64748b' }];
-
-  _jobEl.innerHTML = _rows.map((d, i) => {
-    const pct = Math.round(d.waarde / _maxFte * 100);
-    return `<div class="ig-job-row">
-      <div class="ig-job-label">${d.label}</div>
-      <div class="ig-job-track">
-        <div class="ig-job-fill" data-w="${pct}" style="background:${d.kleur};">
-          ${d.waarde.toLocaleString('nl-NL')} FTE
-        </div>
-      </div>
-      <div class="ig-job-count">${i === 0 ? '' : '~'}${d.waarde.toLocaleString('nl-NL')}</div>
-    </div>`;
-  }).join('');
-
-  // Animeer bars zodra sectie in beeld komt (IntersectionObserver)
-  new IntersectionObserver((entries, obs) => {
-    if (entries[0].isIntersecting) {
-      _jobEl.querySelectorAll('.ig-job-fill').forEach(el => {
-        el.style.width = el.dataset.w + '%';
-      });
-      obs.disconnect();
-    }
-  }, { threshold: 0.15 }).observe(_jobEl);
+  // ── WERKGELEGENHEID PIE CHART ─────────────────────────────────────────────
+  const jobPieChart = echarts.init(document.getElementById('jobPieChart'));
+  jobPieChart.setOption({
+    color: WERKGELEGENHEID.fte.map(d => d.kleur),
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: p => {
+        const pct = Math.round(p.value / _fteTotaal * 100);
+        return `<strong>${p.name}</strong><br>${p.value.toLocaleString('nl-NL')} FTE &nbsp;<span style="color:#94a3b8">(${pct}%)</span>`;
+      }
+    },
+    legend: {
+      bottom: 0, type: 'scroll',
+      textStyle: { color: '#7a90a8', fontSize: 11 },
+      icon: 'circle', itemWidth: 8, itemHeight: 8
+    },
+    series: [{
+      name: 'FTE', type: 'pie',
+      radius: ['36%', '66%'], center: ['50%', '44%'],
+      avoidLabelOverlap: true,
+      itemStyle: { borderRadius: 5, borderColor: '#fff', borderWidth: 3 },
+      label: { show: false },
+      labelLine: { show: false },
+      emphasis: {
+        label: { show: true, fontSize: 13, fontWeight: '700',
+          formatter: p => `${p.name}\n${p.value.toLocaleString('nl-NL')} FTE` },
+        scaleSize: 6
+      },
+      data: WERKGELEGENHEID.fte.map(d => ({ value: d.waarde, name: d.label }))
+    }]
+  });
+  window.addEventListener('resize', () => jobPieChart.resize());
 
   // ── HEROCHAR ─────────────────────────────────────────────────────────────
   const heroChart = echarts.init(document.getElementById('heroChart'));
