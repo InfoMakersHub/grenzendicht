@@ -11,7 +11,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>De Economie — GrenzenDicht</title>
+  <title>De Industrie — GrenzenDicht</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 </head>
@@ -23,7 +23,7 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="stabiliteit.html">Toestroom</a></li>
-      <li><a href="economie.html" class="active">Economie</a></li>
+      <li><a href="industrie.html" class="active">Industrie</a></li>
       <li><a href="werkgelegenheid.html">Werkgelegenheid</a></li>
       <li><a href="nareizigers.html">Nareizigers</a></li>
       <li><a href="europa.html">Europa</a></li>
@@ -44,7 +44,7 @@
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-label">Economie</div>
+    <div class="hero-label">Industrie</div>
     <h1>Wie verdient hoeveel?</h1>
     <p>De volledige €10+ miljard breakdown: overheidsbudget van €8,94 mrd (2026) plus mensensmokkelnetwerken, juridische sector en secundaire dienstverlening. Alle partijen in de keten hebben financieel belang bij continuering.</p>
     <div class="stat-grid">
@@ -225,7 +225,7 @@
       backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
       textStyle: { color: '#1e293b', fontSize: 13 },
       extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
-      formatter: p => `<strong>${p.name}</strong><br>€${Number(p.value).toLocaleString('nl-NL')} mln<br>${Math.round(p.value/ECONOMIE.budgetTotaal*100)}% van totaal`
+      formatter: p => `<strong>${p.name}</strong><br>€${Number(p.value).toLocaleString('nl-NL')} mln<br>${Math.round(p.value/INDUSTRIE.budgetTotaal*100)}% van totaal`
     },
     legend: { bottom: '2%', textStyle: { color: '#7a90a8', fontSize: 11 }, icon: 'circle', itemWidth: 8, itemHeight: 8 },
     series: [{
@@ -234,7 +234,7 @@
       itemStyle: { borderRadius: 4, borderColor: '#fff', borderWidth: 3 },
       label: { show: false }, labelLine: { show: false },
       emphasis: { label: { show: true, fontSize: 13, fontWeight: 'bold' }, scaleSize: 8 },
-      data: ECONOMIE.budget.map(d => ({ value: d.waarde, name: d.label }))
+      data: INDUSTRIE.budget.map(d => ({ value: d.waarde, name: d.label }))
     }]
   });
 
@@ -257,7 +257,7 @@
     },
     yAxis: {
       type: 'category',
-      data: ECONOMIE.geldstromen.map(d => d.label),
+      data: INDUSTRIE.geldstromen.map(d => d.label),
       axisLabel: { color: '#3d526b', fontSize: 12 },
       axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
     },
@@ -265,7 +265,7 @@
       type: 'bar', barMaxWidth: 32,
       itemStyle: { borderRadius: [0,4,4,0] },
       label: { show: true, position: 'right', formatter: p => '€' + Number(p.value).toLocaleString('nl-NL') + ' mln', color: '#7a90a8', fontSize: 10 },
-      data: ECONOMIE.geldstromen.map(d => ({ value: d.waarde, itemStyle: { color: d.kleur } }))
+      data: INDUSTRIE.geldstromen.map(d => ({ value: d.waarde, itemStyle: { color: d.kleur } }))
     }]
   });
 

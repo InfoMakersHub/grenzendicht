@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 16:15';
+const LAST_UPDATE = '22 mei 2026, 17:00';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -39,9 +39,9 @@ const MONTHLY_DATA = {
   values: [3073, 3876, 4216, 3922, 3870, 3056, 3645, 3508, 4055, 3953, 3574, 3349, 3560, 3510, 3490, 3450]
 };
 
-// ── Economie (bron: Rijksbegroting 2026 hoofdstuk XX; COA/IND jaarverslagen) ───
+// ── Industrie (bron: Rijksbegroting 2026 hoofdstuk XX; COA/IND jaarverslagen) ───
 // ⬇ Update deze constanten wanneer nieuwe begrotingscijfers beschikbaar zijn.
-const ECONOMIE = {
+const INDUSTRIE = {
   budgetTotaal: 8940,   // mln € — bijwerken bij nieuwe Rijksbegroting
   budget: [
     { label: 'COA opvang',               waarde: 4200 },
