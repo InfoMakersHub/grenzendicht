@@ -547,25 +547,28 @@ const _db       = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON);
 const _sid      = crypto.randomUUID();   // unieke sessie per paginabezoek
 
 async function _mbVote(idx, keuze, isGoed) {
-  if (!_db) return;
-  try {
-    await _db.from('mythbuster_votes').insert({
-      session_id: _sid, stelling_idx: idx, keuze, correct: isGoed
-    });
-    const { data } = await _db
-      .from('mythbuster_stats')
-      .select('keuze, stemmen')
-      .eq('stelling_idx', idx);
-    if (!data?.length) return;
-    const feit  = data.find(d => d.keuze === 'feit')?.stemmen  || 0;
-    const fabel = data.find(d => d.keuze === 'fabel')?.stemmen || 0;
-    const tot   = feit + fabel;
-    if (tot < 2) return;
-    const pct   = Math.round((keuze === 'feit' ? feit : fabel) / tot * 100);
-    const el    = document.getElementById('_crowd' + idx);
-    if (el) el.innerHTML =
-      `👥 <strong>${pct}%</strong> van de bezoekers koos ook <em>${keuze}</em> voor deze uitspraak.`;
-  } catch (e) { console.warn('Supabase:', e.message); }
+  if (!_db) { console.warn('Supabase: _db niet geïnitialiseerd'); return; }
+
+  const { error: insErr } = await _db.from('mythbuster_votes').insert({
+    session_id: _sid, stelling_idx: idx, keuze, correct: isGoed
+  });
+  if (insErr) { console.error('MB insert fout:', insErr.message, insErr.details); return; }
+
+  const { data, error: selErr } = await _db
+    .from('mythbuster_stats')
+    .select('keuze, stemmen')
+    .eq('stelling_idx', idx);
+  if (selErr) { console.error('MB stats fout:', selErr.message); return; }
+
+  if (!data?.length) return;
+  const feit  = data.find(d => d.keuze === 'feit')?.stemmen  || 0;
+  const fabel = data.find(d => d.keuze === 'fabel')?.stemmen || 0;
+  const tot   = feit + fabel;
+  if (tot < 2) return;
+  const pct = Math.round((keuze === 'feit' ? feit : fabel) / tot * 100);
+  const el  = document.getElementById('_crowd' + idx);
+  if (el) el.innerHTML =
+    `👥 <strong>${pct}%</strong> van de bezoekers koos ook <em>${keuze}</em> voor deze uitspraak.`;
 }
 
 const VERDICTS = ['feit','feit','nuance','fabel','fabel','fabel','feit','nuance','nuance','fabel'];

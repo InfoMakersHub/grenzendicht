@@ -410,19 +410,21 @@
 const _db = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 async function _quizOpslaan() {
-  if (!_db) return;
-  try {
-    await _db.from('quiz_results').insert({
-      score,
-      antwoorden: antwoorden.map((a, i) => ({ i, goed: a.goed }))
-    });
-    const { count } = await _db
-      .from('quiz_results')
-      .select('*', { count: 'exact', head: true });
-    const el = document.getElementById('_quizStat');
-    if (el && count > 1)
-      el.innerHTML = `👥 Je bent een van de <strong>${count.toLocaleString('nl-NL')}</strong> mensen die deze quiz deed.`;
-  } catch (e) { console.warn('Supabase:', e.message); }
+  if (!_db) { console.warn('Supabase: _db niet geïnitialiseerd'); return; }
+  const { error: insErr } = await _db.from('quiz_results').insert({
+    score,
+    antwoorden: antwoorden.map((a, i) => ({ i, goed: a.goed }))
+  });
+  if (insErr) { console.error('Quiz insert fout:', insErr.message, insErr.details); return; }
+
+  const { count, error: cntErr } = await _db
+    .from('quiz_results')
+    .select('*', { count: 'exact', head: true });
+  if (cntErr) { console.error('Quiz count fout:', cntErr.message); return; }
+
+  const el = document.getElementById('_quizStat');
+  if (el && count > 1)
+    el.innerHTML = `👥 Je bent een van de <strong>${count.toLocaleString('nl-NL')}</strong> mensen die deze quiz deed.`;
 }
 
 const VRAGEN = [
