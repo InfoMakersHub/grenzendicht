@@ -207,25 +207,14 @@
     },
     yAxis: {
       type: 'category',
-      data: ['IND','COA','Advocaten','Beveiliging','Facilitair','Tolken','Medisch','Nidos','Begeleiding','Indirect'],
+      data: WERKGELEGENHEID.fte.map(d => d.label),
       axisLabel: { color: '#3d526b', fontSize: 11 },
       axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
     },
     series: [{
       type: 'bar', barMaxWidth: 26, itemStyle: { borderRadius: [0,4,4,0] },
       label: { show: true, position: 'right', formatter: p => Number(p.value).toLocaleString('nl-NL'), color: '#7a90a8', fontSize: 10 },
-      data: [
-        { value: 6438, itemStyle: { color: '#1d6fd4' } },
-        { value: 4500, itemStyle: { color: '#b91c1c' } },
-        { value: 2500, itemStyle: { color: '#0d2d6b' } },
-        { value: 1750, itemStyle: { color: '#4a90d9' } },
-        { value: 1250, itemStyle: { color: '#7a1f1f' } },
-        { value: 1000, itemStyle: { color: '#2563eb' } },
-        { value: 800,  itemStyle: { color: '#dc2626' } },
-        { value: 500,  itemStyle: { color: '#1d6fd4' } },
-        { value: 500,  itemStyle: { color: '#0d2d6b' } },
-        { value: 1050, itemStyle: { color: '#94a3b8' } }
-      ]
+      data: WERKGELEGENHEID.fte.map(d => ({ value: d.waarde, itemStyle: { color: d.kleur } }))
     }]
   });
 
@@ -241,7 +230,7 @@
     grid: { top: 24, right: 24, bottom: 72, left: 16, containLabel: true },
     xAxis: {
       type: 'category',
-      data: ['Asielindustrie NL','NS (spoorwegen)','Nationale Politie','Gemeente Amsterdam','Rijkswaterstaat'],
+      data: WERKGELEGENHEID.vergelijk.map(d => d.label),
       axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
       axisLabel: { color: '#3d526b', fontSize: 10, rotate: 20, interval: 0 }
     },
@@ -254,13 +243,7 @@
     series: [{
       type: 'bar', barMaxWidth: 52, itemStyle: { borderRadius: [4,4,0,0] },
       label: { show: true, position: 'top', formatter: p => Number(p.value).toLocaleString('nl-NL'), color: '#7a90a8', fontSize: 11 },
-      data: [
-        { value: 20500, itemStyle: { color: '#b91c1c' } },
-        { value: 20400, itemStyle: { color: '#1d6fd4' } },
-        { value: 20000, itemStyle: { color: '#2563eb' } },
-        { value: 14000, itemStyle: { color: '#0d2d6b' } },
-        { value: 9800,  itemStyle: { color: '#4a90d9' } }
-      ]
+      data: WERKGELEGENHEID.vergelijk.map(d => ({ value: d.waarde, itemStyle: { color: d.kleur } }))
     }]
   });
 

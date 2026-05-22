@@ -421,7 +421,7 @@
     grid: { top: 24, right: 24, bottom: 48, left: 16, containLabel: true },
     xAxis: {
       type: 'category',
-      data: ['2018','2019','2020','2021','2022','2023','2024','2025'],
+      data: NAREIZIGERS.jaren,
       axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
       axisLabel: { color: '#3d526b', fontSize: 12 }
     },
@@ -434,10 +434,10 @@
     },
     series: [
       { name: 'Eerste aanvragen', type: 'bar', stack: 'total',
-        data: [20515,22540,13720,24745,35535,38375,32100,24100],
+        data: NAREIZIGERS.eersteAanvragen,
         itemStyle: { color: 'rgba(29,111,212,.8)', borderRadius: [0,0,0,0] } },
       { name: 'Nareizigers', type: 'bar', stack: 'total',
-        data: [6460,4180,3865,10120,11130,10125,11900,16500],
+        data: NAREIZIGERS.nareizigers,
         itemStyle: { color: 'rgba(185,28,28,.85)', borderRadius: [4,4,0,0] } }
     ]
   });

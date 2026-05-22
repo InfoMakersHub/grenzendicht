@@ -225,7 +225,7 @@
       backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
       textStyle: { color: '#1e293b', fontSize: 13 },
       extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
-      formatter: p => `<strong>${p.name}</strong><br>€${Number(p.value).toLocaleString('nl-NL')} mln<br>${Math.round(p.value/8940*100)}% van totaal`
+      formatter: p => `<strong>${p.name}</strong><br>€${Number(p.value).toLocaleString('nl-NL')} mln<br>${Math.round(p.value/ECONOMIE.budgetTotaal*100)}% van totaal`
     },
     legend: { bottom: '2%', textStyle: { color: '#7a90a8', fontSize: 11 }, icon: 'circle', itemWidth: 8, itemHeight: 8 },
     series: [{
@@ -234,12 +234,7 @@
       itemStyle: { borderRadius: 4, borderColor: '#fff', borderWidth: 3 },
       label: { show: false }, labelLine: { show: false },
       emphasis: { label: { show: true, fontSize: 13, fontWeight: 'bold' }, scaleSize: 8 },
-      data: [
-        { value: 4200, name: 'COA opvang' },
-        { value: 720,  name: 'IND procedures' },
-        { value: 100,  name: 'Nidos (AMV)' },
-        { value: 3920, name: 'Overig (DT&V, gemeenten)' }
-      ]
+      data: ECONOMIE.budget.map(d => ({ value: d.waarde, name: d.label }))
     }]
   });
 
@@ -262,7 +257,7 @@
     },
     yAxis: {
       type: 'category',
-      data: ['COA','Overig overheid','IND','Secundair','Smokkel (NL)','Nidos','Juridisch'],
+      data: ECONOMIE.geldstromen.map(d => d.label),
       axisLabel: { color: '#3d526b', fontSize: 12 },
       axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
     },
@@ -270,15 +265,7 @@
       type: 'bar', barMaxWidth: 32,
       itemStyle: { borderRadius: [0,4,4,0] },
       label: { show: true, position: 'right', formatter: p => '€' + Number(p.value).toLocaleString('nl-NL') + ' mln', color: '#7a90a8', fontSize: 10 },
-      data: [
-        { value: 4200, itemStyle: { color: '#b91c1c' } },
-        { value: 3920, itemStyle: { color: '#0d2d6b' } },
-        { value: 720,  itemStyle: { color: '#1d6fd4' } },
-        { value: 1250, itemStyle: { color: '#4a90d9' } },
-        { value: 550,  itemStyle: { color: '#7a1f1f' } },
-        { value: 100,  itemStyle: { color: '#2563eb' } },
-        { value: 300,  itemStyle: { color: '#dc2626' } }
-      ]
+      data: ECONOMIE.geldstromen.map(d => ({ value: d.waarde, itemStyle: { color: d.kleur } }))
     }]
   });
 

@@ -779,13 +779,9 @@
 <script>
 /* ─── Chart: Instroom per 100k (2024, gesorteerd hoog→laag) ─── */
 (function() {
-  const pairs = [
-    ['🇦🇹 AT', 286],['🇩🇪 DE', 274],['🇮🇹 IT', 256],
-    ['EU gem.', 200],['🇫🇷 FR', 191],['🇳🇱 NL', 180],
-    ['🇧🇪 BE', 129],['🇸🇪 SE', 124],['🇩🇰 DK', 37],
-  ].sort((a,b) => b[1]-a[1]);
-  const labels = pairs.map(p => p[0]);
-  const data   = pairs.map(p => p[1]);
+  const sorted   = [...EUROPA.instroom].sort((a, b) => b.per100k - a.per100k);
+  const labels   = sorted.map(d => d.land);
+  const data     = sorted.map(d => d.per100k);
   const getColor = l => l.includes('NL') ? '#92400e' : l.includes('DK') ? '#166534' : l === 'EU gem.' ? '#94a3b8' : '#4a90d9';
 
   const chartInstroom = echarts.init(document.getElementById('chartInstroom'));
@@ -822,8 +818,8 @@
 
 /* ─── Chart: Terugkeerpercentage 2024 ─── */
 (function() {
-  const labels = ['🇩🇰 DK*','🇮🇹 IT','🇩🇪 DE','EU-27','🇳🇱 NL','🇧🇪 BE'];
-  const data   = [95, 22, 22, 26, 18, 14];
+  const labels   = EUROPA.terugkeer.map(d => d.land);
+  const data     = EUROPA.terugkeer.map(d => d.pct);
   const getColor = l => l.includes('NL') ? '#b91c1c' : l.includes('DK') ? '#166534' : l === 'EU-27' ? '#94a3b8' : '#4a90d9';
 
   const chartTerugkeer = echarts.init(document.getElementById('chartTerugkeer'));

@@ -39,10 +39,82 @@ const MONTHLY_DATA = {
   values: [3073, 3876, 4216, 3922, 3870, 3056, 3645, 3508, 4055, 3953, 3574, 3349, 3560, 3510, 3490, 3450]
 };
 
-// Chart defaults
-Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-Chart.defaults.color = '#64748b';
-Chart.defaults.plugins.legend.labels.boxWidth = 12;
+// ── Economie (bron: Rijksbegroting 2026 hoofdstuk XX; COA/IND jaarverslagen) ───
+// ⬇ Update deze constanten wanneer nieuwe begrotingscijfers beschikbaar zijn.
+const ECONOMIE = {
+  budgetTotaal: 8940,   // mln € — bijwerken bij nieuwe Rijksbegroting
+  budget: [
+    { label: 'COA opvang',               waarde: 4200 },
+    { label: 'IND procedures',           waarde:  720 },
+    { label: 'Nidos (AMV)',              waarde:  100 },
+    { label: 'Overig (DT&V, gemeenten)', waarde: 3920 },
+  ],
+  geldstromen: [
+    { label: 'COA',            waarde: 4200, kleur: '#b91c1c' },
+    { label: 'Overig overheid',waarde: 3920, kleur: '#0d2d6b' },
+    { label: 'IND',            waarde:  720, kleur: '#1d6fd4' },
+    { label: 'Secundair',      waarde: 1250, kleur: '#4a90d9' },
+    { label: 'Smokkel (NL)',   waarde:  550, kleur: '#7a1f1f' },
+    { label: 'Nidos',          waarde:  100, kleur: '#2563eb' },
+    { label: 'Juridisch',      waarde:  300, kleur: '#dc2626' },
+  ],
+};
+
+// ── Werkgelegenheid (bron: IND Jaarcijfers 2024, COA Jaarverslag 2024) ─────
+// ⬇ Update wanneer nieuwe FTE-cijfers bekend zijn.
+const WERKGELEGENHEID = {
+  fte: [
+    { label: 'IND',         waarde: 6438, kleur: '#1d6fd4' },
+    { label: 'COA',         waarde: 4500, kleur: '#b91c1c' },
+    { label: 'Advocaten',   waarde: 2500, kleur: '#0d2d6b' },
+    { label: 'Beveiliging', waarde: 1750, kleur: '#4a90d9' },
+    { label: 'Facilitair',  waarde: 1250, kleur: '#7a1f1f' },
+    { label: 'Tolken',      waarde: 1000, kleur: '#2563eb' },
+    { label: 'Medisch',     waarde:  800, kleur: '#dc2626' },
+    { label: 'Nidos',       waarde:  500, kleur: '#1d6fd4' },
+    { label: 'Begeleiding', waarde:  500, kleur: '#0d2d6b' },
+    { label: 'Indirect',    waarde: 1050, kleur: '#94a3b8' },
+  ],
+  vergelijk: [
+    { label: 'Asielindustrie NL', waarde: 20500, kleur: '#b91c1c' },
+    { label: 'NS (spoorwegen)',   waarde: 20400, kleur: '#1d6fd4' },
+    { label: 'Nationale Politie', waarde: 20000, kleur: '#2563eb' },
+    { label: 'Gemeente Amsterdam',waarde: 14000, kleur: '#0d2d6b' },
+    { label: 'Rijkswaterstaat',   waarde:  9800, kleur: '#4a90d9' },
+  ],
+};
+
+// ── Nareizigers (bron: IND kerncijfers / CBS StatLine) ─────────────────────
+// ⬇ Voeg een jaar toe door een waarde achteraan toe te voegen aan alle drie arrays.
+const NAREIZIGERS = {
+  jaren:           ['2018','2019','2020','2021','2022','2023','2024','2025'],
+  eersteAanvragen: [20515, 22540, 13720, 24745, 35535, 38375, 32100, 24100],
+  nareizigers:     [ 6460,  4180,  3865, 10120, 11130, 10125, 11900, 16500],
+};
+
+// ── Europa (bron: Eurostat / UNHCR 2024) ────────────────────────────────────
+// ⬇ Gesorteerd hoog→laag in het chart; volgorde hier maakt niet uit.
+const EUROPA = {
+  instroom: [
+    { land: '🇦🇹 AT',  per100k: 286 },
+    { land: '🇩🇪 DE',  per100k: 274 },
+    { land: '🇮🇹 IT',  per100k: 256 },
+    { land: 'EU gem.',  per100k: 200 },
+    { land: '🇫🇷 FR',  per100k: 191 },
+    { land: '🇳🇱 NL',  per100k: 180 },
+    { land: '🇧🇪 BE',  per100k: 129 },
+    { land: '🇸🇪 SE',  per100k: 124 },
+    { land: '🇩🇰 DK',  per100k:  37 },
+  ],
+  terugkeer: [
+    { land: '🇩🇰 DK*', pct: 95 },
+    { land: '🇮🇹 IT',  pct: 22 },
+    { land: '🇩🇪 DE',  pct: 22 },
+    { land: 'EU-27',    pct: 26 },
+    { land: '🇳🇱 NL',  pct: 18 },
+    { land: '🇧🇪 BE',  pct: 14 },
+  ],
+};
 
 // Active nav + Laatste-update-timestamp in elke footer
 document.addEventListener('DOMContentLoaded', () => {
