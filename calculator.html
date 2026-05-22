@@ -476,6 +476,54 @@
 </div>
 
 
+<!-- ── BELASTINGBETALER-CALCULATOR ───────────────────────────── -->
+<div class="content">
+  <div class="section">
+    <div class="section-title">Jouw persoonlijke bijdrage aan het asielstelsel</div>
+    <div class="chart-box">
+      <h3>Belastingbetaler-calculator — asielaandeel 2026</h3>
+
+      <div style="margin:1.25rem 0;">
+        <label style="font-size:.78rem;font-weight:700;color:var(--text-2);display:block;margin-bottom:.5rem;">Bruto jaarinkomen</label>
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <input type="range" id="btcSlider" min="15000" max="150000" step="1000" value="47000"
+            style="flex:1;min-width:180px;accent-color:#1d6fd4;">
+          <span style="font-size:1.1rem;font-weight:900;color:var(--text);min-width:7ch;">€ <span id="btcInkomen">47.000</span></span>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-top:1.25rem;">
+        <div style="background:#eff6ff;border-radius:12px;padding:1.1rem;text-align:center;grid-column:span 2;">
+          <div style="font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#0d2d6b;margin-bottom:.4rem;">Jouw bijdrage aan het asielstelsel</div>
+          <div style="font-size:2.4rem;font-weight:900;line-height:1;letter-spacing:-1px;color:#1d6fd4;">€ <span id="btcJaar">—</span></div>
+          <div style="font-size:.75rem;color:#475569;margin-top:.3rem;">per jaar</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.9rem;text-align:center;">
+          <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.35rem;">Per maand</div>
+          <div style="font-size:1.5rem;font-weight:900;color:var(--text);">€ <span id="btcMaand">—</span></div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.9rem;text-align:center;">
+          <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.35rem;">Per dag</div>
+          <div style="font-size:1.5rem;font-weight:900;color:var(--text);">€ <span id="btcDag">—</span></div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.9rem;text-align:center;">
+          <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.35rem;">Bekostigt opvang</div>
+          <div style="font-size:1.5rem;font-weight:900;color:#b91c1c;"><span id="btcDagen">—</span> dgn</div>
+          <div style="font-size:.65rem;color:var(--muted);margin-top:.15rem;">voor 1 persoon/jaar</div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:.9rem;text-align:center;">
+          <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.35rem;">Loonheffing (netto)</div>
+          <div style="font-size:1.5rem;font-weight:900;color:var(--text);">€ <span id="btcLoon">—</span></div>
+        </div>
+      </div>
+
+      <p class="chart-note" style="margin-top:1rem;">
+        <strong>Methode:</strong> Box 1 loonheffing 2026 (36,97% t/m €75.518 · 49,50% daarboven) inclusief premies volksverzekeringen, minus vereenvoudigde heffingskortingen (AHK + ARK). BTW-schatting: 70% van netto-inkomen × 13,5% effectief tarief. Asielaandeel: €8.940 mln ÷ €428.000 mln totale rijksinkomsten = <strong>2,085%</strong>. Opvangkosten COA: €40.000 p.p./jaar. Alle bedragen zijn schattingen — individuele situatie kan afwijken.
+      </p>
+    </div>
+  </div>
+</div>
+
 <!-- ── INTERACTIEVE KAART ─────────────────────────────────────── -->
 <div class="calc-map-section">
   <div class="calc-map-title">Interactieve kaart</div>
@@ -814,6 +862,59 @@
     geselecteerdeGemeente = naam;
     toonResultaat(naam, GEMEENTEN[naam]);
   });
+
+  // ── BELASTINGBETALER-CALCULATOR ──────────────────────────────────
+  (function() {
+    const ASIEL_BUDGET   = 8940;    // mln €, Rijksbegroting 2026 hfdst XX
+    const RIJK_INKOMSTEN = 428000;  // mln €, totale belasting + premie-inkomsten (schatting)
+    const ASIEL_PCT      = ASIEL_BUDGET / RIJK_INKOMSTEN; // 0.02085
+    const COA_PER_DAG    = 40000 / 365; // €109,59/dag per persoon
+
+    function berekenBijdrage(bruto) {
+      // Box 1 loonheffing 2026 (incl. premies volksverzekeringen)
+      const grens = 75518, t1 = 0.3697, t2 = 0.4950;
+      const brutoBel = bruto <= grens ? bruto * t1 : grens * t1 + (bruto - grens) * t2;
+
+      // Heffingskortingen (vereenvoudigd)
+      const ahk = Math.max(0, 3068 - Math.max(0, (bruto - 24814) * 0.06095));
+      let ark;
+      if      (bruto <= 11490) ark = bruto * 0.0805;
+      else if (bruto <= 24820) ark = Math.min(5158, 925 + (bruto - 11490) * 0.2758);
+      else if (bruto <= 43000) ark = 5158;
+      else                     ark = Math.max(0, 5158 - (bruto - 43000) * 0.0651);
+
+      const loonheffing = Math.max(0, brutoBel - ahk - ark);
+      const netto       = bruto - loonheffing;
+
+      // BTW-schatting: 70% van netto besteden × 13,5% effectief tarief
+      const btw = netto * 0.70 * 0.135;
+
+      const totaalTax = loonheffing + btw;
+      const bijdrage  = totaalTax * ASIEL_PCT;
+
+      return {
+        loonheffing: Math.round(loonheffing),
+        bijdrage:    Math.round(bijdrage),
+        perMaand:    Math.round(bijdrage / 12),
+        perDag:      (bijdrage / 365).toFixed(2),
+        opvangDagen: Math.round(bijdrage / COA_PER_DAG * 10) / 10,
+      };
+    }
+
+    function update() {
+      const bruto = parseInt(document.getElementById('btcSlider').value, 10);
+      document.getElementById('btcInkomen').textContent = bruto.toLocaleString('nl-NL');
+      const r = berekenBijdrage(bruto);
+      document.getElementById('btcJaar').textContent    = r.bijdrage.toLocaleString('nl-NL');
+      document.getElementById('btcMaand').textContent   = r.perMaand.toLocaleString('nl-NL');
+      document.getElementById('btcDag').textContent     = r.perDag.replace('.', ',');
+      document.getElementById('btcDagen').textContent   = r.opvangDagen.toLocaleString('nl-NL');
+      document.getElementById('btcLoon').textContent    = r.loonheffing.toLocaleString('nl-NL');
+    }
+
+    document.getElementById('btcSlider').addEventListener('input', update);
+    update();
+  })();
 </script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
