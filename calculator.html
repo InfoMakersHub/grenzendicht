@@ -140,10 +140,6 @@
     .obl-context strong { color: #fbbf24; }
 
     /* ─── HEADLINE-SAMENVATTING (boven detail-blokken) ────────────── */
-    .summary-pair {
-      display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: .75rem;
-    }
-    @media (max-width: 580px) { .summary-pair { grid-template-columns: 1fr; } }
 
     .result-stack {
       display: flex; flex-direction: column; gap: 1rem;
@@ -298,40 +294,16 @@
         <div class="obl-context" id="resContext"></div>
 
         <!-- Headline-samenvatting: bijkomend per jaar + in opvang -->
-        <div class="summary-pair">
-          <div class="obl-block blue">
-            <div class="obl-head blue">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-              Bijkomende inwoners
-              <span class="meta">JAARLIJKS</span>
-            </div>
-            <div class="obl-body">
-              <div class="obl-cards">
-                <div class="obl-card blue">
-                  <div class="lbl">Per jaar</div>
-                  <div class="val" id="rsHuisv">—</div>
-                  <div class="unit">vergunninghouders</div>
-                </div>
-              </div>
-              <div class="obl-note blue" style="margin-top:.75rem;">Vestigen zich permanent in de gemeente — inclusief nareizigers (~41%).</div>
-            </div>
+        <div class="obl-cards" style="margin-bottom:.75rem;">
+          <div class="obl-card blue">
+            <div class="lbl">Bijkomende inwoners</div>
+            <div class="val" id="rsHuisv">—</div>
+            <div class="unit">per jaar</div>
           </div>
-          <div class="obl-block indigo">
-            <div class="obl-head indigo">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><rect x="9" y="12" width="6" height="10"/></svg>
-              Asielzoekers in opvang
-              <span class="meta">DOORLOPEND</span>
-            </div>
-            <div class="obl-body">
-              <div class="obl-cards">
-                <div class="obl-card indigo">
-                  <div class="lbl">Opvangplekken</div>
-                  <div class="val" id="rsSpreid">—</div>
-                  <div class="unit">vereist</div>
-                </div>
-              </div>
-              <div class="obl-note indigo" id="rsSpreidFlow" style="margin-top:.75rem;">Opvangplekken die de gemeente continu beschikbaar moet hebben.</div>
-            </div>
+          <div class="obl-card indigo">
+            <div class="lbl">Asielzoekers in opvang</div>
+            <div class="val" id="rsSpreid">—</div>
+            <div class="unit">doorlopend</div>
           </div>
         </div>
 
@@ -402,6 +374,7 @@
                 </div>
               </div>
               <div class="obl-note indigo" id="resNoteSpreid"></div>
+              <div id="rsSpreidFlow" style="display:none;"></div>
             </div>
           </div>
 
