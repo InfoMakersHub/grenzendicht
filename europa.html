@@ -14,7 +14,7 @@
   <title>Europa Vergelijking — Hoe doen strengere EU-landen het? — GrenzenDicht</title>
   <meta name="description" content="Welke EU-landen voeren aantoonbaar strenger asielbeleid? Hoe doen Denemarken, Oostenrijk en Italië dit in de praktijk — en wat zijn de meetbare uitkomsten?">
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
   <style>
     /* ─── HERO ─── */
     .eu-hero {
@@ -110,7 +110,7 @@
       font-size: .82rem; font-weight: 700; color: var(--text);
       margin: 0 0 1rem; text-transform: uppercase; letter-spacing: .05em;
     }
-    .eu-chart-card canvas { max-height: 240px; }
+    .eu-chart-card > div[id] { height: 240px; }
 
     /* ─── COUNTRY CARDS (5-WHY) ─── */
     .eu-country-grid {
@@ -404,11 +404,11 @@
   <div class="eu-chart-grid">
     <div class="eu-chart-card">
       <h3>Eerste asielaanvragen per 100.000 inwoners (2024)</h3>
-      <canvas id="chartInstroom"></canvas>
+      <div id="chartInstroom" style="width:100%;height:240px;"></div>
     </div>
     <div class="eu-chart-card">
       <h3>Effectief terugkeerpercentage — % van uitzetbeslissingen (2024)</h3>
-      <canvas id="chartTerugkeer"></canvas>
+      <div id="chartTerugkeer" style="width:100%;height:240px;"></div>
     </div>
   </div>
 
@@ -777,100 +777,83 @@
 
 <script src="js/main.js"></script>
 <script>
-/* ─── Toggle 5-why items ─── */
-function toggleWhy(btn) {
-  const item = btn.closest('.eu-why-item');
-  item.classList.toggle('open');
-}
-
 /* ─── Chart: Instroom per 100k (2024, gesorteerd hoog→laag) ─── */
 (function() {
-  // Bronnen: Eurostat MIGR_ASYAPPCTZA 2024; bevolkingscijfers Eurostat 2024
-  // EU gem = 2,0 per 1.000 = 200/100k (912k aanvragen / ~456M inwoners)
-  // NL: 32.175 / 17,9M = 180; DK: 2.219 / 5,9M = 37; AT: ~26k / 9,1M = 286
-  // IT: 151.120 / 59,1M = 256; DE: ~230k / 84M = 274; FR: ~130k / 68M = 191
-  // BE: ~15k / 11,6M = 129; SE: ~13k / 10,5M = 124
   const pairs = [
-    ['🇦🇹 AT', 286],
-    ['🇮🇹 IT', 256],
-    ['🇩🇪 DE', 274],
-    ['EU gem.', 200],
-    ['🇫🇷 FR', 191],
-    ['🇳🇱 NL', 180],
-    ['🇧🇪 BE', 129],
-    ['🇸🇪 SE', 124],
-    ['🇩🇰 DK',  37],
+    ['🇦🇹 AT', 286],['🇩🇪 DE', 274],['🇮🇹 IT', 256],
+    ['EU gem.', 200],['🇫🇷 FR', 191],['🇳🇱 NL', 180],
+    ['🇧🇪 BE', 129],['🇸🇪 SE', 124],['🇩🇰 DK', 37],
   ].sort((a,b) => b[1]-a[1]);
   const labels = pairs.map(p => p[0]);
   const data   = pairs.map(p => p[1]);
-  const colors = labels.map(l => {
-    if (l.includes('NL'))  return '#92400e'; // amber — NL now below EU avg
-    if (l.includes('DK'))  return '#166534'; // green — best score
-    if (l === 'EU gem.')   return '#6b7280'; // grey
-    return '#4a90d9';
-  });
+  const getColor = l => l.includes('NL') ? '#92400e' : l.includes('DK') ? '#166534' : l === 'EU gem.' ? '#94a3b8' : '#4a90d9';
 
-  new Chart(document.getElementById('chartInstroom'), {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{ data, backgroundColor: colors, borderRadius: 5 }]
+  const chartInstroom = echarts.init(document.getElementById('chartInstroom'));
+  chartInstroom.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 12 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: p => `<strong>${p[0].name}</strong>: ${p[0].value} per 100k inwoners`
     },
-    options: {
-      indexAxis: 'y',
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.raw} per 100k inwoners` } }
-      },
-      scales: {
-        x: {
-          grid: { color: 'rgba(0,0,0,.07)' },
-          ticks: { font: { size: 11 } },
-          title: { display: true, text: 'per 100.000 inwoners', font: { size: 10 } }
-        },
-        y: { ticks: { font: { size: 11 } } }
-      }
-    }
+    grid: { top: 8, right: 48, bottom: 8, left: 8, containLabel: true },
+    xAxis: {
+      type: 'value', name: 'per 100.000 inwoners',
+      nameTextStyle: { color: '#94a3b8', fontSize: 9 },
+      axisLabel: { color: '#94a3b8', fontSize: 10 },
+      splitLine: { lineStyle: { color: 'rgba(0,0,0,.06)', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'category', data: labels,
+      axisLabel: { color: '#334155', fontSize: 11 },
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
+    },
+    series: [{
+      type: 'bar', barMaxWidth: 22,
+      itemStyle: { borderRadius: [0,4,4,0] },
+      label: { show: true, position: 'right', formatter: p => p.value, color: '#64748b', fontSize: 10 },
+      data: labels.map((l, i) => ({ value: data[i], itemStyle: { color: getColor(l) } }))
+    }]
   });
+  window.addEventListener('resize', () => chartInstroom.resize());
 })();
 
 /* ─── Chart: Terugkeerpercentage 2024 ─── */
 (function() {
-  // Bron: Eurostat MIGR_EIRTN 2024 (gedwongen terugkeer als % van uitzetbeslissingen)
-  // EU totaal: 119.155 / 453.840 = 26%. DK ~95% incl. vrijwillig vertrek (Home Office 2025)
-  // NL: ~18% (schatting op basis RVK 2024); IT: ~22%; DE: ~22%; BE: ~14%
   const labels = ['🇩🇰 DK*','🇮🇹 IT','🇩🇪 DE','EU-27','🇳🇱 NL','🇧🇪 BE'];
   const data   = [95, 22, 22, 26, 18, 14];
-  const colors = labels.map(l => {
-    if (l.includes('NL'))  return '#b91c1c';
-    if (l.includes('DK'))  return '#166534';
-    if (l === 'EU-27')     return '#6b7280';
-    return '#4a90d9';
-  });
+  const getColor = l => l.includes('NL') ? '#b91c1c' : l.includes('DK') ? '#166534' : l === 'EU-27' ? '#94a3b8' : '#4a90d9';
 
-  new Chart(document.getElementById('chartTerugkeer'), {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{ data, backgroundColor: colors, borderRadius: 5 }]
+  const chartTerugkeer = echarts.init(document.getElementById('chartTerugkeer'));
+  chartTerugkeer.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 12 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: p => `<strong>${p[0].name}</strong>: ${p[0].value}%`
     },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.raw}%` } }
-      },
-      scales: {
-        x: { ticks: { font: { size: 10 } } },
-        y: {
-          grid: { color: 'rgba(0,0,0,.07)' },
-          ticks: { font: { size: 11 }, callback: v => v + '%' },
-          max: 100
-        }
-      }
-    }
+    grid: { top: 8, right: 24, bottom: 32, left: 8, containLabel: true },
+    xAxis: {
+      type: 'category', data: labels,
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: { color: '#334155', fontSize: 10 }
+    },
+    yAxis: {
+      type: 'value', max: 100,
+      axisLabel: { color: '#94a3b8', fontSize: 10, formatter: v => v + '%' },
+      splitLine: { lineStyle: { color: 'rgba(0,0,0,.06)', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [{
+      type: 'bar', barMaxWidth: 40, itemStyle: { borderRadius: [4,4,0,0] },
+      label: { show: true, position: 'top', formatter: p => p.value + '%', color: '#64748b', fontSize: 11 },
+      data: labels.map((l, i) => ({ value: data[i], itemStyle: { color: getColor(l) } }))
+    }]
   });
+  window.addEventListener('resize', () => chartTerugkeer.resize());
 })();
 </script>
 

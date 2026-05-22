@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nareizigers — GrenzenDicht</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 </head>
 <body>
 
@@ -64,7 +64,7 @@
     <div class="two-col" style="align-items:start;">
       <div class="chart-box">
         <h3>Eerste aanvragen vs. nareizigers per jaar</h3>
-        <div class="chart-wrap"><canvas id="stackedChart"></canvas></div>
+        <div class="chart-wrap"><div id="stackedChart" style="width:100%;height:100%;"></div></div>
         <p class="chart-note">Bron: CBS StatLine 83102NED / CBS nieuwsbericht mei 2026. Nareizigers = nareizende gezinsleden erkende vluchtelingen.</p>
       </div>
       <div style="overflow-x:auto;">
@@ -402,40 +402,46 @@
 
 <script src="js/main.js"></script>
 <script>
-  Chart.defaults.color = '#4a6480';
-  Chart.defaults.borderColor = '#e2e8f0';
-
-  new Chart(document.getElementById('stackedChart'), {
-    type: 'bar',
-    data: {
-      labels: ['2018','2019','2020','2021','2022','2023','2024','2025'],
-      datasets: [
-        {
-          label: 'Eerste aanvragen',
-          data: [20515, 22540, 13720, 24745, 35535, 38375, 32100, 24100],
-          backgroundColor: 'rgba(29,111,212,0.7)',
-          borderRadius: 4
-        },
-        {
-          label: 'Nareizigers',
-          data: [6460, 4180, 3865, 10120, 11130, 10125, 11900, 16500],
-          backgroundColor: 'rgba(185,28,28,0.75)',
-          borderRadius: 4
-        }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'bottom', labels: { color: '#7a90a8', boxWidth: 12, padding: 14 } },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('nl-NL')}` } }
-      },
-      scales: {
-        x: { stacked: true, grid: { color: '#e2e8f0' }, ticks: { color: '#3d526b' } },
-        y: { stacked: true, grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'Personen', color: '#7a90a8' } }
+  const stackedChart = echarts.init(document.getElementById('stackedChart'));
+  stackedChart.setOption({
+    color: ['#1d6fd4','#b91c1c'],
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: params => {
+        const total = params.reduce((s, p) => s + p.value, 0);
+        return `<strong>${params[0].axisValue}</strong><br>` +
+          params.map(p => `${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong>`).join('<br>') +
+          `<br><span style="color:#94a3b8">Totaal: <strong>${total.toLocaleString('nl-NL')}</strong></span>`;
       }
-    }
+    },
+    legend: { bottom: 4, textStyle: { color: '#7a90a8', fontSize: 12 }, icon: 'circle', itemWidth: 8, itemHeight: 8 },
+    grid: { top: 24, right: 24, bottom: 48, left: 16, containLabel: true },
+    xAxis: {
+      type: 'category',
+      data: ['2018','2019','2020','2021','2022','2023','2024','2025'],
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: { color: '#3d526b', fontSize: 12 }
+    },
+    yAxis: {
+      type: 'value', name: 'Personen',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [
+      { name: 'Eerste aanvragen', type: 'bar', stack: 'total',
+        data: [20515,22540,13720,24745,35535,38375,32100,24100],
+        itemStyle: { color: 'rgba(29,111,212,.8)', borderRadius: [0,0,0,0] } },
+      { name: 'Nareizigers', type: 'bar', stack: 'total',
+        data: [6460,4180,3865,10120,11130,10125,11900,16500],
+        itemStyle: { color: 'rgba(185,28,28,.85)', borderRadius: [4,4,0,0] } }
+    ]
   });
+  window.addEventListener('resize', () => stackedChart.resize());
 </script>
 
 </body>

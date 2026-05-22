@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>De Werkgelegenheid — GrenzenDicht</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 </head>
 <body>
 
@@ -62,12 +62,12 @@
     <div class="two-col" style="align-items:start;">
       <div class="chart-box">
         <h3>FTE per categorie — asielindustrie</h3>
-        <div class="chart-wrap"><canvas id="fteChart"></canvas></div>
+        <div class="chart-wrap"><div id="fteChart" style="width:100%;height:100%;"></div></div>
         <p class="chart-note">Middenwaarden van ranges. IND = bewezen hard cijfer (6.438 FTE, IND Jaarcijfers 2024).</p>
       </div>
       <div class="chart-box">
         <h3>Vergelijking met andere sectoren</h3>
-        <div class="chart-wrap"><canvas id="compareChart"></canvas></div>
+        <div class="chart-wrap"><div id="compareChart" style="width:100%;height:100%;"></div></div>
         <p class="chart-note">Asielindustrie = middenscenario 20.500 FTE. NS: halfjaarbericht 2024 (20.423 FTE per 30 juni 2024). Gemeente Amsterdam: gemeentelijk jaarverslag. Rijkswaterstaat: jaarlijkse personeelsrapportage RWS (~9.800 FTE).</p>
       </div>
     </div>
@@ -189,51 +189,82 @@
 
 <script src="js/main.js"></script>
 <script>
-  Chart.defaults.color = '#4a6480';
-  Chart.defaults.borderColor = '#e2e8f0';
-
-  new Chart(document.getElementById('fteChart'), {
-    type: 'bar',
-    data: {
-      labels: ['IND','COA','Advocaten','Beveiliging','Facilitair','Tolken','Medisch','Nidos','Begeleiding','Indirect'],
-      datasets: [{
-        label: 'FTE (midden)',
-        data: [6438,4500,2500,1750,1250,1000,800,500,500,1050],
-        backgroundColor: ['#1d6fd4','#b91c1c','#0d2d6b','#4a90d9','#991b1b','#2563eb','#dc2626','#1d6fd4','#0d2d6b','#7a90a8'],
-        borderRadius: 4
-      }]
+  const fteChart = echarts.init(document.getElementById('fteChart'));
+  fteChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: p => `<strong>${p[0].name}</strong>: <strong>${Number(p[0].value).toLocaleString('nl-NL')}</strong> FTE`
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      indexAxis: 'y',
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'FTE', color: '#7a90a8' } },
-        y: { grid: { color: '#e2e8f0' }, ticks: { color: '#3d526b' } }
-      }
-    }
+    grid: { top: 12, right: 72, bottom: 36, left: 12, containLabel: true },
+    xAxis: {
+      type: 'value', name: 'FTE', nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'category',
+      data: ['IND','COA','Advocaten','Beveiliging','Facilitair','Tolken','Medisch','Nidos','Begeleiding','Indirect'],
+      axisLabel: { color: '#3d526b', fontSize: 11 },
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false }
+    },
+    series: [{
+      type: 'bar', barMaxWidth: 26, itemStyle: { borderRadius: [0,4,4,0] },
+      label: { show: true, position: 'right', formatter: p => Number(p.value).toLocaleString('nl-NL'), color: '#7a90a8', fontSize: 10 },
+      data: [
+        { value: 6438, itemStyle: { color: '#1d6fd4' } },
+        { value: 4500, itemStyle: { color: '#b91c1c' } },
+        { value: 2500, itemStyle: { color: '#0d2d6b' } },
+        { value: 1750, itemStyle: { color: '#4a90d9' } },
+        { value: 1250, itemStyle: { color: '#7a1f1f' } },
+        { value: 1000, itemStyle: { color: '#2563eb' } },
+        { value: 800,  itemStyle: { color: '#dc2626' } },
+        { value: 500,  itemStyle: { color: '#1d6fd4' } },
+        { value: 500,  itemStyle: { color: '#0d2d6b' } },
+        { value: 1050, itemStyle: { color: '#94a3b8' } }
+      ]
+    }]
   });
 
-  new Chart(document.getElementById('compareChart'), {
-    type: 'bar',
-    data: {
-      labels: ['Asielindustrie NL','NS (spoorwegen)','Nationale Politie','Gemeente Amsterdam','Rijkswaterstaat'],
-      datasets: [{
-        label: 'FTE',
-        data: [20500,20400,20000,14000,9800],
-        backgroundColor: ['#b91c1c','#1d6fd4','#2563eb','#0d2d6b','#4a90d9'],
-        borderRadius: 5
-      }]
+  const compareChart = echarts.init(document.getElementById('compareChart'));
+  compareChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: p => `<strong>${p[0].name}</strong><br>${p[0].marker} ${Number(p[0].value).toLocaleString('nl-NL')} FTE`
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { color: '#e2e8f0' }, ticks: { color: '#3d526b' } },
-        y: { grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'FTE', color: '#7a90a8' } }
-      }
-    }
+    grid: { top: 24, right: 24, bottom: 72, left: 16, containLabel: true },
+    xAxis: {
+      type: 'category',
+      data: ['Asielindustrie NL','NS (spoorwegen)','Nationale Politie','Gemeente Amsterdam','Rijkswaterstaat'],
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: { color: '#3d526b', fontSize: 10, rotate: 20, interval: 0 }
+    },
+    yAxis: {
+      type: 'value', name: 'FTE', nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [{
+      type: 'bar', barMaxWidth: 52, itemStyle: { borderRadius: [4,4,0,0] },
+      label: { show: true, position: 'top', formatter: p => Number(p.value).toLocaleString('nl-NL'), color: '#7a90a8', fontSize: 11 },
+      data: [
+        { value: 20500, itemStyle: { color: '#b91c1c' } },
+        { value: 20400, itemStyle: { color: '#1d6fd4' } },
+        { value: 20000, itemStyle: { color: '#2563eb' } },
+        { value: 14000, itemStyle: { color: '#0d2d6b' } },
+        { value: 9800,  itemStyle: { color: '#4a90d9' } }
+      ]
+    }]
   });
+
+  window.addEventListener('resize', () => { fteChart.resize(); compareChart.resize(); });
 </script>
 
 </body>

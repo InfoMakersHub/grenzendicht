@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GrenzenDicht — Asielindustrie Nederland</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
   <style>
     /* ─── INFOGRAPHIC DESIGN TOKENS — alleen rood & blauw ─── */
     :root {
@@ -470,7 +470,7 @@
   <div class="ig-chart-box" style="margin-top:2rem;">
     <h3>Maandelijkse asielinstroom jan 2025 – apr 2026 — IND kerncijfers</h3>
     <div style="position:relative;height:300px;">
-      <canvas id="heroChart"></canvas>
+      <div id="heroChart" style="width:100%;height:100%;"></div>
     </div>
     <p class="ig-chart-note">Bron: IND kerncijfers / CBS. Totaal 2025: ~44.100. Q1 2026: ~10.560 (CBS). * Apr 2026 = voorlopig cijfer.</p>
   </div>
@@ -634,102 +634,50 @@
 
 <script src="js/main.js"></script>
 <script>
-  // ── COUNTER ANIMATION ──
-  function animateCounter(el, target, prefix, suffix, duration) {
-    const start = performance.now();
-    function update(now) {
-      const t = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - t, 3);
-      const val = Math.round(target * ease).toLocaleString('nl-NL');
-      el.textContent = prefix + val + suffix;
-      if (t < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
-  }
-
-  // ── JOB BARS ANIMATION ──
-  function animateBars() {
-    document.querySelectorAll('.ig-job-fill').forEach(el => {
-      el.style.width = el.dataset.w + '%';
-    });
-  }
-
-  // ── INTERSECTION OBSERVER ──
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      if (e.target.id === 'n-geld')   animateCounter(e.target, 10,    '+/- €', ' mrd', 1600);
-      if (e.target.id === 'n-week')   animateCounter(e.target, 850,   '+/- ',  ' pers./wk', 1400);
-      if (e.target.id === 'n-banen')  animateCounter(e.target, 20000, '+/- ',  ' banen',    1800);
-      if (e.target.id === 'jobBars')  animateBars();
-      io.unobserve(e.target);
-    });
-  }, { threshold: 0.3 });
-
-  ['n-geld','n-week','n-banen','jobBars'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) io.observe(el);
-  });
-
-  // ── CHART.JS (light theme) ──
-  Chart.defaults.color = '#7a90a8';
-  Chart.defaults.borderColor = '#e2e8f0';
-
-  const ctx = document.getElementById('heroChart').getContext('2d');
+  const heroChart = echarts.init(document.getElementById('heroChart'));
   const weeklyAvgs = MONTHLY_DATA.values.map(v => Math.round(v / 4.3));
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: MONTHLY_DATA.labels,
-      datasets: [
-        {
-          label: 'Totaal per maand',
-          data: MONTHLY_DATA.values,
-          backgroundColor: MONTHLY_DATA.values.map((_, i) => i === 15 ? 'rgba(185,28,28,0.35)' : 'rgba(29,111,212,0.5)'),
-          borderRadius: 6,
-          yAxisID: 'y1'
-        },
-        {
-          label: 'Weekgemiddelde',
-          data: weeklyAvgs,
-          type: 'line',
-          borderColor: '#b91c1c',
-          backgroundColor: 'transparent',
-          borderWidth: 2.5,
-          pointRadius: 4,
-          pointBackgroundColor: '#b91c1c',
-          tension: 0.35,
-          yAxisID: 'y2'
-        }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: { color: '#7a90a8', boxWidth: 12, padding: 16 }
-        }
-      },
-      scales: {
-        x:  { grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' } },
-        y1: {
-          position: 'left',
-          grid: { color: '#e2e8f0' },
-          ticks: { color: '#7a90a8' },
-          title: { display: true, text: 'Totaal/maand', color: '#7a90a8', font: { size: 11 } }
-        },
-        y2: {
-          position: 'right',
-          grid: { drawOnChartArea: false },
-          ticks: { color: '#b91c1c' },
-          min: 400,
-          title: { display: true, text: 'Week gem.', color: '#b91c1c', font: { size: 11 } }
-        }
+  heroChart.setOption({
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross', crossStyle: { color: '#cbd5e1' } },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: params => {
+        let s = `<div style="font-weight:700;margin-bottom:4px">${params[0].axisValue}</div>`;
+        params.forEach(p => { s += `<div>${p.marker} ${p.seriesName}: <strong>${Number(p.value).toLocaleString('nl-NL')}</strong></div>`; });
+        return s;
       }
-    }
+    },
+    legend: { top: 4, textStyle: { color: '#7a90a8', fontSize: 12 }, icon: 'circle', itemWidth: 8, itemHeight: 8 },
+    grid: { top: 48, right: 64, bottom: 48, left: 16, containLabel: true },
+    xAxis: [{
+      type: 'category', data: MONTHLY_DATA.labels,
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: { color: '#7a90a8', fontSize: 10 }, splitLine: { show: false }
+    }],
+    yAxis: [
+      { type: 'value', name: 'Totaal/maand', nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+        axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+        splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } }, axisLine: { show: false }, axisTick: { show: false } },
+      { type: 'value', name: 'Week gem.', nameTextStyle: { color: '#b91c1c', fontSize: 10 }, min: 400,
+        axisLabel: { color: '#b91c1c', fontSize: 10 },
+        splitLine: { show: false }, axisLine: { show: false }, axisTick: { show: false } }
+    ],
+    series: [
+      { name: 'Totaal per maand', type: 'bar', yAxisIndex: 0, barMaxWidth: 28,
+        data: MONTHLY_DATA.values.map((v, i) => ({
+          value: v,
+          itemStyle: { color: i === 15 ? 'rgba(185,28,28,.65)' : 'rgba(29,111,212,.72)', borderRadius: [4,4,0,0] }
+        }))
+      },
+      { name: 'Weekgemiddelde', type: 'line', yAxisIndex: 1,
+        data: weeklyAvgs, smooth: true,
+        lineStyle: { color: '#b91c1c', width: 2.5 },
+        itemStyle: { color: '#b91c1c' }, symbol: 'circle', symbolSize: 6 }
+    ]
   });
+  window.addEventListener('resize', () => heroChart.resize());
 </script>
 
 </body>

@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>De Toestroom — GrenzenDicht</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 </head>
 <body>
 
@@ -62,7 +62,7 @@
     <div class="chart-box">
       <h3>Wekelijkse asielinstroom jan 2025 – apr 2026 (benadering o.b.v. maandtotalen)</h3>
       <div class="chart-wrap-lg">
-        <canvas id="weeklyChart"></canvas>
+        <div id="weeklyChart" style="width:100%;height:100%;"></div>
       </div>
       <p class="chart-note">Bron: IND kerncijfers / CBS. Wekelijkse verdeling berekend uit maandtotalen. Apr 2026 = voorlopig cijfer. Stippellijn = gemiddelde ~850.</p>
     </div>
@@ -72,7 +72,7 @@
     <div class="chart-box">
       <h3>Maandtotalen jan 2025 – apr 2026 — IND kerncijfers</h3>
       <div class="chart-wrap">
-        <canvas id="monthlyChart"></canvas>
+        <div id="monthlyChart" style="width:100%;height:100%;"></div>
       </div>
       <p class="chart-note">Bron: IND kerncijfers 2025–2026. Rood = maanden boven 4.000 totaal. * Apr 2026 = voorlopig.</p>
     </div>
@@ -143,64 +143,77 @@
 
 <script src="js/main.js"></script>
 <script>
-  Chart.defaults.color = '#4a6480';
-  Chart.defaults.borderColor = '#e2e8f0';
-
-  // Weekly chart
-  new Chart(document.getElementById('weeklyChart'), {
-    type: 'line',
-    data: {
-      labels: WEEK_LABELS,
-      datasets: [
-        {
-          label: 'Instroom per week',
-          data: WEEKLY_DATA,
-          borderColor: '#1d6fd4',
-          backgroundColor: 'rgba(29,111,212,0.07)',
-          borderWidth: 2, pointRadius: 2, pointHoverRadius: 5,
-          tension: 0.3, fill: true
-        },
-        {
-          label: 'Gemiddelde (~850)',
-          data: Array(WEEKLY_DATA.length).fill(850),
-          borderColor: '#b91c1c', borderWidth: 1.5,
-          borderDash: [6,3], pointRadius: 0, fill: false
-        }
-      ]
+  const weeklyChart = echarts.init(document.getElementById('weeklyChart'));
+  weeklyChart.setOption({
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: params =>
+        `<div style="font-weight:700;margin-bottom:4px">${params[0].axisValue}</div>` +
+        params.map(p => `${p.marker} ${p.seriesName}: <strong>${p.value}</strong>`).join('<br>')
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'top', labels: { color: '#7a90a8', boxWidth: 12 } } },
-      scales: {
-        x: { grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'Week 2025', color: '#7a90a8' } },
-        y: { min: 400, max: 1300, grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'Personen/week', color: '#7a90a8' } }
-      }
-    }
+    legend: { top: 4, textStyle: { color: '#7a90a8', fontSize: 12 }, icon: 'circle', itemWidth: 8, itemHeight: 8 },
+    grid: { top: 48, right: 24, bottom: 40, left: 16, containLabel: true },
+    xAxis: {
+      type: 'category', data: WEEK_LABELS,
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: {
+        color: '#7a90a8', fontSize: 10, interval: 3,
+        formatter: val => { const p = val.split('-W'); return p[1] === '1' || p[1] === '5' || p[1] === '9' || p[1] === '13' ? p[0] + '\nW' + p[1] : ''; }
+      },
+      splitLine: { show: false }
+    },
+    yAxis: {
+      type: 'value', min: 400, max: 1300, name: 'Personen/week',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10 },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [
+      { name: 'Instroom per week', type: 'line', data: WEEKLY_DATA, smooth: 0.3,
+        lineStyle: { color: '#1d6fd4', width: 2 }, itemStyle: { color: '#1d6fd4' },
+        symbol: 'circle', symbolSize: 3, areaStyle: { color: 'rgba(29,111,212,.07)' } },
+      { name: 'Gemiddelde (~850)', type: 'line', data: Array(WEEKLY_DATA.length).fill(850),
+        lineStyle: { color: '#b91c1c', width: 1.5, type: 'dashed' },
+        itemStyle: { color: '#b91c1c' }, symbol: 'none' }
+    ]
   });
 
-  // Monthly chart
-  new Chart(document.getElementById('monthlyChart'), {
-    type: 'bar',
-    data: {
-      labels: MONTHLY_DATA.labels,
-      datasets: [{
-        label: 'Instroom per maand',
-        data: MONTHLY_DATA.values,
-        backgroundColor: MONTHLY_DATA.values.map(v => v > 4000 ? 'rgba(185,28,28,0.65)' : 'rgba(29,111,212,0.6)'),
-        borderRadius: 6
-      }]
+  const monthlyChart = echarts.init(document.getElementById('monthlyChart'));
+  monthlyChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: p => `<strong>${p[0].axisValue}</strong><br>${p[0].marker} Instroom: <strong>${Number(p[0].value).toLocaleString('nl-NL')}</strong>`
     },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' } },
-        y: { min: 2000, grid: { color: '#e2e8f0' }, ticks: { color: '#7a90a8' }, title: { display: true, text: 'Totaal/maand', color: '#7a90a8' } }
-      }
-    }
+    grid: { top: 24, right: 24, bottom: 48, left: 16, containLabel: true },
+    xAxis: {
+      type: 'category', data: MONTHLY_DATA.labels,
+      axisLine: { lineStyle: { color: '#e2e8f0' } }, axisTick: { show: false },
+      axisLabel: { color: '#7a90a8', fontSize: 10, rotate: 30 }, splitLine: { show: false }
+    },
+    yAxis: {
+      type: 'value', min: 2000, name: 'Totaal/maand',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [{
+      name: 'Instroom per maand', type: 'bar', barMaxWidth: 32,
+      data: MONTHLY_DATA.values.map(v => ({
+        value: v,
+        itemStyle: { color: v > 4000 ? 'rgba(185,28,28,.75)' : 'rgba(29,111,212,.75)', borderRadius: [4,4,0,0] }
+      }))
+    }]
   });
 
-  // Monthly table
+  // Maandtabel (blijft JS-gegenereerd)
   const monthNames = [
     'Januari 2025','Februari 2025','Maart 2025','April 2025','Mei 2025','Juni 2025',
     'Juli 2025','Augustus 2025','September 2025','Oktober 2025','November 2025','December 2025',
@@ -219,6 +232,8 @@
       <td style="color:${color};font-weight:600;">${sign}${diff}</td>
     </tr>`;
   });
+
+  window.addEventListener('resize', () => { weeklyChart.resize(); monthlyChart.resize(); });
 </script>
 
 </body>
