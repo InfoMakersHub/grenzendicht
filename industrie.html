@@ -129,6 +129,14 @@
 
   <div class="section">
     <div class="section-title">B. Mensensmokkelnetwerken</div>
+    <div class="chart-box">
+      <h3>Geschatte jaaromzet mensensmokkel (NL-aandeel) — 2015–2026</h3>
+      <div class="chart-wrap-lg">
+        <div id="smokkelTijdChart" style="width:100%;height:100%;"></div>
+      </div>
+      <p class="chart-note">Berekening: jaarlijkse eerste asielaanvragen NL (IND/CBS) × gemiddelde smokkelprijs per persoon (€9.000 in 2015 → €15.000 in 2026; bron: Europol EMSC jaarrapport 2023, VRT NWS). Breakdown indicatief (Europol structuurstudie 2023). <strong>Alle cijfers zijn schattingen; bandbreedte ±20%.</strong> Europese totaalmarkt (Europol 2015): €3–5 mrd/jaar.</p>
+    </div>
+
     <div style="overflow-x:auto;">
       <table class="data-table">
         <thead>
@@ -284,7 +292,63 @@
     ]
   });
 
-  window.addEventListener('resize', () => { budgetTijdChart.resize(); });
+  // ── Mensensmokkel tijdreeks ────────────────────────────────────────────────
+  const smokkelTijdChart = echarts.init(document.getElementById('smokkelTijdChart'));
+  smokkelTijdChart.setOption({
+    tooltip: {
+      trigger: 'axis', axisPointer: { type: 'shadow' },
+      backgroundColor: '#fff', borderColor: '#e2e8f0', borderWidth: 1,
+      textStyle: { color: '#1e293b', fontSize: 13 },
+      extraCssText: 'box-shadow:0 2px 8px rgba(0,0,0,.14);border-radius:8px;',
+      formatter: function(params) {
+        const totaal = params.reduce((s, p) => s + (p.value || 0), 0);
+        let html = `<strong>${params[0].axisValue}</strong> <em style="color:#94a3b8;font-size:11px;">(schatting)</em><br>`;
+        params.forEach(p => {
+          html += `${p.marker} ${p.seriesName}: <strong>€${Number(p.value).toLocaleString('nl-NL')} mln</strong><br>`;
+        });
+        html += `<span style="border-top:1px solid #e2e8f0;display:block;margin-top:4px;padding-top:4px;">Totaal: <strong>€${Number(totaal).toLocaleString('nl-NL')} mln</strong></span>`;
+        return html;
+      }
+    },
+    legend: {
+      bottom: '1%', textStyle: { color: '#7a90a8', fontSize: 11 },
+      icon: 'circle', itemWidth: 8, itemHeight: 8
+    },
+    grid: { top: 28, right: 20, bottom: 52, left: 12, containLabel: true },
+    xAxis: {
+      type: 'category',
+      data: SMOKKEL_TIJDREEKS.jaren.map(String),
+      axisLabel: { color: '#3d526b', fontSize: 11 },
+      axisLine: { lineStyle: { color: '#e2e8f0' } },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value', name: 'Miljoenen €',
+      nameTextStyle: { color: '#7a90a8', fontSize: 10 },
+      axisLabel: { color: '#7a90a8', fontSize: 10, formatter: v => '€' + v.toLocaleString('nl-NL') },
+      splitLine: { lineStyle: { color: '#e2e8f0', type: 'dashed' } },
+      axisLine: { show: false }, axisTick: { show: false }
+    },
+    series: [
+      {
+        name: 'Vervoer & route', type: 'bar', stack: 'smokkel', barMaxWidth: 44,
+        itemStyle: { color: '#991b1b' },
+        data: SMOKKEL_TIJDREEKS.vervoer
+      },
+      {
+        name: 'Logistiek & onderdak', type: 'bar', stack: 'smokkel',
+        itemStyle: { color: '#92400e' },
+        data: SMOKKEL_TIJDREEKS.logistiek
+      },
+      {
+        name: 'Crimineel netwerk', type: 'bar', stack: 'smokkel',
+        itemStyle: { color: '#4c1d95', borderRadius: [3, 3, 0, 0] },
+        data: SMOKKEL_TIJDREEKS.netwerk
+      }
+    ]
+  });
+
+  window.addEventListener('resize', () => { budgetTijdChart.resize(); smokkelTijdChart.resize(); });
 </script>
 
 </body>

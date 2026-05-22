@@ -1,7 +1,7 @@
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
-const LAST_UPDATE = '22 mei 2026, 17:30';
+const LAST_UPDATE = '22 mei 2026, 18:00';
 
 // Shared data — Jan 2025 t/m Apr 2026 (bron: IND kerncijfers / CBS)
 const WEEKLY_DATA = [
@@ -74,6 +74,20 @@ const BUDGET_TIJDREEKS = {
   overig: [ 105,  192,  195,  274,  234,  210,  285,  400,  935, 1480, 3525, 3650],
   // schattingsjaren: geen officieel realisatiecijfer beschikbaar
   schatting: [2020, 2024],
+};
+
+// ── Mensensmokkel geschatte jaaromzet 2015–2026 (NL-aandeel) ────────────────
+// Methode: jaarlijkse eersteaanvragen-NL (IND/CBS) × gemiddelde smokkelprijs
+//   per persoon (Europol EMSC jaarrapport 2023; VRT NWS). Prijs stijgt van
+//   ~€9.000 (2015, groot volume Syrische crisis) naar ~€15.000 (2026, hardere
+//   routes). Alle cijfers zijn schattingen; bandbreedte ±20%.
+// Breakdown: vervoer&route 55% | logistiek&onderdak 25% | crimineel netwerk 20%
+const SMOKKEL_TIJDREEKS = {
+  jaren:     [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+  vervoer:   [ 215,  105,   94,  146,  160,   85,  165,  250,  261,  303,  281,  297],
+  logistiek: [  98,   48,   43,   66,   72,   39,   75,  114,  119,  138,  128,  135],
+  netwerk:   [  77,   37,   33,   53,   58,   31,   60,   91,   95,  110,  101,  108],
+  // totaal (mln €): 390, 190, 170, 265, 290, 155, 300, 455, 475, 551, 510, 540
 };
 
 // ── Werkgelegenheid (bron: IND Jaarcijfers 2024, COA Jaarverslag 2024) ─────
