@@ -784,7 +784,7 @@
 
   function shareUrl() {
     const url = new URL(window.location.href);
-    if (huidigNaam && GEMEENTEN[huidigNaam]) url.searchParams.set('gemeente', huidigNaam);
+    url.searchParams.delete('gemeente');
     return url.toString();
   }
 
