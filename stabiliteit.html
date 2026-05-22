@@ -14,6 +14,38 @@
   <title>De Toestroom — GrenzenDicht</title>
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <style>
+    /* ─── VERTICAL VERGUNNINGEN-LEGENDA met uitleg per status ─── */
+    .vergun-legend {
+      display: flex; flex-direction: column; gap: .85rem;
+      margin: 1rem 0 .25rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+    }
+    .vl-item {
+      display: flex; align-items: flex-start; gap: .85rem;
+    }
+    .vl-swatch {
+      width: 16px; height: 16px; border-radius: 4px;
+      flex-shrink: 0; margin-top: .15rem;
+    }
+    .vl-text { flex: 1; min-width: 0; }
+    .vl-title {
+      font-size: .92rem; font-weight: 700;
+      color: var(--text); line-height: 1.3;
+      margin-bottom: .2rem;
+    }
+    .vl-code {
+      font-weight: 600; color: var(--muted);
+      font-size: .78rem; margin-left: .2rem;
+    }
+    .vl-desc {
+      font-size: .82rem; line-height: 1.55;
+      color: var(--text-2);
+    }
+  </style>
 </head>
 <body>
 
@@ -159,27 +191,42 @@
       <div class="chart-wrap-lg">
         <div id="vergunningTypeChart" style="width:100%;height:100%;"></div>
       </div>
+
+      <!-- Uitgebreide verticale legenda met uitleg per status -->
+      <div class="vergun-legend">
+        <div class="vl-item">
+          <div class="vl-swatch" style="background:#0d2d6b;"></div>
+          <div class="vl-text">
+            <div class="vl-title">Vluchtelingenstatus <span class="vl-code">(A-status)</span></div>
+            <div class="vl-desc">Verleend bij <strong>individuele vervolging</strong> op grond van ras, religie, nationaliteit, politieke overtuiging of behoren tot een sociale groep. Juridische basis: <strong>Vluchtelingenverdrag van Genève (1951)</strong>.</div>
+          </div>
+        </div>
+        <div class="vl-item">
+          <div class="vl-swatch" style="background:#1d6fd4;"></div>
+          <div class="vl-text">
+            <div class="vl-title">Subsidiaire bescherming <span class="vl-code">(B-status)</span></div>
+            <div class="vl-desc">Verleend bij <strong>reëel risico op ernstige schade</strong> in het herkomstland — doodstraf, marteling, of willekeurig oorlogsgeweld. Geen individuele vervolging vereist. Juridische basis: <strong>EU Kwalificatierichtlijn (2011/95/EU)</strong>.</div>
+          </div>
+        </div>
+        <div class="vl-item">
+          <div class="vl-swatch" style="background:#93c4e8;"></div>
+          <div class="vl-text">
+            <div class="vl-title">Humanitaire bescherming <span class="vl-code">(C-status)</span></div>
+            <div class="vl-desc">Verleend op <strong>klemmende humanitaire gronden</strong> die niet onder A of B vallen — bijvoorbeeld zeer schrijnende persoonlijke omstandigheden. Juridische basis: <strong>Vreemdelingenwet 2000, art. 29 lid 1 sub c/d</strong>.</div>
+          </div>
+        </div>
+      </div>
+
       <p class="chart-note">Per herkomstland één gestapelde balk met drie wettelijke types vergunning. Bron: CBS Open Data 85400NED.</p>
     </div>
 
-    <div class="two-col" style="align-items:start;margin-top:1.25rem;">
-      <div class="callout callout-blue">
-        <strong>De drie soorten vergunningen — kort</strong>
-        <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.6;font-size:.83rem;">
-          <li><strong>Vluchtelingenstatus</strong> (A-status): vervolging op individuele gronden (politiek, religie, etniciteit) — Vluchtelingenverdrag 1951.</li>
-          <li><strong>Subsidiaire bescherming</strong> (B-status): risico op ernstige schade in herkomstland (oorlog, marteling) — EU-richtlijn.</li>
-          <li><strong>Humanitaire bescherming</strong> (C-status): overige humanitaire gronden — nationale grondslag.</li>
-        </ul>
-      </div>
-
-      <div class="callout callout-red">
-        <strong>Welk type domineert per herkomst?</strong>
-        <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.65;font-size:.83rem;">
-          <li><strong>Oorlogsgebieden</strong> (Syrië, Eritrea, Jemen, Somalië) → <strong>subsidiaire bescherming</strong> overheerst — groepsgevaar zonder individuele vervolging.</li>
-          <li><strong>Turkije</strong> → vooral <strong>vluchtelingenstatus</strong> (75%): individuele politieke vervolging Erdogan-tegenstanders.</li>
-          <li><strong>Humanitaire bescherming</strong> blijft overal klein (NL totaal 2024: 780 van 15.960 vergunningen, ≈ 5%).</li>
-        </ul>
-      </div>
+    <div class="callout callout-red" style="margin-top:1.25rem;">
+      <strong>Welk type domineert per herkomst?</strong>
+      <ul style="margin:.5rem 0 0 1.1rem;padding:0;line-height:1.65;font-size:.85rem;">
+        <li><strong>Oorlogsgebieden</strong> (Syrië, Eritrea, Jemen, Somalië) → <strong>subsidiaire bescherming</strong> overheerst — groepsgevaar zonder individuele vervolging.</li>
+        <li><strong>Turkije</strong> → vooral <strong>vluchtelingenstatus</strong> (75%): individuele politieke vervolging Erdogan-tegenstanders.</li>
+        <li><strong>Humanitaire bescherming</strong> blijft overal klein (NL totaal 2024: 780 van 15.960 vergunningen, ≈ 5%).</li>
+      </ul>
     </div>
   </div>
 
@@ -474,9 +521,8 @@
         return s;
       }
     },
-    legend: { bottom: 0, textStyle: { color: '#7a90a8', fontSize: 11 },
-              icon: 'circle', itemWidth: 10, itemHeight: 10, itemGap: 14 },
-    grid: { top: 12, right: 24, bottom: 48, left: 16, containLabel: true },
+    legend: { show: false },   // custom HTML-legenda met uitleg per status onder de chart
+    grid: { top: 12, right: 24, bottom: 16, left: 16, containLabel: true },
     xAxis: {
       type: 'value', name: 'Personen',
       nameTextStyle: { color: '#7a90a8', fontSize: 10 },
