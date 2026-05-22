@@ -770,7 +770,7 @@
   function shareText() {
     const d = window._shareData;
     if (!d) return '';
-    let s = `De gemeente *${d.naam}* heeft gemiddeld per maand *${d.maand.toLocaleString('nl-NL')}* vergunninghouders verplicht gehuisvest op basis van de Huisvestingswet.`;
+    let s = `De gemeente *${d.naam}* heeft gemiddeld per maand *${d.maand.toLocaleString('nl-NL')}* vergunninghouders voorrang gegeven op huisvesting op basis van de Huisvestingswet.`;
     if (d.sw) {
       s += ` Op basis van de Spreidingswet zou de gemeente dit jaar *${d.sw.eis.toLocaleString('nl-NL')}* opvangplekken moeten stellen voor asielzoekers maar heeft daarvoor *${d.sw.huidig.toLocaleString('nl-NL')}* beschikbaar.`;
     }
