@@ -327,24 +327,24 @@
   // ── Legenda overheidsbudget ────────────────────────────────────────────────
   (function() {
     const lagen = [
-      { k: '#b91c1c', naam: 'COA',                      vol: 'Centrale opvang in AZC\'s' },
-      { k: '#1d6fd4', naam: 'IND',                      vol: 'Verwerkt asielaanvragen' },
-      { k: '#15803d', naam: 'Nidos',                    vol: 'Voogdij alleenstaande minderjarigen' },
-      { k: '#b45309', naam: 'DT&V',                     vol: 'Terugkeer en vertrek' },
-      { k: '#0d2d6b', naam: 'Gemeentelijke opvang',     vol: 'Opvang georganiseerd door gemeenten' },
-      { k: '#4338ca', naam: 'Integratie & inburgering', vol: 'Taalcursussen en participatie' },
-      { k: '#64748b', naam: 'Overig beleid',             vol: 'Beleidscoördinatie en diversen' },
+      { k: '#b91c1c', naam: 'COA',                      vol: 'Centraal Orgaan opvang Asielzoekers',              verhaal: 'Veruit de grootste post. Daalde van €1,3 mrd (2015) naar €638 mln (2019-dal), waarna ze steeg naar €4,2 mrd (2026) — bijna zeven keer zo hoog.' },
+      { k: '#1d6fd4', naam: 'IND',                      vol: 'Immigratie- en Naturalisatiedienst',               verhaal: 'Stabiel rond €360–580 mln tot 2023; stijgt daarna fors door capaciteitsuitbreiding om de opgebouwde achterstanden weg te werken.' },
+      { k: '#15803d', naam: 'Nidos',                    vol: 'Voogdij-instelling voor alleenstaande minderjarigen', verhaal: 'Gestaag gegroeid van €80 mln (2015) naar €470 mln (2026) door toenemende instroom van alleenstaande minderjarige vreemdelingen (AMV\'s).' },
+      { k: '#b45309', naam: 'DT&V',                     vol: 'Dienst Terugkeer en Vertrek',                      verhaal: 'Coördineert vrijwillig en gedwongen terugkeer. Groeit naarmate het terugkeerbeleid intensiveert: van €15 mln (2015) naar €380 mln (2026).' },
+      { k: '#0d2d6b', naam: 'Gemeentelijke opvang',     vol: 'Opvang georganiseerd en gefinancierd door gemeenten', verhaal: 'Nauwelijks zichtbaar vóór 2022. Explodeert naar €2 mrd (2026) door de noodopvangcrisis en de bredere scope van hoofdstuk XX onder het Schoof-kabinet.' },
+      { k: '#4338ca', naam: 'Integratie & inburgering', vol: 'Taalcursussen, participatie en inburgeringsprogramma\'s', verhaal: 'Voorheen verspreid over SZW en OCW. Onder hoofdstuk XX naar het Ministerie van Asiel & Migratie verschoven — ca. €550 mln structureel.' },
+      { k: '#64748b', naam: 'Overig beleid',             vol: 'Beleidscoördinatie, uitvoering en diversen',      verhaal: 'Restcategorie: beleidsonderzoek, communicatie en kleinere uitvoeringskosten die niet in de overige categorieën vallen.' },
     ];
     const el = document.getElementById('budgetLegend');
     if (!el) return;
     el.innerHTML = lagen.map(d => `
       <tr>
-        <td style="width:16px;padding:5px 14px 5px 0;vertical-align:middle;">
+        <td style="width:16px;padding:6px 14px 6px 0;vertical-align:middle;">
           <span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:${d.k};"></span>
         </td>
-        <td style="padding:5px 0;border-bottom:1px solid #f1f5f9;">
+        <td style="padding:6px 0;border-bottom:1px solid #f1f5f9;">
           <span style="font-weight:700;color:#1e293b;font-size:14px;">${d.naam}</span>
-          <span style="color:#64748b;font-size:13px;"> — ${d.vol}</span>
+          <span title="${d.verhaal}" style="color:#64748b;font-size:13px;border-bottom:1px dotted #94a3b8;cursor:help;"> ${d.vol}</span>
         </td>
       </tr>`).join('');
   })();
