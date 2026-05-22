@@ -402,8 +402,29 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script>
 
 <script>
+// ── Supabase client ──────────────────────────────────────────────────────────
+const _db = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+async function _quizOpslaan() {
+  if (!_db) return;
+  try {
+    await _db.from('quiz_results').insert({
+      score,
+      antwoorden: antwoorden.map((a, i) => ({ i, goed: a.goed }))
+    });
+    const { count } = await _db
+      .from('quiz_results')
+      .select('*', { count: 'exact', head: true });
+    const el = document.getElementById('_quizStat');
+    if (el && count > 1)
+      el.innerHTML = `👥 Je bent een van de <strong>${count.toLocaleString('nl-NL')}</strong> mensen die deze quiz deed.`;
+  } catch (e) { console.warn('Supabase:', e.message); }
+}
+
 const VRAGEN = [
   {
     vraag: "Hoeveel gemeenten zijn wettelijk verplicht vergunninghouders te huisvesten?",
@@ -576,6 +597,7 @@ function renderResultaat() {
           <span id="copyLabel">Kopieer link</span>
         </button>
       </div>
+      <div id="_quizStat" style="font-size:.78rem;color:var(--text-2);margin:.6rem 0 .2rem;min-height:1.2em;"></div>
       <button class="result-restart" onclick="herstart()">Opnieuw spelen</button>
 
       <div class="result-review">
@@ -586,6 +608,7 @@ function renderResultaat() {
   `;
 
   window._quizShare = { msg: shareMsg, url: shareUrl };
+  _quizOpslaan();
 }
 
 function deelWA() {
