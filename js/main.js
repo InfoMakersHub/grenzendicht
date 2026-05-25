@@ -1,7 +1,7 @@
 // ── ADMIN TOGGLE ────────────────────────────────────────────────────────
 // Zet SITE_ACTIVE op false om de verkooppagina te tonen.
 // Daarna: git add js/main.js && git commit -m "site uit" && git push
-const SITE_ACTIVE = true;
+const SITE_ACTIVE = false;
 if (!SITE_ACTIVE && !location.pathname.includes('verkoop.html')) {
   location.replace('/verkoop.html');
 }
