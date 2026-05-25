@@ -1,3 +1,11 @@
+// ── ADMIN TOGGLE ────────────────────────────────────────────────────────
+// Zet SITE_ACTIVE op false om de verkooppagina te tonen.
+// Daarna: git add js/main.js && git commit -m "site uit" && git push
+const SITE_ACTIVE = true;
+if (!SITE_ACTIVE && !location.pathname.includes('verkoop.html')) {
+  location.replace('/verkoop.html');
+}
+
 // ── Laatste update ──────────────────────────────────────────────────────
 // Wordt bij elke git push handmatig bijgewerkt naar het exacte pushmoment.
 // JS hieronder injecteert deze waarde onderaan elke .site-footer.
