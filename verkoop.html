@@ -141,6 +141,11 @@
   </p>
   <hr class="divider">
 
+  <!-- Foutmelding (verborgen tot na mislukte submit) -->
+  <div class="success" id="errorMsg" style="display:none;background:#2d0f0f;border-color:#7f1d1d;color:#fca5a5;">
+    Er is iets misgegaan bij het versturen. Probeer het later opnieuw.
+  </div>
+
   <!-- Succesbericht (verborgen tot na submit) -->
   <div class="success" id="successMsg">
     ✓ Je reactie is ontvangen.<br>We nemen zo snel mogelijk contact met je op.
@@ -209,7 +214,7 @@
     } else {
       btn.textContent = 'Probeer opnieuw';
       btn.disabled = false;
-      alert('Er ging iets mis. Stuur een e-mail naar grenzendicht@infomakers.nl');
+      document.getElementById('errorMsg').style.display = 'block';
     }
   });
 </script>
